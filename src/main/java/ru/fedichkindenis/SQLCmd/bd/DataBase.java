@@ -5,7 +5,7 @@ import java.sql.Connection;
 /**
  * Created by Денис on 05.06.2016.
  */
-public abstract class Connect {
+public abstract class DataBase {
 
     String hostname;
     Integer port;

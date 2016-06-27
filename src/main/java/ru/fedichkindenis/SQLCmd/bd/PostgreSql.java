@@ -7,7 +7,7 @@ import java.sql.SQLException;
 /**
  * Created by Денис on 05.06.2016.
  */
-public class PostgreSql extends Connect {
+public class PostgreSql extends DataBase {
 
     private Connection connection = null;
 
@@ -18,6 +18,9 @@ public class PostgreSql extends Connect {
         this.nameBd = nameBd;
         this.username = username;
         this.password = password;
+    }
+
+    private void createConnect() {
 
         try {
             Class.forName("org.postgresql.Driver");
@@ -31,6 +34,10 @@ public class PostgreSql extends Connect {
     }
 
     public Connection getConnect() {
+
+        if(connection == null) {
+            createConnect();
+        }
 
         return connection;
     }
