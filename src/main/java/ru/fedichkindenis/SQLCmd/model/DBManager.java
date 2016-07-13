@@ -9,7 +9,7 @@ import java.util.Objects;
  */
 public interface DBManager {
 
-    void connect(String hostname, Integer port,  String schemeDbName, String username, String password);
+    void connect(String hostname, String port,  String dbName, String username, String password);
     void disconnect();
     String listTable();
     List<DataList> dataTable(String tableName);
