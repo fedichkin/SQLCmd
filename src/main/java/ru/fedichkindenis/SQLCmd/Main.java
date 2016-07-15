@@ -2,6 +2,9 @@ package ru.fedichkindenis.SQLCmd;
 
 import ru.fedichkindenis.SQLCmd.bd.BDManager;
 import ru.fedichkindenis.SQLCmd.bd.PostgreSql;
+import ru.fedichkindenis.SQLCmd.model.DBManager;
+import ru.fedichkindenis.SQLCmd.view.Console;
+import ru.fedichkindenis.SQLCmd.view.View;
 
 import java.util.List;
 
@@ -12,13 +15,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        BDManager bdManager = new BDManager(new PostgreSql("localhost", 5433, "cmd", "postgres", "mac"));
-
-        List<String> listTable = bdManager.getListTable();
-
-        for(String table : listTable) {
-
-            System.out.println(table);
-        }
+        View view = new Console();
+       // DBManager dbManager = new
     }
 }
