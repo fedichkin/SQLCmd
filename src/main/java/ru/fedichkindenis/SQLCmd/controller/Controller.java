@@ -24,11 +24,16 @@ public class Controller {
         view.write("Для начала работы с ситемой установи соединение с базой данных с помощью команды: ");
         view.write("connect|host|port|dbName|userName|password");
 
-        String textCommand = view.read();
+        String textCommand = "";
 
-        CommandFactory commandFactory = new CommandFactory(dbManager, view, textCommand);
+        while (!"exit".equals(textCommand)) {
 
-        Command command = commandFactory.createCommand();
-        command.execute();
+            textCommand = view.read();
+
+            CommandFactory commandFactory = new CommandFactory(dbManager, view, textCommand);
+
+            Command command = commandFactory.createCommand();
+            command.execute();
+        }
     }
 }

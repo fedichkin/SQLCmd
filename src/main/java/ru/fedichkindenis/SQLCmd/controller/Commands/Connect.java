@@ -9,7 +9,7 @@ import ru.fedichkindenis.SQLCmd.view.View;
  *
  * Команда для установки соединения, например с базой данных
  * Формат команды: connect|host|port|dbName|userName|password
- * Пример команды: connect|localhost|test|root|1234
+ * Пример команды: connect|localhost|5433|test|root|1234
  */
 public class Connect implements Command {
 
@@ -32,7 +32,7 @@ public class Connect implements Command {
             throw new IllegalArgumentException("Указан не верный формат команды");
         }
 
-        String [] arguments = textCommand.split("/|");
+        String [] arguments = textCommand.split("\\|");
         String host = arguments[1];
         String port = arguments[2];
         String dbName = arguments[3];
@@ -46,8 +46,8 @@ public class Connect implements Command {
     private boolean validateCommand() {
 
         if(StringUtil.isEmpty(textCommand)) return false;
-        if(!textCommand.startsWith("command|")) return false;
-        if(textCommand.split("/|").length != COUNT_ARGUMENT) return false;
+        if(!textCommand.startsWith("connect|")) return false;
+        if(textCommand.split("\\|").length != COUNT_ARGUMENT) return false;
 
         return true;
     }

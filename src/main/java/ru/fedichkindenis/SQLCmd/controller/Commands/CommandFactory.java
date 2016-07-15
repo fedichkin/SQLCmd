@@ -21,12 +21,12 @@ public class CommandFactory {
 
     public Command createCommand() {
 
-        if(StringUtil.isEmpty(textCommand) || textCommand.split("/|").length == 0) {
+        if(StringUtil.isEmpty(textCommand) || textCommand.split("\\|").length == 0) {
 
             throw new IllegalArgumentException("Введен не верный формат команды!");
         }
 
-        String wordCommand = textCommand.split("/|")[0];
+        String wordCommand = textCommand.split("\\|")[0];
 
         switch (wordCommand) {
 

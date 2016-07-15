@@ -9,6 +9,13 @@ import java.io.InputStreamReader;
  */
 public class Console implements View {
 
+    private BufferedReader reader;
+
+    public Console() {
+
+        reader = new BufferedReader(new InputStreamReader(System.in));
+    }
+
     @Override
     public void write(String message) {
 
@@ -20,8 +27,7 @@ public class Console implements View {
 
         String result = "";
 
-        try (InputStreamReader inReader = new InputStreamReader(System.in);
-             BufferedReader reader = new BufferedReader(inReader)) {
+        try {
 
             result = reader.readLine();
 
@@ -31,5 +37,17 @@ public class Console implements View {
         }
 
         return result;
+    }
+
+    public void closeConsole() {
+
+        if(reader != null) {
+
+            try {
+                reader.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
     }
 }
