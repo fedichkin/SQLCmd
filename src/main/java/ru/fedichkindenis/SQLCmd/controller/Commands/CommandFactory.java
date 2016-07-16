@@ -32,8 +32,10 @@ public class CommandFactory {
 
             case "connect":
                 return new Connect(dbManager, view, textCommand);
+            case "exit":
+                return new Exit(dbManager, view, textCommand);
             default:
-                return null;
+                return new Unsupported();
         }
     }
 }

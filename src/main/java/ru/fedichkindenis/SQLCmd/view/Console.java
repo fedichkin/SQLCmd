@@ -39,7 +39,8 @@ public class Console implements View {
         return result;
     }
 
-    public void closeConsole() {
+    @Override
+    public void close() {
 
         if(reader != null) {
 

@@ -2,6 +2,7 @@ package ru.fedichkindenis.SQLCmd.controller;
 
 import ru.fedichkindenis.SQLCmd.controller.Commands.Command;
 import ru.fedichkindenis.SQLCmd.controller.Commands.CommandFactory;
+import ru.fedichkindenis.SQLCmd.controller.Commands.ExitException;
 import ru.fedichkindenis.SQLCmd.model.DBManager;
 import ru.fedichkindenis.SQLCmd.view.View;
 
@@ -24,16 +25,22 @@ public class Controller {
         view.write("Для начала работы с ситемой установи соединение с базой данных с помощью команды: ");
         view.write("connect|host|port|dbName|userName|password");
 
-        String textCommand = "";
+        while (true) {
 
-        while (!"exit".equals(textCommand)) {
+            try {
 
-            textCommand = view.read();
+                String textCommand = view.read();
 
-            CommandFactory commandFactory = new CommandFactory(dbManager, view, textCommand);
+                CommandFactory commandFactory = new CommandFactory(dbManager, view, textCommand);
 
-            Command command = commandFactory.createCommand();
-            command.execute();
+                Command command = commandFactory.createCommand();
+                command.execute();
+            } catch (ExitException e) {
+                break;
+            } catch (Exception e) {
+
+                view.write("Произошла ошибка: " + e.getMessage());
+            }
         }
     }
 }
