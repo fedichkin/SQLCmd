@@ -46,7 +46,7 @@ public class JDBCManager implements DBManager {
                 "order by table_name";
 
         try (PreparedStatement statement = connection.prepareStatement(queryStr);
-             ResultSet resultSet = statement.getResultSet()) {
+             ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
 

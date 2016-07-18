@@ -5,16 +5,17 @@ import ru.fedichkindenis.SQLCmd.controller.Commands.CommandFactory;
 import ru.fedichkindenis.SQLCmd.controller.Commands.ExitException;
 import ru.fedichkindenis.SQLCmd.model.DBManager;
 import ru.fedichkindenis.SQLCmd.view.View;
+import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
 /**
  * Created by Денис on 11.07.2016.
  */
 public class Controller {
 
-    private View view;
+    private ViewDecorator view;
     private DBManager dbManager;
 
-    public Controller(View view, DBManager dbManager) {
+    public Controller(ViewDecorator view, DBManager dbManager) {
         this.view = view;
         this.dbManager = dbManager;
     }

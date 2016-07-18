@@ -1,5 +1,9 @@
 package ru.fedichkindenis.SQLCmd.view;
 
+import ru.fedichkindenis.SQLCmd.model.DataMap;
+
+import java.util.List;
+
 /**
  * Created by Денис on 11.07.2016.
  */

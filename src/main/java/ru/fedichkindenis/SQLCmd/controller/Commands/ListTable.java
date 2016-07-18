@@ -2,23 +2,25 @@ package ru.fedichkindenis.SQLCmd.controller.Commands;
 
 import ru.fedichkindenis.SQLCmd.model.DBManager;
 import ru.fedichkindenis.SQLCmd.util.StringUtil;
-import ru.fedichkindenis.SQLCmd.view.Console;
-import ru.fedichkindenis.SQLCmd.view.View;
+import ru.fedichkindenis.SQLCmd.view.AlignWrite;
+import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
+
+import java.util.List;
 
 /**
- * Created by Денис on 16.07.2016.
+ * Created by Денис on 17.07.2016.
  *
- * Команда для выхода из приложения
- * Формат команды: exit
- * Пример команды: exit
+ * Команда для вывода списка таблиц
+ * Формат команды: list-table
+ * Пример команды: list-table
  */
-public class Exit implements Command {
+public class ListTable implements Command {
 
     private DBManager dbManager;
-    private View view;
+    private ViewDecorator view;
     private String textCommand;
 
-    public Exit(DBManager dbManager, View view, String textCommand) {
+    public ListTable(DBManager dbManager, ViewDecorator view, String textCommand) {
         this.dbManager = dbManager;
         this.view = view;
         this.textCommand = textCommand;
@@ -31,17 +33,14 @@ public class Exit implements Command {
             throw new IllegalArgumentException("Указан не верный формат команды");
         }
 
-        dbManager.disconnect();
-        view.close();
-        view.write("До свидания!");
-
-        throw new ExitException();
+        List<String> listTable = dbManager.listTable();
+        view.write(listTable, AlignWrite.HORIZONTAL);
     }
 
     private boolean validateCommand() {
 
         if(StringUtil.isEmpty(textCommand)) return false;
-        if(!textCommand.equals("exit")) return false;
+        if(!textCommand.equals("list-table")) return false;
 
         return true;
     }
