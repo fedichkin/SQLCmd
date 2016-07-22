@@ -3,6 +3,7 @@ package ru.fedichkindenis.SQLCmd.view;
 import ru.fedichkindenis.SQLCmd.model.DataMap;
 
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -40,6 +41,19 @@ public class TableConsoleView extends ViewDecorator {
 
             write(upHead);
             write(row);
+            write(downHead);
+        }
+        else if(alignWrite.equals(AlignWrite.VERTICAL)) {
+            int maxLength = getMaxLength(list);
+            String upHead = getHorizontalHead(maxLength, 1, true);
+            String downHead = getHorizontalHead(maxLength, 1, false);
+
+            write(upHead);
+
+            for(String row : getVerticalRows(list, maxLength)) {
+                write(row);
+            }
+
             write(downHead);
         }
     }
@@ -122,6 +136,42 @@ public class TableConsoleView extends ViewDecorator {
         row = row + VERTICAL_BORDER;
 
         return row;
+    }
+
+    private List<String> getVerticalRows(Collection<String> strings, int maxLength) {
+
+        List<String>  rows = new LinkedList<>();
+
+        for (String string : strings) {
+
+            String row = "" + VERTICAL_BORDER;
+            row = row + string;
+            if(string.length() < maxLength) {
+                for(int i = 0; i < maxLength - string.length(); i++) {
+                    row = row + " ";
+                }
+            }
+            row = row + VERTICAL_BORDER;
+            rows.add(row);
+            rows.add(gerHorizontalSeparator(maxLength));
+        }
+
+        rows.remove(rows.size() - 1);
+
+        return rows;
+    }
+
+    private String gerHorizontalSeparator(int length) {
+
+        String separator = "" + CROSS_LEFT;
+
+        for(int i = 0; i < length; i++) {
+            separator = separator + HORIZONTAL_BORDER;
+        }
+
+        separator = separator + CROSS_RIGHT;
+
+        return separator;
     }
 }
 

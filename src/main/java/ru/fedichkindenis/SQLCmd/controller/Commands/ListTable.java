@@ -34,7 +34,7 @@ public class ListTable implements Command {
         }
 
         List<String> listTable = dbManager.listTable();
-        view.write(listTable, AlignWrite.HORIZONTAL);
+        view.write(listTable, AlignWrite.VERTICAL);
     }
 
     private boolean validateCommand() {
