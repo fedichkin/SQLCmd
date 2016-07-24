@@ -3,6 +3,7 @@ package ru.fedichkindenis.SQLCmd.controller.commands;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.fedichkindenis.SQLCmd.controller.Commands.Command;
@@ -33,7 +34,7 @@ public class ConnectTest {
     }
 
     @Test
-    public void testExecute() throws Exception {
+    public void testIncorrectCommandFormat() {
         try {
             command = new Connect(manager, view, "connect|d|12|fg|ere");
             command.execute();
@@ -41,5 +42,27 @@ public class ConnectTest {
         } catch (IllegalArgumentException e) {
             assertEquals("Указан не верный формат команды", e.getMessage());
         }
+    }
+
+    @Test
+    public void testCorrectCommandFormat() {
+
+        command = new Connect(manager, view, "connect|d|12|fg|ere|12");
+        command.execute();
+    }
+
+    @Test
+    public void testConnect() {
+
+        command = new Connect(manager, view, "connect|localhost|5433|cmd|postgres|mac");
+        command.execute();
+
+        shouldPrint("[Соединение установлено!]");
+    }
+
+    private void shouldPrint(String expected) {
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        verify(view, atLeastOnce()).write(captor.capture());
+        assertEquals(expected, captor.getAllValues().toString());
     }
 }
