@@ -3,37 +3,53 @@ package ru.fedichkindenis.SQLCmd.controller.commands;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.MockitoAnnotations;
 import ru.fedichkindenis.SQLCmd.controller.Commands.Command;
 import ru.fedichkindenis.SQLCmd.controller.Commands.Connect;
+import ru.fedichkindenis.SQLCmd.controller.Commands.ListTable;
 import ru.fedichkindenis.SQLCmd.model.DBManager;
+import ru.fedichkindenis.SQLCmd.view.AlignWrite;
 import ru.fedichkindenis.SQLCmd.view.View;
+import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 /**
- * Created by Денис on 23.07.2016.
- *
- * Тесты для команды connect
+ * Created by Денис on 25.07.2016.
  */
-
-public class ConnectTest {
+public class ListTableTest {
 
     private DBManager dbManager;
-    private View view;
+    private ViewDecorator view;
     private Command command;
+
+    @Captor
+    private ArgumentCaptor<List<String>> captor;
 
     @Before
     public void setup() {
+        MockitoAnnotations.initMocks(this);
+
         dbManager = mock(DBManager.class);
-        view = mock(View.class);
+        view = mock(ViewDecorator.class);
+
+        Command connect = new Connect(dbManager, view, "connect|localhost|5433|cmd|postgres|mac");
+        connect.execute();
     }
 
     @Test
     public void testIncorrectCommandFormat() {
         try {
-            command = new Connect(dbManager, view, "connect|d|12|fg|ere");
+            command = new ListTable(dbManager, view, "list_table");
             command.execute();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
@@ -44,22 +60,21 @@ public class ConnectTest {
     @Test
     public void testCorrectCommandFormat() {
 
-        command = new Connect(dbManager, view, "connect|d|12|fg|ere|12");
+        command = new ListTable(dbManager, view, "list-table");
         command.execute();
     }
 
     @Test
     public void testConnect() {
 
-        command = new Connect(dbManager, view, "connect|localhost|5433|cmd|postgres|mac");
+        command = new ListTable(dbManager, view, "list-table");
         command.execute();
 
-        shouldPrint("[Соединение установлено!]");
+        shouldPrint("[]");
     }
 
     private void shouldPrint(String expected) {
-        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        verify(view, atLeastOnce()).write(captor.capture());
+        verify(view, atLeastOnce()).write(captor.capture(), AlignWrite.VERTICAL);
         assertEquals(expected, captor.getAllValues().toString());
     }
 }
