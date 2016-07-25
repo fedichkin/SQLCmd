@@ -6,11 +6,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.MockitoAnnotations;
 import ru.fedichkindenis.SQLCmd.controller.Commands.Command;
-import ru.fedichkindenis.SQLCmd.controller.Commands.Connect;
 import ru.fedichkindenis.SQLCmd.controller.Commands.ListTable;
 import ru.fedichkindenis.SQLCmd.model.DBManager;
-import ru.fedichkindenis.SQLCmd.view.AlignWrite;
-import ru.fedichkindenis.SQLCmd.view.View;
 import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
 import java.util.LinkedList;
@@ -18,38 +15,34 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by Денис on 25.07.2016.
+ *
+ * Класс для тестирования команды list-table
  */
 public class ListTableTest {
 
     private DBManager dbManager;
-    private ViewDecorator view;
+    private ViewDecorator viewDecorator;
     private Command command;
 
     @Captor
-    private ArgumentCaptor<List<String>> captor;
+    private ArgumentCaptor<List<String>> listTable;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
 
         dbManager = mock(DBManager.class);
-        view = mock(ViewDecorator.class);
-
-        Command connect = new Connect(dbManager, view, "connect|localhost|5433|cmd|postgres|mac");
-        connect.execute();
+        viewDecorator = mock(ViewDecorator.class);
     }
 
     @Test
     public void testIncorrectCommandFormat() {
         try {
-            command = new ListTable(dbManager, view, "list_table");
+            command = new ListTable(dbManager, viewDecorator, "list_table");
             command.execute();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
@@ -60,21 +53,27 @@ public class ListTableTest {
     @Test
     public void testCorrectCommandFormat() {
 
-        command = new ListTable(dbManager, view, "list-table");
+        command = new ListTable(dbManager, viewDecorator, "list-table");
         command.execute();
     }
 
     @Test
-    public void testConnect() {
+    public void testListTable() {
 
-        command = new ListTable(dbManager, view, "list-table");
+        List<String> data = new LinkedList<>();
+        data.add("user");
+        data.add("user_info");
+
+        when(dbManager.listTable()).thenReturn(data);
+
+        command = new ListTable(dbManager, viewDecorator, "list-table");
         command.execute();
 
-        shouldPrint("[]");
+        shouldPrintViewDecarator("[[user, user_info]]");
     }
 
-    private void shouldPrint(String expected) {
-        verify(view, atLeastOnce()).write(captor.capture(), AlignWrite.VERTICAL);
-        assertEquals(expected, captor.getAllValues().toString());
+    private void shouldPrintViewDecarator(String expected) {
+        verify(viewDecorator, atMost(2)).write(listTable.capture(), anyObject());
+        assertEquals(expected, listTable.getAllValues().toString());
     }
 }

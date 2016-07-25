@@ -54,10 +54,10 @@ public class ConnectTest {
         command = new Connect(dbManager, view, "connect|localhost|5433|cmd|postgres|mac");
         command.execute();
 
-        shouldPrint("[Соединение установлено!]");
+        shouldPrintView("[Соединение установлено!]");
     }
 
-    private void shouldPrint(String expected) {
+    private void shouldPrintView(String expected) {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(view, atLeastOnce()).write(captor.capture());
         assertEquals(expected, captor.getAllValues().toString());
