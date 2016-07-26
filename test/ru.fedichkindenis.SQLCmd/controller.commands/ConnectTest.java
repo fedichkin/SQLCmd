@@ -44,13 +44,6 @@ public class ConnectTest {
     @Test
     public void testCorrectCommandFormat() {
 
-        command = new Connect(dbManager, view, "connect|d|12|fg|ere|12");
-        command.execute();
-    }
-
-    @Test
-    public void testConnect() {
-
         command = new Connect(dbManager, view, "connect|localhost|5433|cmd|postgres|mac");
         command.execute();
 

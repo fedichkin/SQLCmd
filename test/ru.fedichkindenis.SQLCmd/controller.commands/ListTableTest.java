@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
  *
  * Класс для тестирования команды list-table
  */
-public class ListTableTest {
+public class ListTableTest implements CommandTest {
 
     private DBManager dbManager;
     private ViewDecorator viewDecorator;
@@ -31,6 +31,7 @@ public class ListTableTest {
     @Captor
     private ArgumentCaptor<List<String>> listTable;
 
+    @Override
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -39,6 +40,7 @@ public class ListTableTest {
         viewDecorator = mock(ViewDecorator.class);
     }
 
+    @Override
     @Test
     public void testIncorrectCommandFormat() {
         try {
@@ -50,15 +52,9 @@ public class ListTableTest {
         }
     }
 
+    @Override
     @Test
     public void testCorrectCommandFormat() {
-
-        command = new ListTable(dbManager, viewDecorator, "list-table");
-        command.execute();
-    }
-
-    @Test
-    public void testListTable() {
 
         List<String> data = new LinkedList<>();
         data.add("user");
