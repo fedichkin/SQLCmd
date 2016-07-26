@@ -23,7 +23,7 @@ public class CommandFactory {
 
         if(StringUtil.isEmpty(textCommand) || textCommand.split("\\|").length == 0) {
 
-            throw new IllegalArgumentException("Введен не верный формат команды!");
+            throw new IllegalArgumentException("Указан не верный формат команды");
         }
 
         String wordCommand = textCommand.split("\\|")[0];
