@@ -9,6 +9,8 @@ import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
 /**
  * Created by Денис on 11.07.2016.
+ *
+ * Класс контролер для управления основной логикой программы
  */
 public class Controller {
 
