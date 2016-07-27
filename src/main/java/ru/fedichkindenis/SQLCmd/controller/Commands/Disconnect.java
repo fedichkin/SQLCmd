@@ -2,7 +2,7 @@ package ru.fedichkindenis.SQLCmd.controller.Commands;
 
 import ru.fedichkindenis.SQLCmd.model.DBManager;
 import ru.fedichkindenis.SQLCmd.util.StringUtil;
-import ru.fedichkindenis.SQLCmd.view.View;
+import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
 /**
  * Created by Денис on 16.07.2016.
@@ -14,10 +14,10 @@ import ru.fedichkindenis.SQLCmd.view.View;
 public class Disconnect implements Command {
 
     private DBManager dbManager;
-    private View view;
+    private ViewDecorator view;
     private String textCommand;
 
-    public Disconnect(DBManager dbManager, View view, String textCommand) {
+    public Disconnect(DBManager dbManager, ViewDecorator view, String textCommand) {
         this.dbManager = dbManager;
         this.view = view;
         this.textCommand = textCommand;
@@ -36,9 +36,7 @@ public class Disconnect implements Command {
 
     private boolean validateCommand() {
 
-        if(StringUtil.isEmpty(textCommand)) return false;
-        if(!textCommand.equals("disconnect")) return false;
+        return !StringUtil.isEmpty(textCommand) && textCommand.equals("disconnect");
 
-        return true;
     }
 }

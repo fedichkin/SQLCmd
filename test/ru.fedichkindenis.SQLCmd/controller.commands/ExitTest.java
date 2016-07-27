@@ -4,11 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import ru.fedichkindenis.SQLCmd.controller.Commands.Command;
-import ru.fedichkindenis.SQLCmd.controller.Commands.Connect;
 import ru.fedichkindenis.SQLCmd.controller.Commands.Exit;
 import ru.fedichkindenis.SQLCmd.controller.Commands.ExitException;
 import ru.fedichkindenis.SQLCmd.model.DBManager;
-import ru.fedichkindenis.SQLCmd.view.View;
+import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -24,21 +23,21 @@ import static org.mockito.Mockito.verify;
 public class ExitTest implements CommandTest {
 
     private DBManager dbManager;
-    private View view;
+    private ViewDecorator viewDecorator;
     private Command command;
 
     @Override
     @Before
     public void setup() {
         dbManager = mock(DBManager.class);
-        view = mock(View.class);
+        viewDecorator = mock(ViewDecorator.class);
     }
 
     @Override
     @Test
     public void testIncorrectCommandFormat() {
         try {
-            command = new Exit(dbManager, view, "exxit");
+            command = new Exit(dbManager, viewDecorator, "exxit");
             command.execute();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
@@ -51,7 +50,7 @@ public class ExitTest implements CommandTest {
     public void testCorrectCommandFormat() {
 
         try {
-            command = new Exit(dbManager, view, "exit");
+            command = new Exit(dbManager, viewDecorator, "exit");
             command.execute();
 
             shouldPrintView("[До свидания!]");
@@ -65,7 +64,7 @@ public class ExitTest implements CommandTest {
 
     private void shouldPrintView(String expected) {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        verify(view, atLeastOnce()).write(captor.capture());
+        verify(viewDecorator, atLeastOnce()).write(captor.capture());
         assertEquals(expected, captor.getAllValues().toString());
     }
 }

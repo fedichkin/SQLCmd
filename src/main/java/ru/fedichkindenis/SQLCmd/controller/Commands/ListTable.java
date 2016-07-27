@@ -39,9 +39,7 @@ public class ListTable implements Command {
 
     private boolean validateCommand() {
 
-        if(StringUtil.isEmpty(textCommand)) return false;
-        if(!textCommand.equals("list-table")) return false;
+        return !StringUtil.isEmpty(textCommand) && textCommand.equals("list-table");
 
-        return true;
     }
 }

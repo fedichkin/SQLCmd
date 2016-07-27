@@ -6,6 +6,8 @@ import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
 /**
  * Created by Денис on 15.07.2016.
+ *
+ * Класс-фабрика для создания команд
  */
 public class CommandFactory {
 
