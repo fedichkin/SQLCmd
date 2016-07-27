@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 
 /**
  * Created by Денис on 11.07.2016.
+ *
+ * Класс для отображения и чтения информации в консоли
  */
 public class Console implements View {
 
@@ -32,8 +34,7 @@ public class Console implements View {
             result = reader.readLine();
 
         } catch (IOException e) {
-
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
 
         return result;
