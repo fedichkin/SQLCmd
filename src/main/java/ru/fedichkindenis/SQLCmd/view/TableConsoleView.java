@@ -33,6 +33,11 @@ public class TableConsoleView extends ViewDecorator {
     @Override
     public void write(List<String> list, AlignWrite alignWrite) {
 
+        if(list == null || list.size() == 0) {
+
+            throw new IllegalArgumentException("Не указан список значений");
+        }
+
         if(alignWrite.equals(AlignWrite.HORIZONTAL)) {
             int maxLength = getMaxLength(list);
             String upHead = getHorizontalHead(maxLength, list.size(), true);
