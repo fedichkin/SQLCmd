@@ -5,14 +5,13 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by Денис on 29.07.2016.
@@ -30,7 +29,39 @@ public class TableConsoleViewTest {
     }
 
     @Test
-    public void writeListIfListNull() {
+    public void testRead() {
+
+        String expected = "Hello World!!!";
+        when(view.read()).thenReturn(expected);
+
+        viewDecorator = new TableConsoleView(view);
+        String actual = viewDecorator.read();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testWrite() {
+
+        String expected = "Hello World!!!";
+
+        viewDecorator = new TableConsoleView(view);
+        viewDecorator.write(expected);
+
+        shouldPrintView(Collections.singletonList(expected));
+    }
+
+    @Test
+    public void testClose() {
+
+        viewDecorator = new TableConsoleView(view);
+        viewDecorator.close();
+
+        verify(view).close();
+    }
+
+    @Test
+    public void testWriteListIfListNull() {
 
         try {
             viewDecorator = new TableConsoleView(view);
@@ -44,7 +75,7 @@ public class TableConsoleViewTest {
     }
 
     @Test
-    public void writeListIfListEmpty() {
+    public void testWriteListIfListEmpty() {
 
         try {
             viewDecorator = new TableConsoleView(view);
@@ -58,7 +89,7 @@ public class TableConsoleViewTest {
     }
 
     @Test
-    public void writeListHorizontal() {
+    public void testWriteListHorizontal() {
 
         viewDecorator = new TableConsoleView(view);
         viewDecorator.write(Arrays.asList("table1", "table22", "table333"), AlignWrite.HORIZONTAL);
@@ -71,7 +102,7 @@ public class TableConsoleViewTest {
     }
 
     @Test
-    public void writeListVertical() {
+    public void testWriteListVertical() {
 
         viewDecorator = new TableConsoleView(view);
         viewDecorator.write(Arrays.asList("table1", "table22", "table333"), AlignWrite.VERTICAL);
