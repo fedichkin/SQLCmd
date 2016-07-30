@@ -6,6 +6,8 @@ import java.util.List;
 
 /**
  * Created by Денис on 15.07.2016.
+ *
+ * Менеджер базы данных JDBC
  */
 public class JDBCManager implements DBManager {
 
@@ -68,7 +70,7 @@ public class JDBCManager implements DBManager {
         String queryStr = "select * from " + tableName;
 
         try (PreparedStatement statement = connection.prepareStatement(queryStr);
-             ResultSet resultSet = statement.getResultSet()) {
+             ResultSet resultSet = statement.executeQuery()) {
 
             ResultSetMetaData rsmd = resultSet.getMetaData();
 
@@ -185,7 +187,7 @@ public class JDBCManager implements DBManager {
         }
     }
 
-    private boolean isConnect() {
+    public boolean isConnect() {
 
         return connection != null;
     }

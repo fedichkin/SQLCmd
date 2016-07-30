@@ -4,6 +4,8 @@ import java.util.*;
 
 /**
  * Created by Денис on 11.07.2016.
+ *
+ * Класс для хранения данных таблицы
  */
 public class DataMap {
 
@@ -32,5 +34,11 @@ public class DataMap {
     public Object getValueByName(String nameField) {
 
         return dataMap.get(nameField);
+    }
+
+    @Override
+    public String toString() {
+
+        return dataMap.toString();
     }
 }
