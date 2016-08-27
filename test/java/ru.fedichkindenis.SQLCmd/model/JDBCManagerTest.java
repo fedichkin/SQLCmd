@@ -21,7 +21,7 @@ public class JDBCManagerTest {
     public void testConnect() {
 
         JDBCManager jdbcManager = new JDBCManager();
-        jdbcManager.connect("localhost", "5433", "cmd", "postgres", "mac");
+        jdbcManager.connect("localhost", "5432", "testSqlCmd", "postgres", "mac");
 
         assertEquals(true, jdbcManager.isConnect());
     }
@@ -31,7 +31,7 @@ public class JDBCManagerTest {
 
         try {
             JDBCManager jdbcManager = new JDBCManager();
-            jdbcManager.connect("badHost", "5433", "cmd", "postgres", "mac");
+            jdbcManager.connect("badHost", "5432", "testSqlCmd", "postgres", "mac");
 
             fail("Expected RuntimeException");
         } catch (RuntimeException e) {
@@ -44,7 +44,7 @@ public class JDBCManagerTest {
 
         try {
             JDBCManager jdbcManager = new JDBCManager();
-            jdbcManager.connect("localhost", "6666", "cmd", "postgres", "mac");
+            jdbcManager.connect("localhost", "6666", "testSqlCmd", "postgres", "mac");
 
             fail("Expected RuntimeException");
         } catch (RuntimeException e) {
@@ -57,7 +57,7 @@ public class JDBCManagerTest {
 
         try {
             JDBCManager jdbcManager = new JDBCManager();
-            jdbcManager.connect("localhost", "5433", "bad", "postgres", "mac");
+            jdbcManager.connect("localhost", "5432", "bad", "postgres", "mac");
 
             fail("Expected RuntimeException");
         } catch (RuntimeException e) {
@@ -70,7 +70,7 @@ public class JDBCManagerTest {
 
         try {
             JDBCManager jdbcManager = new JDBCManager();
-            jdbcManager.connect("localhost", "5433", "cmd", "bad", "mac");
+            jdbcManager.connect("localhost", "5432", "testSqlCmd", "bad", "mac");
 
             fail("Expected RuntimeException");
         } catch (RuntimeException e) {
@@ -83,7 +83,7 @@ public class JDBCManagerTest {
 
         try {
             JDBCManager jdbcManager = new JDBCManager();
-            jdbcManager.connect("localhost", "5433", "cmd", "postgres", "bad");
+            jdbcManager.connect("localhost", "5432", "testSqlCmd", "postgres", "bad");
 
             fail("Expected RuntimeException");
         } catch (RuntimeException e) {
@@ -95,19 +95,8 @@ public class JDBCManagerTest {
     public void testDisconnect() {
 
         JDBCManager jdbcManager = new JDBCManager();
-        jdbcManager.connect("localhost", "5433", "cmd", "postgres", "mac");
+        jdbcManager.connect("localhost", "5432", "testSqlCmd", "postgres", "mac");
         jdbcManager.disconnect();
-    }
-
-    @Test
-    public void testListTable() {
-
-        JDBCManager jdbcManager = new JDBCManager();
-        jdbcManager.connect("localhost", "5433", "cmd", "postgres", "mac");
-
-        List<String> actual = jdbcManager.listTable();
-
-        assertEquals(Arrays.asList("user_info", "users"), actual);
     }
 
     @Test
@@ -121,21 +110,5 @@ public class JDBCManagerTest {
         } catch (RuntimeException e) {
             //do nothing
         }
-    }
-
-    @Test
-    public void testDataTable() {
-
-        JDBCManager jdbcManager = new JDBCManager();
-        jdbcManager.connect("localhost", "5433", "cmd", "postgres", "mac");
-
-        List<DataMap> actual = jdbcManager.dataTable("users");
-
-        DataMap expected = new DataMap();
-        expected.add("id", "1");
-        expected.add("login", "admin");
-        expected.add("password", "W#KJDJ&^Rxcv");
-
-        assertEquals(expected.toString(), actual.get(0).toString());
     }
 }
