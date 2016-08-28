@@ -1,6 +1,7 @@
 package ru.fedichkindenis.SQLCmd.model;
 
 import config.DBUnitConfig;
+import config.JDBCProperties;
 import org.dbunit.Assertion;
 import org.dbunit.dataset.Column;
 import org.dbunit.dataset.IDataSet;
@@ -13,7 +14,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+import java.util.Properties;
 
 /**
  * Created by Денис on 03.08.2016.
@@ -21,6 +22,8 @@ import java.util.concurrent.ExecutionException;
  * Тестирование работы с базой данных с использованием DBUnit
  */
 public class JDBCManagerTestDBUnit extends DBUnitConfig {
+
+    private JDBCManager jdbcManager;
 
     @Before
     public void setUp() throws Exception {
@@ -31,6 +34,15 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
 
         tester.setDataSet(beforeData);
         tester.onSetup();
+
+        JDBCProperties jdbcProperties = new JDBCProperties("postgesql.config.properties");
+        Properties properties = jdbcProperties.getProperties();
+        jdbcManager = new JDBCManager();
+        jdbcManager.connect(properties.getProperty("db.host"),
+                properties.getProperty("db.port"),
+                properties.getProperty("db.dbName"),
+                properties.getProperty("db.username"),
+                properties.getProperty("db.password"));
     }
 
     public JDBCManagerTestDBUnit(String name) {
@@ -39,9 +51,6 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
 
     @Test
     public void testListTable() throws Exception {
-
-        JDBCManager jdbcManager = new JDBCManager();
-        jdbcManager.connect("localhost", "5432", "testSqlCmd", "postgres", "mac");
 
         List<String> actual = jdbcManager.listTable();
 
@@ -58,9 +67,6 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
     @Test
     public void testDataTable()  throws Exception {
 
-        JDBCManager jdbcManager = new JDBCManager();
-        jdbcManager.connect("localhost", "5432", "testSqlCmd", "postgres", "mac");
-
         List<DataMap> actual = jdbcManager.dataTable("usr");
 
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
@@ -74,9 +80,6 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
 
     @Test
     public void testInsert() throws Exception {
-
-        JDBCManager jdbcManager = new JDBCManager();
-        jdbcManager.connect("localhost", "5432", "testSqlCmd", "postgres", "mac");
 
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
@@ -98,9 +101,6 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
     @Test
     public void testUpdate() throws Exception {
 
-        JDBCManager jdbcManager = new JDBCManager();
-        jdbcManager.connect("localhost", "5432", "testSqlCmd", "postgres", "mac");
-
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("update-data.xml"));
@@ -121,9 +121,6 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
     @Test
     public void testDelete() throws Exception {
 
-        JDBCManager jdbcManager = new JDBCManager();
-        jdbcManager.connect("localhost", "5432", "testSqlCmd", "postgres", "mac");
-
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("delete-data.xml"));
@@ -139,9 +136,6 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
 
     @Test
     public void testClearTable() throws Exception {
-
-        JDBCManager jdbcManager = new JDBCManager();
-        jdbcManager.connect("localhost", "5432", "testSqlCmd", "postgres", "mac");
 
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()

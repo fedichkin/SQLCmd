@@ -1,11 +1,14 @@
 package ru.fedichkindenis.SQLCmd.model;
 
+import config.JDBCProperties;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -17,12 +20,29 @@ import static org.junit.Assert.fail;
  */
 public class JDBCManagerTest {
 
+    private JDBCManager jdbcManager;
+    private Properties properties;
+
+    @Before
+    public void setUp() throws Exception {
+        JDBCProperties jdbcProperties = new JDBCProperties("postgesql.config.properties");
+        properties = jdbcProperties.getProperties();
+        jdbcManager = new JDBCManager();
+    }
+
+    private void correctConnect() {
+
+        jdbcManager.connect(properties.getProperty("db.host"),
+                properties.getProperty("db.port"),
+                properties.getProperty("db.dbName"),
+                properties.getProperty("db.username"),
+                properties.getProperty("db.password"));
+    }
+
     @Test
     public void testConnect() {
 
-        JDBCManager jdbcManager = new JDBCManager();
-        jdbcManager.connect("localhost", "5432", "testSqlCmd", "postgres", "mac");
-
+        correctConnect();
         assertEquals(true, jdbcManager.isConnect());
     }
 
@@ -30,8 +50,11 @@ public class JDBCManagerTest {
     public void testConnectBadHost() {
 
         try {
-            JDBCManager jdbcManager = new JDBCManager();
-            jdbcManager.connect("badHost", "5432", "testSqlCmd", "postgres", "mac");
+            jdbcManager.connect("badHost",
+                    properties.getProperty("db.port"),
+                    properties.getProperty("db.dbName"),
+                    properties.getProperty("db.username"),
+                    properties.getProperty("db.password"));
 
             fail("Expected RuntimeException");
         } catch (RuntimeException e) {
@@ -43,8 +66,11 @@ public class JDBCManagerTest {
     public void testConnectBadPort() {
 
         try {
-            JDBCManager jdbcManager = new JDBCManager();
-            jdbcManager.connect("localhost", "6666", "testSqlCmd", "postgres", "mac");
+            jdbcManager.connect(properties.getProperty("db.host"),
+                    "6666",
+                    properties.getProperty("db.dbName"),
+                    properties.getProperty("db.username"),
+                    properties.getProperty("db.password"));
 
             fail("Expected RuntimeException");
         } catch (RuntimeException e) {
@@ -56,8 +82,11 @@ public class JDBCManagerTest {
     public void testConnectBadDBName() {
 
         try {
-            JDBCManager jdbcManager = new JDBCManager();
-            jdbcManager.connect("localhost", "5432", "bad", "postgres", "mac");
+            jdbcManager.connect(properties.getProperty("db.host"),
+                    properties.getProperty("db.port"),
+                    "bad",
+                    properties.getProperty("db.username"),
+                    properties.getProperty("db.password"));
 
             fail("Expected RuntimeException");
         } catch (RuntimeException e) {
@@ -69,8 +98,11 @@ public class JDBCManagerTest {
     public void testConnectBadUser() {
 
         try {
-            JDBCManager jdbcManager = new JDBCManager();
-            jdbcManager.connect("localhost", "5432", "testSqlCmd", "bad", "mac");
+            jdbcManager.connect(properties.getProperty("db.host"),
+                    properties.getProperty("db.port"),
+                    properties.getProperty("db.dbName"),
+                    "bad",
+                    properties.getProperty("db.password"));
 
             fail("Expected RuntimeException");
         } catch (RuntimeException e) {
@@ -82,8 +114,11 @@ public class JDBCManagerTest {
     public void testConnectBadPassword() {
 
         try {
-            JDBCManager jdbcManager = new JDBCManager();
-            jdbcManager.connect("localhost", "5432", "testSqlCmd", "postgres", "bad");
+            jdbcManager.connect(properties.getProperty("db.host"),
+                    properties.getProperty("db.port"),
+                    properties.getProperty("db.dbName"),
+                    properties.getProperty("db.username"),
+                    "bad");
 
             fail("Expected RuntimeException");
         } catch (RuntimeException e) {
@@ -94,21 +129,7 @@ public class JDBCManagerTest {
     @Test
     public void testDisconnect() {
 
-        JDBCManager jdbcManager = new JDBCManager();
-        jdbcManager.connect("localhost", "5432", "testSqlCmd", "postgres", "mac");
+        correctConnect();
         jdbcManager.disconnect();
-    }
-
-    @Test
-    public void testListTableNoConnect() {
-
-        try {
-            JDBCManager jdbcManager = new JDBCManager();
-            jdbcManager.listTable();
-
-            fail("Expected RuntimeException");
-        } catch (RuntimeException e) {
-            //do nothing
-        }
     }
 }
