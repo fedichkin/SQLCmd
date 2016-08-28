@@ -95,6 +95,29 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
         Assert.assertEquals(expected.toString(), actual.toString());
     }
 
+    @Test
+    public void testUpdate() throws Exception {
+
+        JDBCManager jdbcManager = new JDBCManager();
+        jdbcManager.connect("localhost", "5432", "testSqlCmd", "postgres", "mac");
+
+        IDataSet expectedData = new FlatXmlDataSetBuilder().build(
+                Thread.currentThread().getContextClassLoader()
+                        .getResourceAsStream("update-data.xml"));
+
+        List<DataMap> expected = getDataMapList(expectedData, "usr");
+
+        DataMap modifyRow = new DataMap();
+        modifyRow.add("id", 2);
+        modifyRow.add("login", "user");
+        modifyRow.add("password", "QWERTY");
+        jdbcManager.update("usr", 2, modifyRow);
+
+        List<DataMap> actual = jdbcManager.dataTable("usr");
+
+        Assert.assertEquals(expected.toString(), actual.toString());
+    }
+
     private List<DataMap> getDataMapList(IDataSet iDataSet, String tableName) throws Exception {
 
         List<DataMap> dataMapList = new LinkedList<>();
