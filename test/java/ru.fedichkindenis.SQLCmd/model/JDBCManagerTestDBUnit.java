@@ -118,6 +118,25 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
         Assert.assertEquals(expected.toString(), actual.toString());
     }
 
+    @Test
+    public void testDelete() throws Exception {
+
+        JDBCManager jdbcManager = new JDBCManager();
+        jdbcManager.connect("localhost", "5432", "testSqlCmd", "postgres", "mac");
+
+        IDataSet expectedData = new FlatXmlDataSetBuilder().build(
+                Thread.currentThread().getContextClassLoader()
+                        .getResourceAsStream("delete-data.xml"));
+
+        List<DataMap> expected = getDataMapList(expectedData, "user_info");
+
+        jdbcManager.delete("user_info", 1);
+
+        List<DataMap> actual = jdbcManager.dataTable("user_info");
+
+        Assert.assertEquals(expected.toString(), actual.toString());
+    }
+
     private List<DataMap> getDataMapList(IDataSet iDataSet, String tableName) throws Exception {
 
         List<DataMap> dataMapList = new LinkedList<>();
