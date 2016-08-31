@@ -5,6 +5,7 @@ import ru.fedichkindenis.SQLCmd.model.DataMap;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Денис on 18.07.2016.
@@ -40,8 +41,8 @@ public class TableConsoleView extends ViewDecorator {
 
         if(alignWrite.equals(AlignWrite.HORIZONTAL)) {
             int maxLength = getMaxLength(list);
-            String upHead = getHorizontalHead(maxLength, list.size(), true);
-            String downHead = getHorizontalHead(maxLength, list.size(), false);
+            String upHead = getHorizontalHead(maxLength, list.size(), true, false);
+            String downHead = getHorizontalHead(maxLength, list.size(), false, false);
             String row = getHorizontalRow(list, maxLength);
 
             write(upHead);
@@ -50,8 +51,8 @@ public class TableConsoleView extends ViewDecorator {
         }
         else if(alignWrite.equals(AlignWrite.VERTICAL)) {
             int maxLength = getMaxLength(list);
-            String upHead = getHorizontalHead(maxLength, 1, true);
-            String downHead = getHorizontalHead(maxLength, 1, false);
+            String upHead = getHorizontalHead(maxLength, 1, true, false);
+            String downHead = getHorizontalHead(maxLength, 1, false, false);
 
             write(upHead);
 
@@ -66,18 +67,75 @@ public class TableConsoleView extends ViewDecorator {
     @Override
     public void write(DataMap dataMap) {
 
+        Collection<String> nameField = dataMap.getListNameField();
+        Collection<Object> valueField = dataMap.getListValueField();
+
+        int maxLengthName = getMaxLength(nameField);
+        int maxLengthValue = getMaxLength(valueField);
+        int maxLength = maxLengthName > maxLengthValue ? maxLengthName : maxLengthValue;
+        String upHead = getHorizontalHead(maxLength, nameField.size(), true, false);
+        String downHead = getHorizontalHead(maxLength, nameField.size(), false, true);
+        String downBody = getHorizontalHead(maxLength, nameField.size(), false, false);
+        String head = getHorizontalRow(nameField, maxLength);
+        String row = getHorizontalRow(valueField, maxLength);
+
+        write(upHead);
+        write(head);
+        write(downHead);
+        write(row);
+        write(downBody);
     }
 
     @Override
     public void write(List<DataMap> listDataMap) {
 
+        if(listDataMap.size() == 0) return;
+
+        int maxLength = getMaxLengthInTable(listDataMap);
+        Collection nameField = listDataMap.get(0).getListNameField();
+
+        String upHead = getHorizontalHead(maxLength, nameField.size(), true, false);
+        String downHead = getHorizontalHead(maxLength, nameField.size(), false, true);
+        String downBody = getHorizontalHead(maxLength, nameField.size(), false, false);
+        String head = getHorizontalRow(nameField, maxLength);
+
+        write(upHead);
+        write(head);
+        write(downHead);
+
+        for(DataMap dataMap : listDataMap) {
+
+            String row = getHorizontalRow(dataMap.getListValueField(), maxLength);
+            write(row);
+        }
+
+        write(downBody);
     }
 
-    private int getMaxLength(Collection<String> strings) {
+    private int getMaxLengthInTable(List<DataMap> listDataMap) {
+
+        int maxLength = getMaxLength(listDataMap.get(0).getListNameField());
+
+        for(DataMap dataMap : listDataMap) {
+
+            int maxLengthInRow = getMaxLength(dataMap.getListValueField());
+
+            if(maxLengthInRow > maxLength) {
+
+                maxLength = maxLengthInRow;
+            }
+        }
+
+        return maxLength;
+    }
+
+    private int getMaxLength(Collection objList) {
 
         int max = 0;
 
-        for(String string : strings) {
+        for(Object obj : objList) {
+
+            String string = String.valueOf(obj);
 
             if(max < string.length()) {
                 max = string.length();
@@ -87,7 +145,8 @@ public class TableConsoleView extends ViewDecorator {
         return max;
     }
 
-    private String getHorizontalHead(int maxLength, int countColumn, boolean isUp) {
+    private String getHorizontalHead(int maxLength, int countColumn,
+                                     boolean isUp, boolean isLast) {
 
         int countBorder = countColumn + 1;
 
@@ -98,8 +157,8 @@ public class TableConsoleView extends ViewDecorator {
             head[head.length - 1] = RIGHT_UP_ANGLE;
         }
         else {
-            head[0] = LEFT_DOWN_ANGLE;
-            head[head.length - 1] = RIGHT_DOWN_ANGLE;
+            head[0] = isLast ? CROSS_LEFT : LEFT_DOWN_ANGLE;
+            head[head.length - 1] = isLast ? CROSS_RIGHT : RIGHT_DOWN_ANGLE;
         }
 
         int indexBorder = 1;
@@ -114,7 +173,8 @@ public class TableConsoleView extends ViewDecorator {
                     head[i * maxLength + maxLength + indexBorder] = CROSS_UP;
                 }
                 else {
-                    head[i * maxLength + maxLength + indexBorder] = CROSS_DOWN;
+                    head[i * maxLength + maxLength + indexBorder] =
+                            isLast ? CROSS_BORDER : CROSS_DOWN;
                 }
 
                 indexBorder++;
@@ -124,11 +184,13 @@ public class TableConsoleView extends ViewDecorator {
         return new String(head);
     }
 
-    private String getHorizontalRow(Collection<String> strings, int maxLength) {
+    private String getHorizontalRow(Collection objList, int maxLength) {
 
         String row = "";
 
-        for(String string : strings) {
+        for(Object obj : objList) {
+
+            String string = String.valueOf(obj);
 
             row = row + VERTICAL_BORDER;
             row = row + string;
@@ -143,11 +205,13 @@ public class TableConsoleView extends ViewDecorator {
         return row;
     }
 
-    private List<String> getVerticalRows(Collection<String> strings, int maxLength) {
+    private List<String> getVerticalRows(Collection objList, int maxLength) {
 
         List<String>  rows = new LinkedList<>();
 
-        for (String string : strings) {
+        for(Object obj : objList) {
+
+            String string = String.valueOf(obj);
 
             String row = "" + VERTICAL_BORDER;
             row = row + string;

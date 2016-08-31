@@ -11,7 +11,7 @@ import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 import java.util.List;
 
 /**
- * Created by Денис on 05.06.2016.
+ * Класс для запуска приложения
  */
 public class Main {
 

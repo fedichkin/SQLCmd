@@ -3,7 +3,7 @@ package ru.fedichkindenis.SQLCmd.model;
 import java.util.List;
 
 /**
- * Created by Денис on 11.07.2016.
+ * Интерфейс управления базами данных
  */
 public interface DBManager {
 

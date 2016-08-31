@@ -86,6 +86,18 @@ public class JDBCManager implements DBManager {
                 dataMaps.add(dataMap);
             }
 
+            if (dataMaps.size() == 0) {
+
+                DataMap dataMap = new DataMap();
+
+                for (int i = 0; i < rsmd.getColumnCount(); i++) {
+
+                    dataMap.add(rsmd.getColumnName(i + 1), "");
+                }
+
+                dataMaps.add(dataMap);
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }

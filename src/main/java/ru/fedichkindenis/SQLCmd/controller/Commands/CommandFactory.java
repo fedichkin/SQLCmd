@@ -38,6 +38,8 @@ public class CommandFactory {
                 return new Exit(dbManager, view, textCommand);
             case "list-table":
                 return new ListTable(dbManager, view, textCommand);
+            case "data-table":
+                return new DataTable(dbManager, view, textCommand);
             default:
                 return new Unsupported();
         }
