@@ -8,8 +8,6 @@ import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 import java.util.List;
 
 /**
- * Created by Денис on 17.07.2016.
- *
  * Команда для вывода списка таблиц
  * Формат команды: list-table
  * Пример команды: list-table

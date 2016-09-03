@@ -5,8 +5,6 @@ import ru.fedichkindenis.SQLCmd.util.StringUtil;
 import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
 /**
- * Created by Денис on 15.07.2016.
- *
  * Класс-фабрика для создания команд
  */
 public class CommandFactory {
@@ -40,6 +38,8 @@ public class CommandFactory {
                 return new ListTable(dbManager, view, textCommand);
             case "data-table":
                 return new DataTable(dbManager, view, textCommand);
+            case "clear-table":
+                return new ClearTable(dbManager, view, textCommand);
             default:
                 return new Unsupported();
         }
