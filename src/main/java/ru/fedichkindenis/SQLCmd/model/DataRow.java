@@ -3,11 +3,9 @@ package ru.fedichkindenis.SQLCmd.model;
 import java.util.*;
 
 /**
- * Created by Денис on 11.07.2016.
- *
- * Класс для хранения данных таблицы
+ * Класс для хранения строки таблицы
  */
-public class DataMap {
+public class DataRow {
 
     private Map<String, Object> dataMap = new LinkedHashMap<>();
 

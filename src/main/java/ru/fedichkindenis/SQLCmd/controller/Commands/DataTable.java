@@ -1,7 +1,7 @@
 package ru.fedichkindenis.SQLCmd.controller.Commands;
 
 import ru.fedichkindenis.SQLCmd.model.DBManager;
-import ru.fedichkindenis.SQLCmd.model.DataMap;
+import ru.fedichkindenis.SQLCmd.model.DataRow;
 import ru.fedichkindenis.SQLCmd.util.StringUtil;
 import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Команда для вывода данных таблицы
- * Формат команды: data-table|nameTable
+ * Формат команды: data-table|наименование таблицы
  * Пример команды: data-table|usr
  */
 public class DataTable implements Command {
@@ -35,8 +35,8 @@ public class DataTable implements Command {
 
         String nameTable = textCommand.split("\\|")[1];
 
-        List<DataMap> dataMapList = dbManager.dataTable(nameTable);
-        view.write(dataMapList);
+        List<DataRow> dataRowList = dbManager.dataTable(nameTable);
+        view.write(dataRowList);
     }
 
     private boolean validateCommand() {

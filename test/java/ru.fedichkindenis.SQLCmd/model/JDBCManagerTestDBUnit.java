@@ -67,13 +67,13 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
     @Test
     public void testDataTable()  throws Exception {
 
-        List<DataMap> actual = jdbcManager.dataTable("usr");
+        List<DataRow> actual = jdbcManager.dataTable("usr");
 
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("init-data.xml"));
 
-        List<DataMap> expected = getDataMapList(expectedData, "usr");
+        List<DataRow> expected = getDataMapList(expectedData, "usr");
 
         Assert.assertEquals(expected.toString(), actual.toString());
     }
@@ -85,15 +85,15 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("insert-data.xml"));
 
-        List<DataMap> expected = getDataMapList(expectedData, "usr");
+        List<DataRow> expected = getDataMapList(expectedData, "usr");
 
-        DataMap newRow = new DataMap();
+        DataRow newRow = new DataRow();
         newRow.add("id", 3);
         newRow.add("login", "super_user");
         newRow.add("password", "1q2w3e4r");
         jdbcManager.insert("usr", newRow);
 
-        List<DataMap> actual = jdbcManager.dataTable("usr");
+        List<DataRow> actual = jdbcManager.dataTable("usr");
 
         Assert.assertEquals(expected.toString(), actual.toString());
     }
@@ -105,15 +105,15 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("update-data.xml"));
 
-        List<DataMap> expected = getDataMapList(expectedData, "usr");
+        List<DataRow> expected = getDataMapList(expectedData, "usr");
 
-        DataMap modifyRow = new DataMap();
+        DataRow modifyRow = new DataRow();
         modifyRow.add("id", 2);
         modifyRow.add("login", "user");
         modifyRow.add("password", "QWERTY");
         jdbcManager.update("usr", 2, modifyRow);
 
-        List<DataMap> actual = jdbcManager.dataTable("usr");
+        List<DataRow> actual = jdbcManager.dataTable("usr");
 
         Assert.assertEquals(expected.toString(), actual.toString());
     }
@@ -125,11 +125,11 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("delete-data.xml"));
 
-        List<DataMap> expected = getDataMapList(expectedData, "user_info");
+        List<DataRow> expected = getDataMapList(expectedData, "user_info");
 
         jdbcManager.delete("user_info", 1);
 
-        List<DataMap> actual = jdbcManager.dataTable("user_info");
+        List<DataRow> actual = jdbcManager.dataTable("user_info");
 
         Assert.assertEquals(expected.toString(), actual.toString());
     }
@@ -141,32 +141,32 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("clear_table-data.xml"));
 
-        List<DataMap> expected = getDataMapList(expectedData, "user_info");
+        List<DataRow> expected = getDataMapList(expectedData, "user_info");
 
         jdbcManager.clearTable("user_info");
 
-        List<DataMap> actual = jdbcManager.dataTable("user_info");
+        List<DataRow> actual = jdbcManager.dataTable("user_info");
 
         Assert.assertEquals(expected.toString(), actual.toString());
     }
 
-    private List<DataMap> getDataMapList(IDataSet iDataSet, String tableName) throws Exception {
+    private List<DataRow> getDataMapList(IDataSet iDataSet, String tableName) throws Exception {
 
-        List<DataMap> dataMapList = new LinkedList<>();
+        List<DataRow> dataRowList = new LinkedList<>();
 
         ITable usrTable = iDataSet.getTable(tableName);
         Column [] columns = usrTable.getTableMetaData().getColumns();
 
         for (int indexRow = 0; indexRow < usrTable.getRowCount(); indexRow++) {
-            DataMap row = new DataMap();
+            DataRow row = new DataRow();
             for (Column column : columns) {
 
                 String nameColumn = column.getColumnName();
                 row.add(nameColumn, usrTable.getValue(indexRow, nameColumn));
             }
-            dataMapList.add(row);
+            dataRowList.add(row);
         }
 
-        return dataMapList;
+        return dataRowList;
     }
 }

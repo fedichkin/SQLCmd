@@ -1,11 +1,10 @@
 package ru.fedichkindenis.SQLCmd.view;
 
-import ru.fedichkindenis.SQLCmd.model.DataMap;
+import ru.fedichkindenis.SQLCmd.model.DataRow;
 
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by Денис on 18.07.2016.
@@ -65,10 +64,10 @@ public class TableConsoleView extends ViewDecorator {
     }
 
     @Override
-    public void write(DataMap dataMap) {
+    public void write(DataRow dataRow) {
 
-        Collection<String> nameField = dataMap.getListNameField();
-        Collection<Object> valueField = dataMap.getListValueField();
+        Collection<String> nameField = dataRow.getListNameField();
+        Collection<Object> valueField = dataRow.getListValueField();
 
         int maxLengthName = getMaxLength(nameField);
         int maxLengthValue = getMaxLength(valueField);
@@ -87,12 +86,12 @@ public class TableConsoleView extends ViewDecorator {
     }
 
     @Override
-    public void write(List<DataMap> listDataMap) {
+    public void write(List<DataRow> listDataRow) {
 
-        if(listDataMap.size() == 0) return;
+        if(listDataRow.size() == 0) return;
 
-        int maxLength = getMaxLengthInTable(listDataMap);
-        Collection nameField = listDataMap.get(0).getListNameField();
+        int maxLength = getMaxLengthInTable(listDataRow);
+        Collection nameField = listDataRow.get(0).getListNameField();
 
         String upHead = getHorizontalHead(maxLength, nameField.size(), true, false);
         String downHead = getHorizontalHead(maxLength, nameField.size(), false, true);
@@ -103,22 +102,22 @@ public class TableConsoleView extends ViewDecorator {
         write(head);
         write(downHead);
 
-        for(DataMap dataMap : listDataMap) {
+        for(DataRow dataRow : listDataRow) {
 
-            String row = getHorizontalRow(dataMap.getListValueField(), maxLength);
+            String row = getHorizontalRow(dataRow.getListValueField(), maxLength);
             write(row);
         }
 
         write(downBody);
     }
 
-    private int getMaxLengthInTable(List<DataMap> listDataMap) {
+    private int getMaxLengthInTable(List<DataRow> listDataRow) {
 
-        int maxLength = getMaxLength(listDataMap.get(0).getListNameField());
+        int maxLength = getMaxLength(listDataRow.get(0).getListNameField());
 
-        for(DataMap dataMap : listDataMap) {
+        for(DataRow dataRow : listDataRow) {
 
-            int maxLengthInRow = getMaxLength(dataMap.getListValueField());
+            int maxLengthInRow = getMaxLength(dataRow.getListValueField());
 
             if(maxLengthInRow > maxLength) {
 

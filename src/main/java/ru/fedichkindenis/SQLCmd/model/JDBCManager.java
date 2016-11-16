@@ -63,9 +63,9 @@ public class JDBCManager implements DBManager {
     }
 
     @Override
-    public List<DataMap> dataTable(String tableName) {
+    public List<DataRow> dataTable(String tableName) {
 
-        List<DataMap> dataMaps = new LinkedList<>();
+        List<DataRow> dataRows = new LinkedList<>();
 
         String queryStr = "select * from " + tableName;
 
@@ -76,33 +76,33 @@ public class JDBCManager implements DBManager {
 
             while (resultSet.next()) {
 
-                DataMap dataMap = new DataMap();
+                DataRow dataRow = new DataRow();
 
                 for (int i = 0; i < rsmd.getColumnCount(); i++) {
 
-                    dataMap.add(rsmd.getColumnName(i + 1), resultSet.getObject(i + 1));
+                    dataRow.add(rsmd.getColumnName(i + 1), resultSet.getObject(i + 1));
                 }
 
-                dataMaps.add(dataMap);
+                dataRows.add(dataRow);
             }
 
-            if (dataMaps.size() == 0) {
+            if (dataRows.size() == 0) {
 
-                DataMap dataMap = new DataMap();
+                DataRow dataRow = new DataRow();
 
                 for (int i = 0; i < rsmd.getColumnCount(); i++) {
 
-                    dataMap.add(rsmd.getColumnName(i + 1), "");
+                    dataRow.add(rsmd.getColumnName(i + 1), "");
                 }
 
-                dataMaps.add(dataMap);
+                dataRows.add(dataRow);
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
 
-        return dataMaps;
+        return dataRows;
     }
 
     @Override
@@ -120,11 +120,11 @@ public class JDBCManager implements DBManager {
     }
 
     @Override
-    public void insert(String tableName, DataMap dataMap) {
+    public void insert(String tableName, DataRow dataRow) {
 
         String queryStr = "insert into " + tableName + "(";
 
-        for(String nameFiled : dataMap.getListNameField()) {
+        for(String nameFiled : dataRow.getListNameField()) {
 
             queryStr = queryStr + nameFiled + ",";
         }
@@ -132,7 +132,7 @@ public class JDBCManager implements DBManager {
         queryStr = queryStr.substring(0, queryStr.length() - 1) + ")";
         queryStr = queryStr + " values (";
 
-        for(int i = 0; i < dataMap.getCountField(); i++) {
+        for(int i = 0; i < dataRow.getCountField(); i++) {
 
             queryStr = queryStr + "?,";
         }
@@ -142,7 +142,7 @@ public class JDBCManager implements DBManager {
         try (PreparedStatement statement = connection.prepareStatement(queryStr)) {
 
             int index = 1;
-            for(Object valueField : dataMap.getListValueField()) {
+            for(Object valueField : dataRow.getListValueField()) {
 
                 statement.setObject(index++, valueField);
             }
@@ -155,11 +155,11 @@ public class JDBCManager implements DBManager {
     }
 
     @Override
-    public void update(String tableName, Integer id, DataMap dataMap) {
+    public void update(String tableName, Integer id, DataRow dataRow) {
 
         String queryStr = "update " + tableName + " set ";
 
-        for(String nameField : dataMap.getListNameField()) {
+        for(String nameField : dataRow.getListNameField()) {
 
             queryStr = queryStr + nameField + " = ?,";
         }
@@ -170,7 +170,7 @@ public class JDBCManager implements DBManager {
         try (PreparedStatement statement = connection.prepareStatement(queryStr)) {
 
             int index = 1;
-            for(Object valueField : dataMap.getListValueField()) {
+            for(Object valueField : dataRow.getListValueField()) {
 
                 statement.setObject(index++, valueField);
             }

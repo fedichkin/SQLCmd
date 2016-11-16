@@ -1,6 +1,6 @@
 package ru.fedichkindenis.SQLCmd.view;
 
-import ru.fedichkindenis.SQLCmd.model.DataMap;
+import ru.fedichkindenis.SQLCmd.model.DataRow;
 
 import java.util.List;
 
@@ -31,6 +31,6 @@ public abstract class ViewDecorator implements View {
     }
 
     public abstract void write(List<String> list, AlignWrite alignWrite);
-    public abstract void write(DataMap dataMap);
-    public abstract void write(List<DataMap> listDataMap);
+    public abstract void write(DataRow dataRow);
+    public abstract void write(List<DataRow> listDataRow);
 }
