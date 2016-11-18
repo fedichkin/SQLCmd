@@ -43,7 +43,7 @@ public class InsertRow implements Command {
             String field = parameters[firstFieldIndex + index * 2];
             String value = parameters[firstValueIndex + index * 2];
 
-            dataRow.add(field, value);
+            //dataRow.add(field, value);
         }
 
         dbManager.insert(nameTable, dataRow);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-    <user_info />
+    <user_info id="" usr="" name="" surname=""/>
 
     <usr id="1" login="admin" password="DHsdfv"/>
     <usr id="2" login="user" password="1234"/>

@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.Types;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -88,9 +89,9 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
         List<DataRow> expected = getDataMapList(expectedData, "usr");
 
         DataRow newRow = new DataRow();
-        newRow.add("id", 3);
-        newRow.add("login", "super_user");
-        newRow.add("password", "1q2w3e4r");
+        newRow.add("id", 3, Types.BIGINT);
+        newRow.add("login", "super_user", Types.VARCHAR);
+        newRow.add("password", "1q2w3e4r", Types.VARCHAR);
         jdbcManager.insert("usr", newRow);
 
         List<DataRow> actual = jdbcManager.dataTable("usr");
@@ -108,9 +109,9 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
         List<DataRow> expected = getDataMapList(expectedData, "usr");
 
         DataRow modifyRow = new DataRow();
-        modifyRow.add("id", 2);
-        modifyRow.add("login", "user");
-        modifyRow.add("password", "QWERTY");
+        modifyRow.add("id", 2, Types.BIGINT);
+        modifyRow.add("login", "user", Types.VARCHAR);
+        modifyRow.add("password", "QWERTY", Types.VARCHAR);
         jdbcManager.update("usr", 2, modifyRow);
 
         List<DataRow> actual = jdbcManager.dataTable("usr");
@@ -162,7 +163,9 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
             for (Column column : columns) {
 
                 String nameColumn = column.getColumnName();
-                row.add(nameColumn, usrTable.getValue(indexRow, nameColumn));
+                Object value = usrTable.getValue(indexRow, nameColumn);
+                Integer type = column.getDataType().getSqlType();
+                row.add(nameColumn, value, type);
             }
             dataRowList.add(row);
         }

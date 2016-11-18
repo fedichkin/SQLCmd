@@ -10,7 +10,7 @@ public class DataRow {
 
     private List<DataField> dataRow = new LinkedList<>();
 
-    public void add(String nameField, Object field, Types types) {
+    public void add(String nameField, Object field, Integer types) {
 
         DataField dataField = new DataField(nameField, field, types);
         dataRow.add(dataField);

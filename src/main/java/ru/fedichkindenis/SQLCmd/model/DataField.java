@@ -9,9 +9,9 @@ public class DataField {
 
     private String name;
     private Object value;
-    private Types type;
+    private Integer type;
 
-    public DataField(String name, Object value, Types type) {
+    public DataField(String name, Object value, Integer type) {
         this.name = name;
         this.value = value;
         this.type = type;
@@ -25,14 +25,13 @@ public class DataField {
         return value;
     }
 
-    public Types getType() {
+    public Integer getType() {
         return type;
     }
 
     @Override
     public String toString() {
 
-        return "{name: }" + name + ", value" + value.toString() +
-                ", type: " + type + "}";
+        return "{name: " + name + ", value: " + value.toString() + "}";
     }
 }

@@ -80,7 +80,8 @@ public class JDBCManager implements DBManager {
 
                 for (int i = 0; i < rsmd.getColumnCount(); i++) {
 
-                    dataRow.add(rsmd.getColumnName(i + 1), resultSet.getObject(i + 1));
+                    dataRow.add(rsmd.getColumnName(i + 1), resultSet.getObject(i + 1),
+                            rsmd.getColumnType(i + 1));
                 }
 
                 dataRows.add(dataRow);
@@ -92,7 +93,8 @@ public class JDBCManager implements DBManager {
 
                 for (int i = 0; i < rsmd.getColumnCount(); i++) {
 
-                    dataRow.add(rsmd.getColumnName(i + 1), "");
+                    dataRow.add(rsmd.getColumnName(i + 1), "",
+                            rsmd.getColumnType(i + 1));
                 }
 
                 dataRows.add(dataRow);
