@@ -5,6 +5,13 @@ import ru.fedichkindenis.SQLCmd.model.DataRow;
 import ru.fedichkindenis.SQLCmd.util.StringUtil;
 import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
+import java.math.BigDecimal;
+import java.sql.Types;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Команда для вставки строк в таблицу
  * Формат команды: insert-row|наименование таблицы|наименование поля1|значение1.....
@@ -41,9 +48,10 @@ public class InsertRow implements Command {
         for(int index = 0; index < countField; index ++) {
 
             String field = parameters[firstFieldIndex + index * 2];
-            String value = parameters[firstValueIndex + index * 2];
+            Object value = getValue(parameters[firstValueIndex + index * 2]);
+            int type = getTypeValue(value);
 
-            //dataRow.add(field, value);
+            dataRow.add(field, value, type);
         }
 
         dbManager.insert(nameTable, dataRow);
@@ -56,5 +64,36 @@ public class InsertRow implements Command {
                 && textCommand.startsWith("insert-row|")
                 && textCommand.split("\\|").length >= MIN_COUNT_ARGUMENT
                 && textCommand.split("\\|").length % 2 == 0;
+    }
+
+    private Object getValue(String parameter) {
+
+        if(parameter.matches("\\d\\d\\.\\d\\d\\.\\d\\d\\d\\d")) {
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+
+            try {
+                return dateFormat.parse(parameter);
+            } catch (ParseException e) {
+                return parameter;
+            }
+        }
+        else {
+            try {
+
+                return new BigDecimal(parameter);
+            } catch (NumberFormatException e) {
+
+                return parameter;
+            }
+        }
+    }
+
+    private int getTypeValue(Object value) {
+
+        if(value instanceof Date) return Types.DATE;
+        if(value instanceof BigDecimal) return Types.DECIMAL;
+
+        return Types.VARCHAR;
     }
 }
