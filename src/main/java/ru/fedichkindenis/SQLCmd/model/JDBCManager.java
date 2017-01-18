@@ -157,9 +157,9 @@ public class JDBCManager implements DBManager {
     }
 
     @Override
-    public void update(String tableName, Integer id, DataRow dataRow) {
+    public void update(String tableName, DataRow dataRow, ConditionRow conditionRow) {
 
-        String queryStr = "update " + tableName + " set ";
+        /*String queryStr = "update " + tableName + " set ";
 
         for(String nameField : dataRow.getListNameField()) {
 
@@ -183,7 +183,7 @@ public class JDBCManager implements DBManager {
 
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
-        }
+        }*/
     }
 
     @Override

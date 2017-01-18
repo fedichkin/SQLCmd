@@ -22,7 +22,7 @@ public class DataRow {
 
         for(DataField dataField : dataRow) {
 
-            nameList.add(dataField.getName());
+            nameList.add(dataField.getNameField());
         }
 
         return nameList;
@@ -49,7 +49,7 @@ public class DataRow {
 
         for(DataField dataField : dataRow) {
 
-            if(dataField.getName().equals(nameField)) {
+            if(dataField.getNameField().equals(nameField)) {
 
                 return dataField.getValue();
             }

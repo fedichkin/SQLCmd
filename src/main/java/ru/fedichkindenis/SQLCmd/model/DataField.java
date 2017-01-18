@@ -7,18 +7,18 @@ import java.sql.Types;
  */
 public class DataField {
 
-    private String name;
+    private String nameField;
     private Object value;
     private Integer type;
 
-    public DataField(String name, Object value, Integer type) {
-        this.name = name;
+    public DataField(String nameField, Object value, Integer type) {
+        this.nameField = nameField;
         this.value = value;
         this.type = type;
     }
 
-    public String getName() {
-        return name;
+    public String getNameField() {
+        return nameField;
     }
 
     public Object getValue() {
@@ -32,6 +32,6 @@ public class DataField {
     @Override
     public String toString() {
 
-        return "{name: " + name + ", value: " + value.toString() + "}";
+        return "{nameField: " + nameField + ", value: " + value.toString() + "}";
     }
 }

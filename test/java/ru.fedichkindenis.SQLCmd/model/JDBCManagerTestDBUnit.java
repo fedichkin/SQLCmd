@@ -9,6 +9,7 @@ import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.sql.Types;
@@ -112,7 +113,7 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
         modifyRow.add("id", 2, Types.BIGINT);
         modifyRow.add("login", "user", Types.VARCHAR);
         modifyRow.add("password", "QWERTY", Types.VARCHAR);
-        jdbcManager.update("usr", 2, modifyRow);
+        //jdbcManager.update("usr", 2, modifyRow);
 
         List<DataRow> actual = jdbcManager.dataTable("usr");
 

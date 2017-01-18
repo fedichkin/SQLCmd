@@ -13,6 +13,6 @@ public interface DBManager {
     List<DataRow> dataTable(String tableName);
     void clearTable(String tableName);
     void insert(String tableName, DataRow dataRow);
-    void update(String tableName, Integer id, DataRow dataRow);
+    void update(String tableName, DataRow dataRow, ConditionRow conditionRow);
     void delete(String tableName, Integer id);
 }
