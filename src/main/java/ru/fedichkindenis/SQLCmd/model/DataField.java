@@ -9,11 +9,4 @@ public class DataField extends Field {
 
         super(nameField, valueField);
     }
-
-    @Override
-    public String toString() {
-
-        return "{nameField: " + getNameField() +
-                ", value: " + getValueField().toString() + "}";
-    }
 }

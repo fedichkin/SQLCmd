@@ -20,4 +20,11 @@ public abstract class Field {
     public Object getValueField() {
         return valueField;
     }
+
+    @Override
+    public String toString() {
+
+        return "{nameField: " + getNameField() +
+                ", value: " + getValueField().toString() + "}";
+    }
 }
