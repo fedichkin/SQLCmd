@@ -1,6 +1,5 @@
 package ru.fedichkindenis.SQLCmd.model;
 
-import java.sql.Types;
 import java.util.*;
 
 /**
@@ -10,9 +9,9 @@ public class DataRow {
 
     private List<DataField> dataRow = new LinkedList<>();
 
-    public void add(String nameField, Object field, Integer types) {
+    public void add(String nameField, Object field) {
 
-        DataField dataField = new DataField(nameField, field, types);
+        DataField dataField = new DataField(nameField, field);
         dataRow.add(dataField);
     }
 
@@ -34,28 +33,15 @@ public class DataRow {
 
         for(DataField dataField : dataRow) {
 
-            valueList.add(dataField.getValue());
+            valueList.add(dataField.getValueField());
         }
 
         return valueList;
     }
 
-    public int getCountField() {
+    int getCountField() {
 
         return dataRow.size();
-    }
-
-    public Object getValueByName(String nameField) {
-
-        for(DataField dataField : dataRow) {
-
-            if(dataField.getNameField().equals(nameField)) {
-
-                return dataField.getValue();
-            }
-        }
-
-        return null;
     }
 
     @Override

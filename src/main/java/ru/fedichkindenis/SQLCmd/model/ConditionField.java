@@ -3,15 +3,12 @@ package ru.fedichkindenis.SQLCmd.model;
 /**
  * Класс для хранения условия
  */
-public class ConditionField {
+public class ConditionField extends Field {
 
-    private String nameField;
-    private String value;
     private String condition;
 
-    public ConditionField(String nameField, String value, String condition) {
-        this.nameField = nameField;
-        this.value = value;
+    ConditionField(String nameField, Object valueField, String condition) {
+        super(nameField, valueField);
         this.condition = condition;
     }
 }

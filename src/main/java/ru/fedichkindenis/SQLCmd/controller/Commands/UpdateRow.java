@@ -55,9 +55,8 @@ public class UpdateRow implements Command {
 
             String field = parameters[firstFieldIndex + index * 2];
             Object value = getValue(parameters[firstValueIndex + index * 2]);
-            int type = getTypeValue(value);
 
-            dataRow.add(field, value, type);
+            dataRow.add(field, value);
         }
 
         ConditionRow conditionRow = new ConditionRow();
@@ -74,7 +73,7 @@ public class UpdateRow implements Command {
 
                 String nameFiled = conditions[firstIndexNameField + index * 3];
                 String condition = conditions[firstIndexCondition + index * 3];
-                String valueField = conditions[firstIndexValueField + index * 3];
+                Object valueField = getValue(conditions[firstIndexValueField + index * 3]);
 
                 conditionRow.add(nameFiled, valueField, condition);
             }
@@ -127,13 +126,5 @@ public class UpdateRow implements Command {
                 return parameter;
             }
         }
-    }
-
-    private int getTypeValue(Object value) {
-
-        if(value instanceof Date) return Types.DATE;
-        if(value instanceof BigDecimal) return Types.DECIMAL;
-
-        return Types.VARCHAR;
     }
 }

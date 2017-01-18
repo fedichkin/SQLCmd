@@ -48,9 +48,8 @@ public class InsertRow implements Command {
 
             String field = parameters[firstFieldIndex + index * 2];
             Object value = getValue(parameters[firstValueIndex + index * 2]);
-            int type = getTypeValue(value);
 
-            dataRow.add(field, value, type);
+            dataRow.add(field, value);
         }
 
         dbManager.insert(nameTable, dataRow);
@@ -86,13 +85,5 @@ public class InsertRow implements Command {
                 return parameter;
             }
         }
-    }
-
-    private int getTypeValue(Object value) {
-
-        if(value instanceof Date) return Types.DATE;
-        if(value instanceof BigDecimal) return Types.DECIMAL;
-
-        return Types.VARCHAR;
     }
 }

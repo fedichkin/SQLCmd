@@ -10,7 +10,7 @@ public class ConditionRow {
 
     private List<ConditionField> conditionRow = new LinkedList<>();
 
-    public void add(String nameField, String value, String condition) {
+    public void add(String nameField, Object value, String condition) {
 
         ConditionField conditionField = new ConditionField(nameField, value, condition);
         conditionRow.add(conditionField);
