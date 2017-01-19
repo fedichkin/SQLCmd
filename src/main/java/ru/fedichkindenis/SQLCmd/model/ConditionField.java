@@ -3,7 +3,7 @@ package ru.fedichkindenis.SQLCmd.model;
 /**
  * Класс для хранения условия
  */
-public class ConditionField extends Field {
+class ConditionField extends Field {
 
     private String condition;
 
