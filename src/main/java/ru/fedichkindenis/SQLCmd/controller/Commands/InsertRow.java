@@ -6,10 +6,8 @@ import ru.fedichkindenis.SQLCmd.util.StringUtil;
 import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
 import java.math.BigDecimal;
-import java.sql.Types;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Команда для вставки строк в таблицу
@@ -24,7 +22,7 @@ public class InsertRow implements Command {
 
     private static int MIN_COUNT_ARGUMENT = 4;
 
-    public InsertRow(DBManager dbManager, ViewDecorator view, String textCommand) {
+    InsertRow(DBManager dbManager, ViewDecorator view, String textCommand) {
         this.dbManager = dbManager;
         this.view = view;
         this.textCommand = textCommand;
