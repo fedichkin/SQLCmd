@@ -8,16 +8,16 @@ public abstract class Field {
     private String nameFiled;
     private Object valueField;
 
-    public Field(String nameFiled, Object valueField) {
+    Field(String nameFiled, Object valueField) {
         this.nameFiled = nameFiled;
         this.valueField = valueField;
     }
 
-    public String getNameField() {
+    String getNameField() {
         return nameFiled;
     }
 
-    public Object getValueField() {
+    Object getValueField() {
         return valueField;
     }
 
