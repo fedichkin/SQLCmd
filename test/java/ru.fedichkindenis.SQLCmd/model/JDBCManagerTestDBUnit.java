@@ -110,10 +110,12 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
         List<DataRow> expected = getDataMapList(expectedData, "usr");
 
         DataRow modifyRow = new DataRow();
-        modifyRow.add("id", 2);
-        modifyRow.add("login", "user");
         modifyRow.add("password", "QWERTY");
-        //jdbcManager.update("usr", 2, modifyRow);
+
+        ConditionRow conditionRow = new ConditionRow();
+        conditionRow.add("id", 2, "=");
+
+        jdbcManager.update("usr", modifyRow, conditionRow);
 
         List<DataRow> actual = jdbcManager.dataTable("usr");
 

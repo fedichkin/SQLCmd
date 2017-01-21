@@ -34,7 +34,7 @@ public class InsertRow implements Command {
 
         String [] parameters = textCommand.split("\\|");
         String nameTable = parameters[1];
-        String [] parametersDataRow = Arrays.copyOfRange(parameters, 2, parameters.length - 1);
+        String [] parametersDataRow = Arrays.copyOfRange(parameters, 2, parameters.length);
 
         RowFactory rowFactory = new RowFactory(parametersDataRow);
         DataRow dataRow = rowFactory.createDataRow();

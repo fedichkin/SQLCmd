@@ -41,7 +41,7 @@ public class UpdateRow implements Command {
         String [] blocksCommand = textCommand.split("\\|!IF\\|");
         String [] parameters = blocksCommand[0].split("\\|");
         String nameTable = parameters[1];
-        String [] parametersDataRow = Arrays.copyOfRange(parameters, 2, parameters.length - 1);
+        String [] parametersDataRow = Arrays.copyOfRange(parameters, 2, parameters.length);
 
         RowFactory rowFactory = new RowFactory(parametersDataRow);
         DataRow dataRow = rowFactory.createDataRow();
@@ -65,20 +65,20 @@ public class UpdateRow implements Command {
         int minCountArguments = 4;
         boolean isValidateCommand;
 
-        isValidateCommand = StringUtil.isEmpty(textCommand);
-        isValidateCommand = isValidateCommand && !textCommand.startsWith("update-row|");
-        isValidateCommand = isValidateCommand && textCommand.split("\\|").length < minCountArguments;
+        isValidateCommand = !StringUtil.isEmpty(textCommand);
+        isValidateCommand = isValidateCommand && textCommand.startsWith("update-row|");
+        isValidateCommand = isValidateCommand && textCommand.split("\\|").length >= minCountArguments;
 
         String [] blocksCommand = textCommand.split("\\|!IF\\|");
 
-        isValidateCommand = isValidateCommand && blocksCommand.length < 1 || blocksCommand.length > 2;
+        isValidateCommand = isValidateCommand && (blocksCommand.length == 1 || blocksCommand.length == 2);
 
         String [] argumentsFirstBlock = blocksCommand[0].split("\\|");
         String [] argumentsSecondBlock = blocksCommand.length == 2
                 ? blocksCommand[1].split("\\|") : new String [0];
 
-        isValidateCommand = isValidateCommand && argumentsFirstBlock.length % 2 != 0;
-        isValidateCommand = isValidateCommand && argumentsSecondBlock.length % 3 != 0;
+        isValidateCommand = isValidateCommand && argumentsFirstBlock.length % 2 == 0;
+        isValidateCommand = isValidateCommand && argumentsSecondBlock.length % 3 == 0;
 
         return isValidateCommand;
     }

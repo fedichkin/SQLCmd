@@ -11,4 +11,8 @@ class ConditionField extends Field {
         super(nameField, valueField);
         this.condition = condition;
     }
+
+    public String getCondition() {
+        return condition;
+    }
 }

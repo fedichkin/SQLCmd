@@ -42,6 +42,8 @@ public class CommandFactory {
                 return new ClearTable(dbManager, view, textCommand);
             case "insert-row":
                 return new InsertRow(dbManager, view, textCommand);
+            case "update-row":
+                return new UpdateRow(dbManager, view, textCommand);
             default:
                 return new Unsupported();
         }

@@ -1,9 +1,6 @@
 package ru.fedichkindenis.SQLCmd.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * База для строки таблицы
@@ -19,7 +16,7 @@ public abstract class Row {
 
     public Collection<String> getListNameField() {
 
-        List<String> nameList = new ArrayList<>();
+        List<String> nameList = new LinkedList<>();
 
         for(Field field : row) {
 
@@ -31,7 +28,7 @@ public abstract class Row {
 
     public Collection<Object> getListValueField() {
 
-        List<Object> valueList = new ArrayList<>();
+        List<Object> valueList = new LinkedList<>();
 
         for(Field field : row) {
 
@@ -44,6 +41,11 @@ public abstract class Row {
     int getCountField() {
 
         return row.size();
+    }
+
+    Iterator<Field> getIteratorField() {
+
+        return row.iterator();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ru.fedichkindenis.SQLCmd.model;
 
 import java.sql.*;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -157,7 +158,7 @@ public class JDBCManager implements DBManager {
     @Override
     public void update(String tableName, DataRow dataRow, ConditionRow conditionRow) {
 
-        /*String queryStr = "update " + tableName + " set ";
+        String queryStr = "update " + tableName + " set ";
 
         for(String nameField : dataRow.getListNameField()) {
 
@@ -165,7 +166,13 @@ public class JDBCManager implements DBManager {
         }
 
         queryStr = queryStr.substring(0, queryStr.length() - 1);
-        queryStr = queryStr + " where id = ?";
+        queryStr = queryStr + " where 1 = 1 ";
+
+        Iterator<String> conditionIterator = conditionRow.getListConditionField().iterator();
+        for(String nameField : conditionRow.getListNameField()) {
+
+            queryStr = queryStr + " and " + nameField + conditionIterator.next() + "?";
+        }
 
         try (PreparedStatement statement = connection.prepareStatement(queryStr)) {
 
@@ -175,13 +182,16 @@ public class JDBCManager implements DBManager {
                 statement.setObject(index++, valueField);
             }
 
-            statement.setInt(index, id);
+            for(Object valueField : conditionRow.getListValueField()) {
+
+                statement.setObject(index++, valueField);
+            }
 
             statement.execute();
 
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
-        }*/
+        }
     }
 
     @Override
