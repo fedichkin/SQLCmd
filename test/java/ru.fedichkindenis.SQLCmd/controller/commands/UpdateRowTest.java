@@ -6,18 +6,21 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.MockitoAnnotations;
 import ru.fedichkindenis.SQLCmd.controller.Commands.Command;
 import ru.fedichkindenis.SQLCmd.controller.Commands.InsertRow;
+import ru.fedichkindenis.SQLCmd.controller.Commands.UpdateRow;
 import ru.fedichkindenis.SQLCmd.model.DBManager;
 import ru.fedichkindenis.SQLCmd.model.DataRow;
 import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 /**
- * Класс для тестирования команды insert-row
+ * Класс для тестирования команды update-row
  */
-public class InsertRowTest implements CommandTest {
+public class UpdateRowTest implements CommandTest {
 
     private DBManager dbManager;
     private ViewDecorator viewDecorator;
@@ -37,7 +40,8 @@ public class InsertRowTest implements CommandTest {
     public void testIncorrectCommandFormat() {
 
         try {
-            command = new InsertRow(dbManager, viewDecorator, "insert-row|user|");
+            command = new UpdateRow(dbManager, viewDecorator,
+                    "update-row|user|login|!IF|id|=|4");
             command.execute();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
@@ -49,11 +53,11 @@ public class InsertRowTest implements CommandTest {
     @Test
     public void testCorrectCommandFormat() {
 
-        command = new InsertRow(dbManager, viewDecorator,
-                "insert-row|usr|login|admin");
+        command = new UpdateRow(dbManager, viewDecorator,
+                "update-row|usr|login|admin|!IF|id|=|4");
         command.execute();
 
-        shouldPrintView("[В таблицу usr была добавлена строка!]");
+        shouldPrintView("[В таблице usr была обновлена строка!]");
     }
 
     private void shouldPrintView(String expected) {
