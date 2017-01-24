@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Created by Денис on 31.07.2016.
- *
  * Конфигурационный файл для dbunit тестов
  */
 @Ignore

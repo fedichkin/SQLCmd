@@ -9,10 +9,8 @@ import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.sql.Types;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -52,7 +50,7 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
     }
 
     @Test
-    public void testListTable() throws Exception {
+    public void listTableTest() throws Exception {
 
         List<String> actual = jdbcManager.listTable();
 
@@ -67,7 +65,7 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
     }
 
     @Test
-    public void testDataTable()  throws Exception {
+    public void dataTableTest()  throws Exception {
 
         List<DataRow> actual = jdbcManager.dataTable("usr");
 
@@ -81,7 +79,7 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
     }
 
     @Test
-    public void testInsert() throws Exception {
+    public void insertTest() throws Exception {
 
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
@@ -101,7 +99,7 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
     }
 
     @Test
-    public void testUpdate() throws Exception {
+    public void updateTest() throws Exception {
 
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
@@ -123,7 +121,7 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
     }
 
     @Test
-    public void testDelete() throws Exception {
+    public void deleteTest() throws Exception {
 
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
@@ -139,7 +137,7 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
     }
 
     @Test
-    public void testClearTable() throws Exception {
+    public void clearTableTest() throws Exception {
 
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
