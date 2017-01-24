@@ -3,31 +3,26 @@ package ru.fedichkindenis.SQLCmd.controller.commands;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.MockitoAnnotations;
 import ru.fedichkindenis.SQLCmd.controller.Commands.Command;
-import ru.fedichkindenis.SQLCmd.controller.Commands.ListTable;
+import ru.fedichkindenis.SQLCmd.controller.Commands.InsertRow;
 import ru.fedichkindenis.SQLCmd.model.DBManager;
+import ru.fedichkindenis.SQLCmd.model.DataRow;
 import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
-
-import java.util.LinkedList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.*;
 
 /**
- * Класс для тестирования команды list-table
+ * Класс для тестирования команды insert-row
  */
-public class ListTableTest implements CommandTest {
+public class InsertRowTest implements CommandTest {
 
     private DBManager dbManager;
     private ViewDecorator viewDecorator;
     private Command command;
-
-    @Captor
-    private ArgumentCaptor<List<String>> listTable;
 
     @Override
     @Before
@@ -41,8 +36,9 @@ public class ListTableTest implements CommandTest {
     @Override
     @Test
     public void testIncorrectCommandFormat() {
+
         try {
-            command = new ListTable(dbManager, viewDecorator, "list_table");
+            command = new InsertRow(dbManager, viewDecorator, "insert-row|user|");
             command.execute();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
@@ -54,20 +50,19 @@ public class ListTableTest implements CommandTest {
     @Test
     public void testCorrectCommandFormat() {
 
-        List<String> data = new LinkedList<>();
-        data.add("user");
-        data.add("user_info");
+        DataRow dataRow = new DataRow();
+        dataRow.add("login", "admin");
+        dataRow.add("password", "1234");
 
-        when(dbManager.listTable()).thenReturn(data);
-
-        command = new ListTable(dbManager, viewDecorator, "list-table");
+        command = new InsertRow(dbManager, viewDecorator, "insert-row|usr|login|admin");
         command.execute();
 
-        shouldPrintViewDecarator("[[user, user_info]]");
+        shouldPrintView("[В таблицу usr была добавлена строка!]");
     }
 
-    private void shouldPrintViewDecarator(String expected) {
-        verify(viewDecorator, atMost(2)).write(listTable.capture(), anyObject());
-        assertEquals(expected, listTable.getAllValues().toString());
+    private void shouldPrintView(String expected) {
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        verify(viewDecorator, atLeastOnce()).write(captor.capture());
+        assertEquals(expected, captor.getAllValues().toString());
     }
 }

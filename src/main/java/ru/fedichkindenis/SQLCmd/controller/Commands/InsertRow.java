@@ -19,7 +19,7 @@ public class InsertRow implements Command {
     private ViewDecorator view;
     private String textCommand;
 
-    InsertRow(DBManager dbManager, ViewDecorator view, String textCommand) {
+    public InsertRow(DBManager dbManager, ViewDecorator view, String textCommand) {
         this.dbManager = dbManager;
         this.view = view;
         this.textCommand = textCommand;
