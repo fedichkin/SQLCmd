@@ -12,6 +12,7 @@ public interface DBManager {
     List<String> listTable();
     List<DataRow> dataTable(String tableName);
     void clearTable(String tableName);
+    void deleteTable(String tableName);
     void insert(String tableName, DataRow dataRow);
     void update(String tableName, DataRow dataRow, ConditionRow conditionRow);
     void delete(String tableName, Integer id);

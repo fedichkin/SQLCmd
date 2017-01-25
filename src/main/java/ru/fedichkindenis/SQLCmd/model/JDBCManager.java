@@ -121,6 +121,20 @@ public class JDBCManager implements DBManager {
     }
 
     @Override
+    public void deleteTable(String tableName) {
+
+        String queryStr = "drop table " + tableName;
+
+        try (PreparedStatement statement = connection.prepareStatement(queryStr)) {
+
+            statement.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
     public void insert(String tableName, DataRow dataRow) {
 
         String queryStr = "insert into " + tableName + "(";

@@ -40,6 +40,8 @@ public class CommandFactory {
                 return new DataTable(dbManager, view, textCommand);
             case "clear-table":
                 return new ClearTable(dbManager, view, textCommand);
+            case "delete-table":
+                return new DeleteTable(dbManager, view, textCommand);
             case "insert-row":
                 return new InsertRow(dbManager, view, textCommand);
             case "update-row":
