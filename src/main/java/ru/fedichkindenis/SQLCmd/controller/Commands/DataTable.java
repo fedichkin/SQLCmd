@@ -18,8 +18,6 @@ public class DataTable implements Command {
     private ViewDecorator view;
     private String textCommand;
 
-    private static int COUNT_ARGUMENT = 2;
-
     public DataTable(DBManager dbManager, ViewDecorator view, String textCommand) {
         this.dbManager = dbManager;
         this.view = view;
@@ -41,8 +39,10 @@ public class DataTable implements Command {
 
     private boolean validateCommand() {
 
+        int countArgument = 2;
+
         return !StringUtil.isEmpty(textCommand)
                 && textCommand.startsWith("data-table|")
-                && textCommand.split("\\|").length == COUNT_ARGUMENT;
+                && textCommand.split("\\|").length == countArgument;
     }
 }
