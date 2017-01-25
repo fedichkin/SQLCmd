@@ -49,8 +49,7 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
         super(name);
     }
 
-    @Test
-    public void listTableTest() throws Exception {
+    public void testListTable() throws Exception {
 
         List<String> actual = jdbcManager.listTable();
 
@@ -64,8 +63,7 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
         Assert.assertEquals(Arrays.asList(expectedData.getTableNames()), actual);
     }
 
-    @Test
-    public void dataTableTest()  throws Exception {
+    public void testDataTable()  throws Exception {
 
         List<DataRow> actual = jdbcManager.dataTable("usr");
 
@@ -78,8 +76,7 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
         Assert.assertEquals(expected.toString(), actual.toString());
     }
 
-    @Test
-    public void insertTest() throws Exception {
+    public void testInsert() throws Exception {
 
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
@@ -98,8 +95,7 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
         Assert.assertEquals(expected.toString(), actual.toString());
     }
 
-    @Test
-    public void updateTest() throws Exception {
+    public void testUpdate() throws Exception {
 
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
@@ -120,8 +116,7 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
         Assert.assertEquals(expected.toString(), actual.toString());
     }
 
-    @Test
-    public void deleteTest() throws Exception {
+    public void testDelete() throws Exception {
 
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
@@ -136,8 +131,7 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
         Assert.assertEquals(expected.toString(), actual.toString());
     }
 
-    @Test
-    public void clearTableTest() throws Exception {
+    public void testClearTable() throws Exception {
 
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
@@ -150,6 +144,19 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
         List<DataRow> actual = jdbcManager.dataTable("user_info");
 
         Assert.assertEquals(expected.toString(), actual.toString());
+    }
+
+    public void testDeleteTable() throws Exception {
+
+        IDataSet expectedData = new FlatXmlDataSetBuilder().build(
+                Thread.currentThread().getContextClassLoader()
+                        .getResourceAsStream("delete_table-data.xml"));
+
+        jdbcManager.deleteTable("user_info");
+
+        List<String> actual = jdbcManager.listTable();
+
+        Assert.assertEquals(Arrays.asList(expectedData.getTableNames()), actual);
     }
 
     private List<DataRow> getDataMapList(IDataSet iDataSet, String tableName) throws Exception {

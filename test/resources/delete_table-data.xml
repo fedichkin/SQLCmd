@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <usr id="1" login="admin" password="DHsdfv"/>
+    <usr id="2" login="user" password="1234"/>
+</dataset>
