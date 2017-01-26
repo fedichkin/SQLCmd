@@ -34,16 +34,15 @@ public abstract  class DatabaseTestCase {
 
         final IDatabaseConnection connection = getConnection();
         getOperationListener().connectionRetrieved(connection);
-        final IDatabaseTester tester = new DefaultDatabaseTester(connection);
-        return tester;
+        return new DefaultDatabaseTester(connection);
     }
 
-    protected void setUpDatabaseConfig(DatabaseConfig config)
+    void setUpDatabaseConfig(DatabaseConfig config)
     {
         // Designed to be overridden.
     }
 
-    protected IDatabaseTester getDatabaseTester() throws Exception {
+    IDatabaseTester getDatabaseTester() throws Exception {
         if ( this.tester == null ) {
             this.tester = newDatabaseTester();
         }
@@ -58,7 +57,7 @@ public abstract  class DatabaseTestCase {
         getDatabaseTester().closeConnection( connection );
     }
 
-    protected DatabaseOperation getSetUpOperation() throws Exception
+    private DatabaseOperation getSetUpOperation() throws Exception
     {
         return DatabaseOperation.CLEAN_INSERT;
     }
@@ -96,7 +95,7 @@ public abstract  class DatabaseTestCase {
         }
     }
 
-    protected IOperationListener getOperationListener()
+    private IOperationListener getOperationListener()
     {
         logger.debug("getOperationListener() - start");
         if(this.operationListener==null){
