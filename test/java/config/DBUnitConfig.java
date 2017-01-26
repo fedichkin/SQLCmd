@@ -1,6 +1,6 @@
 package config;
 
-import org.dbunit.DBTestCase;
+import config.dbunit.DBTestCase;
 import org.dbunit.IDatabaseTester;
 import org.dbunit.JdbcDatabaseTester;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
@@ -30,8 +30,8 @@ public class DBUnitConfig extends DBTestCase {
                 properties.getProperty("db.password"));
     }
 
-    public DBUnitConfig(String name) {
-        super(name);
+    public DBUnitConfig() {
+        super();
         try {
             JDBCProperties jdbcProperties = new JDBCProperties("postgesql.config.properties");
             properties = jdbcProperties.getProperties();
