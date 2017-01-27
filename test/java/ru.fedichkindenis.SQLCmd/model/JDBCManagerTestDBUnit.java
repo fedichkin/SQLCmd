@@ -129,7 +129,10 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
 
         List<DataRow> expected = getDataMapList(expectedData, "user_info");
 
-        jdbcManager.delete("user_info", 1);
+        ConditionRow conditionRow = new ConditionRow();
+        conditionRow.add("id", 1, "=");
+
+        jdbcManager.delete("user_info", conditionRow);
 
         List<DataRow> actual = jdbcManager.dataTable("user_info");
 

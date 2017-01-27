@@ -15,5 +15,5 @@ public interface DBManager {
     void deleteTable(String tableName);
     void insert(String tableName, DataRow dataRow);
     void update(String tableName, DataRow dataRow, ConditionRow conditionRow);
-    void delete(String tableName, Integer id);
+    void delete(String tableName, ConditionRow conditionRow);
 }

@@ -46,6 +46,8 @@ public class CommandFactory {
                 return new InsertRow(dbManager, view, textCommand);
             case "update-row":
                 return new UpdateRow(dbManager, view, textCommand);
+            case "delete-row":
+                return new DeleteRow(dbManager, view, textCommand);
             default:
                 return new Unsupported();
         }

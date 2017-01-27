@@ -190,16 +190,8 @@ public class JDBCManager implements DBManager {
 
         try (PreparedStatement statement = connection.prepareStatement(queryStr)) {
 
-            int index = 1;
-            for(Object valueField : dataRow.getListValueField()) {
-
-                statement.setObject(index++, valueField);
-            }
-
-            for(Object valueField : conditionRow.getListValueField()) {
-
-                statement.setObject(index++, valueField);
-            }
+            setParameters(conditionRow, dataRow, statement);
+            statement.execute();
 
             statement.execute();
 
@@ -209,17 +201,38 @@ public class JDBCManager implements DBManager {
     }
 
     @Override
-    public void delete(String tableName, Integer id) {
+    public void delete(String tableName, ConditionRow conditionRow) {
 
-        String queryStr = "delete from " + tableName + " where id = ?";
+        String queryStr = "delete from " + tableName + " where 1 = 1";
+
+        Iterator<String> conditionIterator = conditionRow.getListConditionField().iterator();
+        for(String nameField : conditionRow.getListNameField()) {
+
+            queryStr = queryStr + " and " + nameField + conditionIterator.next() + "?";
+        }
 
         try (PreparedStatement statement = connection.prepareStatement(queryStr)) {
 
-            statement.setInt(1, id);
+            setParameters(conditionRow, new DataRow(), statement);
             statement.execute();
 
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    private void setParameters(ConditionRow conditionRow, DataRow dataRow,
+                               PreparedStatement statement) throws SQLException {
+
+        int index = 1;
+        for(Object valueField : dataRow.getListValueField()) {
+
+            statement.setObject(index++, valueField);
+        }
+
+        for(Object valueField : conditionRow.getListValueField()) {
+
+            statement.setObject(index++, valueField);
         }
     }
 
