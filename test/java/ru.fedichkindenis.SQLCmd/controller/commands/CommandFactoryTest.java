@@ -8,6 +8,12 @@ import ru.fedichkindenis.SQLCmd.controller.Commands.Exit;
 import ru.fedichkindenis.SQLCmd.controller.Commands.ListTable;
 import ru.fedichkindenis.SQLCmd.controller.Commands.Unsupported;
 import ru.fedichkindenis.SQLCmd.controller.Commands.Command;
+import ru.fedichkindenis.SQLCmd.controller.Commands.ClearTable;
+import ru.fedichkindenis.SQLCmd.controller.Commands.DeleteTable;
+import ru.fedichkindenis.SQLCmd.controller.Commands.InsertRow;
+import ru.fedichkindenis.SQLCmd.controller.Commands.UpdateRow;
+import ru.fedichkindenis.SQLCmd.controller.Commands.DeleteRow;
+import ru.fedichkindenis.SQLCmd.controller.Commands.DataTable;
 import ru.fedichkindenis.SQLCmd.model.DBManager;
 import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
@@ -50,8 +56,12 @@ public class CommandFactoryTest implements CommandTest {
     @Test
     public void testCorrectCommandFormat() {
 
-        String [] textCommands = {"connect|1|1|1|1|1", "exit", "list-table", "bla"};
-        Class [] commands = {Connect.class, Exit.class, ListTable.class, Unsupported.class};
+        String[] textCommands = {"connect|1|1|1|1|1", "exit", "list-table", "bla",
+                "clear-table|usr", "delete-table|usr", "insert-row|usr", "update-row|usr",
+                "delete-row|usr", "data-table|usr"};
+        Class[] commands = {Connect.class, Exit.class, ListTable.class, Unsupported.class,
+                ClearTable.class, DeleteTable.class, InsertRow.class, UpdateRow.class,
+                DeleteRow.class, DataTable.class};
 
         for(int index = 0; index < textCommands.length; index++) {
 

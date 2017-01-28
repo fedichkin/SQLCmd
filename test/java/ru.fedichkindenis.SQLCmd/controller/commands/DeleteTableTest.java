@@ -40,7 +40,7 @@ public class DeleteTableTest implements CommandTest {
     public void testIncorrectCommandFormat() {
 
         try {
-            command = new ListTable(dbManager, viewDecorator, "delete-table|");
+            command = new DeleteTable(dbManager, viewDecorator, "delete-table|");
             command.execute();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
@@ -49,6 +49,7 @@ public class DeleteTableTest implements CommandTest {
     }
 
     @Override
+    @Test
     public void testCorrectCommandFormat() {
 
         command = new DeleteTable(dbManager, viewDecorator, "delete-table|user-info");
