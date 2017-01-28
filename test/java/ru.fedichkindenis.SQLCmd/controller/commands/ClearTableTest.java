@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.MockitoAnnotations;
+import ru.fedichkindenis.SQLCmd.controller.Commands.ClearTable;
 import ru.fedichkindenis.SQLCmd.controller.Commands.Command;
-import ru.fedichkindenis.SQLCmd.controller.Commands.UpdateRow;
 import ru.fedichkindenis.SQLCmd.model.DBManager;
 import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
@@ -16,9 +16,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 /**
- * Класс для тестирования команды update-row
+ * Класс для тестирования команды clear-table
  */
-public class UpdateRowTest implements CommandTest {
+public class ClearTableTest implements CommandTest {
 
     private DBManager dbManager;
     private ViewDecorator viewDecorator;
@@ -38,8 +38,8 @@ public class UpdateRowTest implements CommandTest {
     public void testIncorrectCommandFormat() {
 
         try {
-            command = new UpdateRow(dbManager, viewDecorator,
-                    "update-row|user|login|!IF|id|=|4");
+            command = new ClearTable(dbManager, viewDecorator,
+                    "clear-table|");
             command.execute();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
@@ -51,11 +51,11 @@ public class UpdateRowTest implements CommandTest {
     @Test
     public void testCorrectCommandFormat() {
 
-        command = new UpdateRow(dbManager, viewDecorator,
-                "update-row|usr|login|admin|!IF|id|=|4");
+        command = new ClearTable(dbManager, viewDecorator,
+                "clear-table|usr");
         command.execute();
 
-        shouldPrintView("[В таблице usr была обновлена строка!]");
+        shouldPrintView("[Таблица usr очищена!]");
     }
 
     private void shouldPrintView(String expected) {
