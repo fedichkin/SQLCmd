@@ -7,10 +7,14 @@ import org.dbunit.dataset.Column;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,6 +37,8 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
                         .getResourceAsStream("init-data.xml"));
 
         tester.setDataSet(beforeData);
+        tester.getConnection().getConnection()
+                .prepareStatement("create table tmp_table (id bigint)").execute();
         tester.onSetup();
 
         JDBCProperties jdbcProperties = new JDBCProperties("postgesql.config.properties");
@@ -43,6 +49,13 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
                 properties.getProperty("db.dbName"),
                 properties.getProperty("db.username"),
                 properties.getProperty("db.password"));
+    }
+
+    @After
+    public void cleanScheme() throws Exception {
+
+        tester.getConnection().getConnection()
+                .prepareStatement("drop table if exists tmp_table").execute();
     }
 
     public JDBCManagerTestDBUnit() {
@@ -156,18 +169,19 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
     }
 
     //TODO: Придумать что сделать синициализацие таблиц, они не создаются после удаления
-    /*public void deleteTableTest() throws Exception {
+    @Test
+    public void deleteTableTest() throws Exception {
 
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("delete_table-data.xml"));
 
-        jdbcManager.deleteTable("user_info");
+        jdbcManager.deleteTable("tmp_table");
 
         List<String> actual = jdbcManager.listTable();
 
         Assert.assertEquals(Arrays.asList(expectedData.getTableNames()), actual);
-    }*/
+    }
 
     private List<DataRow> getDataMapList(IDataSet iDataSet, String tableName) throws Exception {
 
