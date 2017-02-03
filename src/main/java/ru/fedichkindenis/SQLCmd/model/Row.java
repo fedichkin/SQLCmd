@@ -26,18 +26,6 @@ public abstract class Row {
         return nameList;
     }
 
-    public Collection<Object> getListValueField() {
-
-        List<Object> valueList = new LinkedList<>();
-
-        for(Field field : row) {
-
-            valueList.add(field.getValueField());
-        }
-
-        return valueList;
-    }
-
     int getCountField() {
 
         return row.size();

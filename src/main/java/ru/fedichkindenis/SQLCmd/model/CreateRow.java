@@ -10,9 +10,9 @@ import java.util.List;
  */
 public class CreateRow extends Row {
 
-    public void add(String nameField, Object value, String tpeField) {
+    public void add(String nameField, String typeField, boolean isNotNull) {
 
-        CreateField createField = new CreateField(nameField, value, tpeField);
+        CreateField createField = new CreateField(nameField, typeField, isNotNull);
         add(createField);
     }
 

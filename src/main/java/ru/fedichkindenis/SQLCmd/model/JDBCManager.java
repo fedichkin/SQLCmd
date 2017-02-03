@@ -221,6 +221,11 @@ public class JDBCManager implements DBManager {
         }
     }
 
+    @Override
+    public void create(String tableName, ConditionRow conditionRow) {
+
+    }
+
     private void setParameters(ConditionRow conditionRow, DataRow dataRow,
                                PreparedStatement statement) throws SQLException {
 

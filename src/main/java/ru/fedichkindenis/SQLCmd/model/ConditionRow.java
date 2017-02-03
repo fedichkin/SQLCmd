@@ -26,4 +26,18 @@ public class ConditionRow extends Row {
 
         return conditionList;
     }
+
+    public Collection<Object> getListValueField() {
+
+        List<Object> valueList = new LinkedList<>();
+
+        Iterator<Field> it = getIteratorField();
+        while (it.hasNext()) {
+            ConditionField field = (ConditionField) it.next();
+
+            valueList.add(field.getValueField());
+        }
+
+        return valueList;
+    }
 }

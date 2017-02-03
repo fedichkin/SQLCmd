@@ -6,25 +6,18 @@ package ru.fedichkindenis.SQLCmd.model;
 public abstract class Field {
 
     private String nameFiled;
-    private Object valueField;
 
-    Field(String nameFiled, Object valueField) {
+    Field(String nameFiled) {
         this.nameFiled = nameFiled;
-        this.valueField = valueField;
     }
 
     String getNameField() {
         return nameFiled;
     }
 
-    Object getValueField() {
-        return valueField;
-    }
-
     @Override
     public String toString() {
 
-        return "{nameField: " + getNameField() +
-                ", value: " + getValueField().toString() + "}";
+        return "{nameField: " + getNameField() + "}";
     }
 }
