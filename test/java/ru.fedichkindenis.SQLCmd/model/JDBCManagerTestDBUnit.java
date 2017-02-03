@@ -12,9 +12,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +35,7 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
 
         tester.setDataSet(beforeData);
         tester.getConnection().getConnection()
-                .prepareStatement("create table tmp_table (id bigint)").execute();
+                .prepareStatement("create table delete_table (id bigint)").execute();
         tester.onSetup();
 
         JDBCProperties jdbcProperties = new JDBCProperties("postgesql.config.properties");
@@ -55,7 +52,7 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
     public void cleanScheme() throws Exception {
 
         tester.getConnection().getConnection()
-                .prepareStatement("drop table if exists tmp_table").execute();
+                .prepareStatement("drop table if exists delete_table").execute();
     }
 
     public JDBCManagerTestDBUnit() {
@@ -176,7 +173,7 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("delete_table-data.xml"));
 
-        jdbcManager.deleteTable("tmp_table");
+        jdbcManager.deleteTable("delete_table");
 
         List<String> actual = jdbcManager.listTable();
 
