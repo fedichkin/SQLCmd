@@ -1,6 +1,7 @@
 package ru.fedichkindenis.SQLCmd.controller.row;
 
 import ru.fedichkindenis.SQLCmd.model.ConditionRow;
+import ru.fedichkindenis.SQLCmd.model.CreateRow;
 import ru.fedichkindenis.SQLCmd.model.DataRow;
 
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ public class RowFactory {
     private String [] parameters;
     private final String DATA_ROW = "data-row";
     private final String CONDITION_ROW = "condition-row";
+    private final String CREATE_ROW = "create-row";
 
     public RowFactory(String[] parameters) {
         this.parameters = parameters;
@@ -62,6 +64,28 @@ public class RowFactory {
         return conditionRow;
     }
 
+    public CreateRow createCreateRow() {
+
+        validate(CONDITION_ROW);
+
+        int countCreateField = parameters.length / 3;
+        int firstIndexNameField = 0;
+        int firstIndexTypeField = 1;
+        int firstIndexIsNotNullField = 2;
+        
+        CreateRow createRow = new CreateRow();
+        for(int index = 0; index < countCreateField; index++) {
+
+            String nameField = parameters[firstIndexNameField + index * 3];
+            String typeField = parameters[firstIndexTypeField + index * 3];
+            String isNotNullField = parameters[firstIndexIsNotNullField + index * 3];
+
+            createRow.add(nameField, typeField, isNotNullField.equals("true"));
+        }
+
+        return createRow;
+    }
+
     private void validate(String typeRow) {
 
         boolean valid;
@@ -75,6 +99,7 @@ public class RowFactory {
                 valid = valid && parameters.length % 2 == 0;
                 break;
             case CONDITION_ROW:
+            case CREATE_ROW:
                 valid = valid && parameters.length % 3 == 0;
                 break;
             default:
