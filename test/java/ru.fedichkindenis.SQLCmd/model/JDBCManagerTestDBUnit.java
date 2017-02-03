@@ -53,6 +53,9 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
 
         tester.getConnection().getConnection()
                 .prepareStatement("drop table if exists delete_table").execute();
+
+        tester.getConnection().getConnection()
+                .prepareStatement("drop table if exists create_table").execute();
     }
 
     public JDBCManagerTestDBUnit() {
@@ -165,7 +168,6 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
         Assert.assertEquals(expected.toString(), actual.toString());
     }
 
-    //TODO: Придумать что сделать синициализацие таблиц, они не создаются после удаления
     @Test
     public void deleteTableTest() throws Exception {
 
@@ -174,6 +176,24 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
                         .getResourceAsStream("delete_table-data.xml"));
 
         jdbcManager.deleteTable("delete_table");
+
+        List<String> actual = jdbcManager.listTable();
+
+        Assert.assertEquals(Arrays.asList(expectedData.getTableNames()), actual);
+    }
+
+    @Test
+    public void createTableTe() throws Exception {
+
+        IDataSet expectedData = new FlatXmlDataSetBuilder().build(
+                Thread.currentThread().getContextClassLoader()
+                        .getResourceAsStream("create_table-data.xml"));
+
+        CreateRow createRow = new CreateRow();
+        createRow.add("id", "bigint", true);
+        createRow.add("name", "varchar", false);
+
+        jdbcManager.create("create_table", createRow);
 
         List<String> actual = jdbcManager.listTable();
 

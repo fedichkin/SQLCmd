@@ -224,6 +224,34 @@ public class JDBCManager implements DBManager {
     @Override
     public void create(String tableName, CreateRow createRow) {
 
+        String queryStr = "create table " + tableName + " (";
+
+        Iterator<Field> fieldIterator = createRow.getIteratorField();
+
+        while (fieldIterator.hasNext()) {
+
+            CreateField field = (CreateField)fieldIterator.next();
+
+            queryStr = queryStr + field.getNameField() + " ";
+            queryStr = queryStr + field.getTypeField() + " ";
+            queryStr = queryStr + (field.isNotNull() ? " NOT NULL" : "");
+            queryStr = queryStr + ",";
+        }
+
+        if(queryStr.charAt(queryStr.length() - 1) == ',') {
+
+            queryStr = queryStr.substring(0, queryStr.length() - 1);
+        }
+
+        queryStr = queryStr + ")";
+
+        try (PreparedStatement statement = connection.prepareStatement(queryStr)) {
+
+            statement.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     private void setParameters(ConditionRow conditionRow, DataRow dataRow,

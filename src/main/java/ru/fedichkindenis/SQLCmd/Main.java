@@ -8,8 +8,6 @@ import ru.fedichkindenis.SQLCmd.view.TableConsoleView;
 import ru.fedichkindenis.SQLCmd.view.View;
 import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
-import java.util.List;
-
 /**
  * Класс для запуска приложения
  */

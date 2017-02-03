@@ -39,10 +39,13 @@ public class CreateTable implements Command {
 
         String [] parameters = textCommand.split("\\|");
         String nameTable = parameters[1];
-        String [] parametersCreateRow = Arrays.copyOfRange(parameters, 2, parameters.length);
 
-        RowFactory rowFactory = new RowFactory(parametersCreateRow);
-        CreateRow createRow = rowFactory.createCreateRow();
+        CreateRow createRow = new CreateRow();
+        if(parameters.length > 2) {
+            String [] parametersCreateRow = Arrays.copyOfRange(parameters, 2, parameters.length);
+            RowFactory rowFactory = new RowFactory(parametersCreateRow);
+            createRow = rowFactory.createCreateRow();
+        }
 
         dbManager.create(nameTable, createRow);
         view.write("Была создана таблица " + nameTable + "!");
