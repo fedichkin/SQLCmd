@@ -72,7 +72,7 @@ public class RowFactory {
         int firstIndexNameField = 0;
         int firstIndexTypeField = 1;
         int firstIndexIsNotNullField = 2;
-        
+
         CreateRow createRow = new CreateRow();
         for(int index = 0; index < countCreateField; index++) {
 

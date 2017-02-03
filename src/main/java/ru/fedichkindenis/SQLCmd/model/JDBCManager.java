@@ -222,7 +222,7 @@ public class JDBCManager implements DBManager {
     }
 
     @Override
-    public void create(String tableName, ConditionRow conditionRow) {
+    public void create(String tableName, CreateRow createRow) {
 
     }
 

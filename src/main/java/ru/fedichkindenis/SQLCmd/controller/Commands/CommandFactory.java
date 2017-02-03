@@ -48,6 +48,8 @@ public class CommandFactory {
                 return new UpdateRow(dbManager, view, textCommand);
             case "delete-row":
                 return new DeleteRow(dbManager, view, textCommand);
+            case "create-table":
+                return new CreateTable(dbManager, view, textCommand);
             default:
                 return new Unsupported();
         }
