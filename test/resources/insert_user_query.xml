@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <delete_table />
+
+    <user_info id="1" usr="2" name="Александр" surname="Круглов"/>
+    <user_info id="2" usr="1" name="Николай" surname="Дроздов"/>
+
+    <usr id="1" login="admin" password="DHsdfv"/>
+    <usr id="2" login="user" password="1234"/>
+    <usr id="3" login="Iam" password="secure"/>
+</dataset>

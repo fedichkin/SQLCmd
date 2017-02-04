@@ -254,6 +254,18 @@ public class JDBCManager implements DBManager {
         }
     }
 
+    @Override
+    public void userQuery(String textQuery) {
+
+        try (PreparedStatement statement = connection.prepareStatement(textQuery)) {
+
+            statement.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
     private void setParameters(ConditionRow conditionRow, DataRow dataRow,
                                PreparedStatement statement) throws SQLException {
 

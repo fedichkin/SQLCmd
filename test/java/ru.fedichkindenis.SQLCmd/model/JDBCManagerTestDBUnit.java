@@ -200,6 +200,23 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
         Assert.assertEquals(Arrays.asList(expectedData.getTableNames()), actual);
     }
 
+    @Test
+    public void userQueryTest() throws Exception {
+
+        IDataSet expectedData = new FlatXmlDataSetBuilder().build(
+                Thread.currentThread().getContextClassLoader()
+                        .getResourceAsStream("insert_user_query.xml"));
+
+        List<DataRow> expected = getDataMapList(expectedData, "usr");
+
+        jdbcManager.userQuery("insert into usr(id, login, password) " +
+                "values(3, 'Iam', 'secure')");
+
+        List<DataRow> actual = jdbcManager.dataTable("usr");
+
+        Assert.assertEquals(expected.toString(), actual.toString());
+    }
+
     private List<DataRow> getDataMapList(IDataSet iDataSet, String tableName) throws Exception {
 
         List<DataRow> dataRowList = new LinkedList<>();

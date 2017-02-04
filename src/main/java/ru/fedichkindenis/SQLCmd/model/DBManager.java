@@ -17,4 +17,5 @@ public interface DBManager {
     void update(String tableName, DataRow dataRow, ConditionRow conditionRow);
     void delete(String tableName, ConditionRow conditionRow);
     void create(String tableName, CreateRow createRow);
+    void userQuery(String textQuery);
 }
