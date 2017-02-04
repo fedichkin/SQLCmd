@@ -50,6 +50,8 @@ public class CommandFactory {
                 return new DeleteRow(dbManager, view, textCommand);
             case "create-table":
                 return new CreateTable(dbManager, view, textCommand);
+            case "user-query":
+                return new UserQuery(dbManager, view, textCommand);
             default:
                 return new Unsupported();
         }
