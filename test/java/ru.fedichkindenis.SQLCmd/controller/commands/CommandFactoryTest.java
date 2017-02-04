@@ -15,6 +15,7 @@ import ru.fedichkindenis.SQLCmd.controller.Commands.UpdateRow;
 import ru.fedichkindenis.SQLCmd.controller.Commands.DeleteRow;
 import ru.fedichkindenis.SQLCmd.controller.Commands.DataTable;
 import ru.fedichkindenis.SQLCmd.controller.Commands.CreateTable;
+import ru.fedichkindenis.SQLCmd.controller.Commands.UserQuery;
 import ru.fedichkindenis.SQLCmd.model.DBManager;
 import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
@@ -59,10 +60,10 @@ public class CommandFactoryTest implements CommandTest {
 
         String[] textCommands = {"connect|1|1|1|1|1", "exit", "list-table", "bla",
                 "clear-table|usr", "delete-table|usr", "insert-row|usr", "update-row|usr",
-                "delete-row|usr", "data-table|usr", "create-table|usr"};
+                "delete-row|usr", "data-table|usr", "create-table|usr", "user-query|insert"};
         Class[] commands = {Connect.class, Exit.class, ListTable.class, Unsupported.class,
                 ClearTable.class, DeleteTable.class, InsertRow.class, UpdateRow.class,
-                DeleteRow.class, DataTable.class, CreateTable.class};
+                DeleteRow.class, DataTable.class, CreateTable.class, UserQuery.class};
 
         for(int index = 0; index < textCommands.length; index++) {
 
