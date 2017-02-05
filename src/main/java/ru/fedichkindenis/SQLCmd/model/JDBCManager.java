@@ -41,6 +41,8 @@ public class JDBCManager implements DBManager {
 
     @Override
     public List<String> listTable() {
+        exceptionConnect();
+
         List<String> listTable = new LinkedList<>();
 
         String queryStr = "select table_name as nameTable " +
@@ -65,6 +67,7 @@ public class JDBCManager implements DBManager {
 
     @Override
     public List<DataRow> dataTable(String tableName) {
+        exceptionConnect();
 
         List<DataRow> dataRows = new LinkedList<>();
 
@@ -108,6 +111,7 @@ public class JDBCManager implements DBManager {
 
     @Override
     public void clearTable(String tableName) {
+        exceptionConnect();
 
         String queryStr = "delete from " + tableName;
 
@@ -122,6 +126,7 @@ public class JDBCManager implements DBManager {
 
     @Override
     public void deleteTable(String tableName) {
+        exceptionConnect();
 
         String queryStr = "drop table " + tableName;
 
@@ -136,6 +141,7 @@ public class JDBCManager implements DBManager {
 
     @Override
     public void insert(String tableName, DataRow dataRow) {
+        exceptionConnect();
 
         String queryStr = "insert into " + tableName + "(";
 
@@ -171,6 +177,7 @@ public class JDBCManager implements DBManager {
 
     @Override
     public void update(String tableName, DataRow dataRow, ConditionRow conditionRow) {
+        exceptionConnect();
 
         String queryStr = "update " + tableName + " set ";
 
@@ -202,6 +209,7 @@ public class JDBCManager implements DBManager {
 
     @Override
     public void delete(String tableName, ConditionRow conditionRow) {
+        exceptionConnect();
 
         String queryStr = "delete from " + tableName + " where 1 = 1";
 
@@ -223,6 +231,7 @@ public class JDBCManager implements DBManager {
 
     @Override
     public void create(String tableName, CreateRow createRow) {
+        exceptionConnect();
 
         String queryStr = "create table " + tableName + " (";
 
@@ -256,6 +265,7 @@ public class JDBCManager implements DBManager {
 
     @Override
     public void userQuery(String textQuery) {
+        exceptionConnect();
 
         try (PreparedStatement statement = connection.prepareStatement(textQuery)) {
 
@@ -284,5 +294,13 @@ public class JDBCManager implements DBManager {
     public boolean isConnect() {
 
         return connection != null;
+    }
+
+    private void exceptionConnect() {
+
+        if(!isConnect()) {
+
+            throw new RuntimeException("Соединение не установленно! Установите соединение!");
+        }
     }
 }
