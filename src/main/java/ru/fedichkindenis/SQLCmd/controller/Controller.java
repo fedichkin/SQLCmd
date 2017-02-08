@@ -32,6 +32,8 @@ public class Controller {
 
             try {
 
+                view.write("");
+                view.write("Введите команду (help для справки): ");
                 String textCommand = view.read();
 
                 CommandFactory commandFactory = new CommandFactory(dbManager, view, textCommand);

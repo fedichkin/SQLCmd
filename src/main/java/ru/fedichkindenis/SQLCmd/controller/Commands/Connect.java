@@ -7,7 +7,7 @@ import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 /**
  * Created by Денис on 13.07.2016.
  *
- * Команда для установки соединения, например с базой данных
+ * Команда для установки соединения с базой данных
  * Формат команды: connect|host|port|dbName|userName|password
  * Пример команды: connect|localhost|5433|test|root|1234
  */

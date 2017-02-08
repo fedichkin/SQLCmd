@@ -52,6 +52,10 @@ public class CommandFactory {
                 return new CreateTable(dbManager, view, textCommand);
             case "user-query":
                 return new UserQuery(dbManager, view, textCommand);
+            case "disconnect":
+                return new Disconnect(dbManager, view, textCommand);
+            case "help":
+                return new Help(view, textCommand);
             default:
                 return new Unsupported();
         }

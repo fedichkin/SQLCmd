@@ -6,7 +6,7 @@ import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
 /**
  * Команда для выполнения пользовательского запроса
- * Формат команды: user-query|пользовательский запрос
+ * Формат команды: user-query|<пользовательский запрос
  * Пример команды: user-query|<insert into usr (id, login, password) values(6, "us", "1234")
  * В текущей версии select запросы не доступны
  */
