@@ -13,7 +13,7 @@ public class ConditionRow extends Row {
         add(conditionField);
     }
 
-    public Collection<String> getListConditionField() {
+    Collection<String> getListConditionField() {
 
         List<String> conditionList = new LinkedList<>();
 
@@ -27,7 +27,7 @@ public class ConditionRow extends Row {
         return conditionList;
     }
 
-    public Collection<Object> getListValueField() {
+    Collection<Object> getListValueField() {
 
         List<Object> valueList = new LinkedList<>();
 

@@ -4,12 +4,9 @@ import ru.fedichkindenis.SQLCmd.controller.Commands.Command;
 import ru.fedichkindenis.SQLCmd.controller.Commands.CommandFactory;
 import ru.fedichkindenis.SQLCmd.controller.Commands.ExitException;
 import ru.fedichkindenis.SQLCmd.model.DBManager;
-import ru.fedichkindenis.SQLCmd.view.View;
 import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
 /**
- * Created by Денис on 11.07.2016.
- *
  * Класс контролер для управления основной логикой программы
  */
 public class Controller {

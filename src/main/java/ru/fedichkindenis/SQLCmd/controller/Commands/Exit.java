@@ -5,8 +5,6 @@ import ru.fedichkindenis.SQLCmd.util.StringUtil;
 import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
 /**
- * Created by Денис on 16.07.2016.
- *
  * Команда для выхода из приложения
  * Формат команды: exit
  * Пример команды: exit

@@ -3,7 +3,7 @@ package ru.fedichkindenis.SQLCmd.model;
 /**
  * Класс для хранения параметров создания поля
  */
-public class CreateField extends Field {
+class CreateField extends Field {
 
     private String typeField;
     private boolean isNotNull;
@@ -14,11 +14,11 @@ public class CreateField extends Field {
         this.isNotNull = isNotNull;
     }
 
-    public String getTypeField() {
+    String getTypeField() {
         return typeField;
     }
 
-    public boolean isNotNull() {
+    boolean isNotNull() {
         return isNotNull;
     }
 }

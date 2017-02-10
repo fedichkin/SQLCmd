@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Created by Денис on 11.07.2016.
- *
  * Класс для отображения и чтения информации в консоли
  */
 public class Console implements View {
@@ -27,7 +25,7 @@ public class Console implements View {
     @Override
     public String read() {
 
-        String result = "";
+        String result;
 
         try {
 

@@ -14,11 +14,11 @@ class ConditionField extends Field {
         this.valueField = valueField;
     }
 
-    public Object getValueField() {
+    Object getValueField() {
         return valueField;
     }
 
-    public String getCondition() {
+    String getCondition() {
         return condition;
     }
 }

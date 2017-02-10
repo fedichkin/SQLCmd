@@ -4,9 +4,6 @@ import ru.fedichkindenis.SQLCmd.model.DataRow;
 
 import java.util.List;
 
-/**
- * Created by Денис on 18.07.2016.
- */
 public abstract class ViewDecorator implements View {
 
     protected View view;

@@ -7,6 +7,7 @@ import ru.fedichkindenis.SQLCmd.view.ViewDecorator;
 
 import java.io.File;
 import java.io.FileReader;
+import java.net.URL;
 
 /**
  * Команда для вызова справки
@@ -31,8 +32,14 @@ public class Help implements Command {
         }
 
         try {
-            File jsonFile = new File(Thread.currentThread().getContextClassLoader()
-                    .getResource("descriptionOfTheCommands.json").toURI());
+            URL url = Thread.currentThread().getContextClassLoader()
+                    .getResource("descriptionOfTheCommands.json");
+
+            if(url == null) {
+                throw new RuntimeException("Не удалось прочитать файл с справкой");
+            }
+
+            File jsonFile = new File(url.toURI());
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject)jsonParser.parse(new FileReader(jsonFile));
 

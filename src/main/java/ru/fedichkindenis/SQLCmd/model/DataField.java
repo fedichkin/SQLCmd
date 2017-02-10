@@ -13,7 +13,7 @@ public class DataField extends Field {
         this.valueField = valueField;
     }
 
-    public Object getValueField() {
+    Object getValueField() {
         return valueField;
     }
 

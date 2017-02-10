@@ -17,8 +17,6 @@ public class Connect implements Command {
     private ViewDecorator view;
     private String textCommand;
 
-    private static int COUNT_ARGUMENT = 6;
-
     public Connect(DBManager dbManager, ViewDecorator view, String textCommand) {
         this.dbManager = dbManager;
         this.view = view;
@@ -45,9 +43,11 @@ public class Connect implements Command {
 
     private boolean validateCommand() {
 
+        int countArgument = 6;
+
         return !StringUtil.isEmpty(textCommand)
                 && textCommand.startsWith("connect|")
-                && textCommand.split("\\|").length == COUNT_ARGUMENT;
+                && textCommand.split("\\|").length == countArgument;
 
     }
 }
