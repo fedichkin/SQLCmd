@@ -1,13 +1,10 @@
 package ru.fedichkindenis.SQLCmd.model;
 
 import config.JDBCProperties;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
@@ -44,6 +41,7 @@ public class JDBCManagerTest {
 
         correctConnect();
         assertEquals(true, jdbcManager.isConnect());
+        jdbcManager.disconnect();
     }
 
     @Test
