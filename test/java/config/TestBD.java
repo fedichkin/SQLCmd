@@ -14,13 +14,6 @@ public class TestBD {
 
     private String nameDB;
 
-    public static void main(String[] args) throws Exception {
-
-        TestBD testBD = new TestBD();
-        testBD.generate();
-        testBD.deleteDB();
-    }
-
     public void generate() throws Exception {
 
         Connection connection = getConnection(true);
@@ -59,7 +52,7 @@ public class TestBD {
 
         Statement statement = connection.createStatement();
 
-        statement.executeUpdate("create table delete_table ()");
+        statement.executeUpdate("create table delete_table (id bigint)");
 
         statement.executeUpdate("create table user_info " +
                 "(id bigint not null, usr bigint, name varchar, surname varchar)");

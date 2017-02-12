@@ -1,9 +1,8 @@
 package ru.fedichkindenis.SQLCmd.model;
 
 import config.JDBCProperties;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import config.TestBD;
+import org.junit.*;
 
 import java.util.Properties;
 
@@ -19,12 +18,26 @@ public class JDBCManagerTest {
 
     private JDBCManager jdbcManager;
     private Properties properties;
+    private static TestBD testBD;
 
     @Before
     public void setUp() throws Exception {
         JDBCProperties jdbcProperties = new JDBCProperties("postgesql.config.properties");
         properties = jdbcProperties.getProperties();
         jdbcManager = new JDBCManager();
+    }
+
+    @BeforeClass
+    public static void initDb() throws Exception {
+
+        testBD = new TestBD();
+        testBD.generate();
+    }
+
+    @AfterClass
+    public static void deleteDB() throws Exception {
+
+        testBD.deleteDB();
     }
 
     private void correctConnect() {

@@ -2,15 +2,13 @@ package ru.fedichkindenis.SQLCmd.model;
 
 import config.DBUnitConfig;
 import config.JDBCProperties;
+import config.TestBD;
 import org.dbunit.Assertion;
 import org.dbunit.dataset.Column;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -33,11 +31,6 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("init-data.xml"));
 
-        tester.setDataSet(beforeData);
-        tester.getConnection().getConnection()
-                .prepareStatement("create table delete_table (id bigint)").execute();
-        tester.onSetup();
-
         JDBCProperties jdbcProperties = new JDBCProperties("postgesql.config.properties");
         Properties properties = jdbcProperties.getProperties();
         jdbcManager = new JDBCManager();
@@ -46,16 +39,18 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
                 properties.getProperty("db.dbName"),
                 properties.getProperty("db.username"),
                 properties.getProperty("db.password"));
+
+        jdbcManager.userQuery("create table if not exists delete_table (id bigint)");
+        tester.setDataSet(beforeData);
+        tester.onSetup();
     }
 
     @After
     public void cleanScheme() throws Exception {
 
-        tester.getConnection().getConnection()
-                .prepareStatement("drop table if exists delete_table").execute();
-
-        tester.getConnection().getConnection()
-                .prepareStatement("drop table if exists create_table").execute();
+        jdbcManager.userQuery("drop table if exists create_table");
+        tester.getConnection().close();
+        jdbcManager.disconnect();
     }
 
     public JDBCManagerTestDBUnit() {
@@ -71,9 +66,6 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("init-data.xml"));
 
-        IDataSet actualData = tester.getConnection().createDataSet();
-
-        Assertion.assertEquals(expectedData, actualData);
         Assert.assertEquals(Arrays.asList(expectedData.getTableNames()), actual);
     }
 
@@ -183,7 +175,7 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
     }
 
     @Test
-    public void createTableTe() throws Exception {
+    public void createTableTest() throws Exception {
 
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
