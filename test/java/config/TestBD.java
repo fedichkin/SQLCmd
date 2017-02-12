@@ -14,6 +14,13 @@ public class TestBD {
 
     private String nameDB;
 
+    public static void main(String[] args) throws Exception {
+
+        TestBD testBD = new TestBD();
+        testBD.generate();
+        testBD.deleteDB();
+    }
+
     public void generate() throws Exception {
 
         Connection connection = getConnection(true);
