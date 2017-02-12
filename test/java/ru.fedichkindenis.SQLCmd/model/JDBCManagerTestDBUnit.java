@@ -49,7 +49,6 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
     public void cleanScheme() throws Exception {
 
         jdbcManager.userQuery("drop table if exists create_table");
-        tester.getConnection().close();
         jdbcManager.disconnect();
     }
 
