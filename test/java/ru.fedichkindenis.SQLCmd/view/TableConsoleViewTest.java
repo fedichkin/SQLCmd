@@ -3,6 +3,7 @@ package ru.fedichkindenis.SQLCmd.view;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import ru.fedichkindenis.SQLCmd.model.DataRow;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,7 +30,7 @@ public class TableConsoleViewTest {
     }
 
     @Test
-    public void testRead() {
+    public void readTes() {
 
         String expected = "Hello World!!!";
         when(view.read()).thenReturn(expected);
@@ -41,7 +42,7 @@ public class TableConsoleViewTest {
     }
 
     @Test
-    public void testWrite() {
+    public void writeTest() {
 
         String expected = "Hello World!!!";
 
@@ -52,7 +53,7 @@ public class TableConsoleViewTest {
     }
 
     @Test
-    public void testClose() {
+    public void closeTest() {
 
         viewDecorator = new TableConsoleView(view);
         viewDecorator.close();
@@ -61,7 +62,7 @@ public class TableConsoleViewTest {
     }
 
     @Test
-    public void testWriteListIfListNull() {
+    public void writeListIfListNullTest() {
 
         try {
             viewDecorator = new TableConsoleView(view);
@@ -75,7 +76,7 @@ public class TableConsoleViewTest {
     }
 
     @Test
-    public void testWriteListIfListEmpty() {
+    public void writeListIfListEmptyTest() {
 
         try {
             viewDecorator = new TableConsoleView(view);
@@ -89,7 +90,7 @@ public class TableConsoleViewTest {
     }
 
     @Test
-    public void testWriteListHorizontal() {
+    public void writeListHorizontalTest() {
 
         viewDecorator = new TableConsoleView(view);
         viewDecorator.write(Arrays.asList("table1", "table22", "table333"), AlignWrite.HORIZONTAL);
@@ -102,7 +103,7 @@ public class TableConsoleViewTest {
     }
 
     @Test
-    public void testWriteListVertical() {
+    public void writeListVerticalTest() {
 
         viewDecorator = new TableConsoleView(view);
         viewDecorator.write(Arrays.asList("table1", "table22", "table333"), AlignWrite.VERTICAL);
@@ -115,6 +116,50 @@ public class TableConsoleViewTest {
                 "╠════════╣",
                 "║table333║",
                 "╚════════╝");
+        shouldPrintView(expected);
+    }
+
+    @Test
+    public void writeDataRowTest() {
+
+        viewDecorator = new TableConsoleView(view);
+        DataRow dataRow = new DataRow();
+        dataRow.add("id", 1);
+        dataRow.add("name", "user");
+
+        viewDecorator.write(dataRow);
+
+        List<String> expected = Arrays.asList(
+                        "╔════╦════╗",
+                        "║id  ║name║",
+                        "╠════╬════╣",
+                        "║1   ║user║",
+                        "╚════╩════╝");
+
+        shouldPrintView(expected);
+    }
+
+    @Test
+    public void writeListDataRow() {
+
+        viewDecorator = new TableConsoleView(view);
+        DataRow dataRow1 = new DataRow();
+        dataRow1.add("id", 1);
+        dataRow1.add("name", "user");
+        DataRow dataRow2 = new DataRow();
+        dataRow2.add("id", 2);
+        dataRow2.add("name", "admin");
+
+        viewDecorator.write(Arrays.asList(dataRow1, dataRow2));
+
+        List<String> expected = Arrays.asList(
+                "╔═════╦═════╗",
+                "║id   ║name ║",
+                "╠═════╬═════╣",
+                "║1    ║user ║",
+                "║2    ║admin║",
+                "╚═════╩═════╝");
+
         shouldPrintView(expected);
     }
 
