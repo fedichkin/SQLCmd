@@ -3,7 +3,7 @@ package ru.fedichkindenis.SQLCmd.model;
 /**
  * База для поля таблицы
  */
-public abstract class Field {
+abstract class Field {
 
     private String nameFiled;
 
@@ -15,9 +15,4 @@ public abstract class Field {
         return nameFiled;
     }
 
-    @Override
-    public String toString() {
-
-        return "{nameField: " + getNameField() + "}";
-    }
 }
