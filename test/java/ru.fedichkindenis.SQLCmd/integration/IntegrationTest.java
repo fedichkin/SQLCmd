@@ -69,6 +69,27 @@ public class IntegrationTest {
         assertEquals(expectedText , getData());
     }
 
+    @Test
+    public void commandWithoutConnectTest() throws Exception {
+
+        in.add("list-table");
+        in.add("exit");
+        runApplication();
+
+        String expectedText =
+                "Приветствую тебя пользователь!\n" +
+                "Для начала работы с ситемой установи соединение с базой данных с помощью команды: \n" +
+                "connect|host|port|dbName|userName|password\n" +
+                "\n" +
+                "Введите команду (help для справки): \n" +
+                "Произошла ошибка: Соединение не установленно! Установите соединение!\n" +
+                "\n" +
+                "Введите команду (help для справки): \n" +
+                "До свидания!\n";
+
+        assertEquals(expectedText , getData());
+    }
+
     private void runApplication() throws Exception {
 
         View view = new Console();
