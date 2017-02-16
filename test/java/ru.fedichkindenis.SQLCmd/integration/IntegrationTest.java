@@ -1,6 +1,7 @@
 package ru.fedichkindenis.SQLCmd.integration;
 
 import config.ConsoleInputStream;
+import config.JDBCProperties;
 import config.TestBD;
 import org.junit.*;
 import ru.fedichkindenis.SQLCmd.controller.Controller;
@@ -11,6 +12,7 @@ import ru.fedichkindenis.SQLCmd.view.TableConsoleView;
 import ru.fedichkindenis.SQLCmd.view.View;
 
 import java.io.*;
+import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 
@@ -88,6 +90,43 @@ public class IntegrationTest {
                 "До свидания!\n";
 
         assertEquals(expectedText , getData());
+    }
+
+    @Test
+    public void connectBDTest() throws Exception {
+
+        in.add(getParametersForConnect());
+        in.add("exit");
+        runApplication();
+
+        String expectedText =
+                "Приветствую тебя пользователь!\n" +
+                        "Для начала работы с ситемой установи соединение с базой данных с помощью команды: \n" +
+                        "connect|host|port|dbName|userName|password\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "Соединение установлено!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "До свидания!\n";
+
+        assertEquals(expectedText , getData());
+    }
+
+    private String getParametersForConnect() throws Exception {
+
+        String parameters = "connect|";
+
+        JDBCProperties jdbcProperties = new JDBCProperties("postgesql.config.properties");
+        Properties properties = jdbcProperties.getProperties();
+
+        parameters += properties.get("db.host") + "|";
+        parameters += properties.get("db.port") + "|";
+        parameters += properties.get("db.dbName") + "|";
+        parameters += properties.get("db.username") + "|";
+        parameters += properties.get("db.password");
+
+        return parameters;
     }
 
     private void runApplication() throws Exception {
