@@ -114,7 +114,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void badCommndTest() throws Exception {
+    public void badCommandTest() throws Exception {
 
         in.add(getParametersForConnect());
         in.add("listCommand");
@@ -131,6 +131,346 @@ public class IntegrationTest {
                         "\n" +
                         "Введите команду (help для справки): \n" +
                         "Произошла ошибка: Указан не верный формат команды\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "До свидания!\n";
+
+        assertEquals(expectedText , getData());
+    }
+
+    @Test
+    public void getListTableTest() throws Exception {
+
+        in.add(getParametersForConnect());
+        in.add("list-table");
+        in.add("exit");
+        runApplication();
+
+        String expectedText =
+                "Приветствую тебя пользователь!\n" +
+                        "Для начала работы с ситемой установи соединение с базой данных с помощью команды: \n" +
+                        "connect|host|port|dbName|userName|password\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "Соединение установлено!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "╔════════════╗\n" +
+                        "║delete_table║\n" +
+                        "╠════════════╣\n" +
+                        "║user_info   ║\n" +
+                        "╠════════════╣\n" +
+                        "║usr         ║\n" +
+                        "╚════════════╝\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "До свидания!\n";
+
+        assertEquals(expectedText , getData());
+    }
+
+    @Test
+    public void insertDataAndClearTableTest() throws Exception {
+
+        in.add(getParametersForConnect());
+        in.add("data-table|usr");
+        in.add("insert-row|usr|id|1|login|admin|password|qwerty");
+        in.add("insert-row|usr|id|2|login|user|password|1234");
+        in.add("data-table|usr");
+        in.add("clear-table|usr");
+        in.add("data-table|usr");
+        in.add("exit");
+        runApplication();
+
+        String expectedText =
+                "Приветствую тебя пользователь!\n" +
+                        "Для начала работы с ситемой установи соединение с базой данных с помощью команды: \n" +
+                        "connect|host|port|dbName|userName|password\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "Соединение установлено!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "╔════════╦════════╦════════╗\n" +
+                        "║id      ║login   ║password║\n" +
+                        "╠════════╬════════╬════════╣\n" +
+                        "║        ║        ║        ║\n" +
+                        "╚════════╩════════╩════════╝\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "В таблицу usr была добавлена строка!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "В таблицу usr была добавлена строка!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "╔════════╦════════╦════════╗\n" +
+                        "║id      ║login   ║password║\n" +
+                        "╠════════╬════════╬════════╣\n" +
+                        "║1       ║admin   ║qwerty  ║\n" +
+                        "║2       ║user    ║1234    ║\n" +
+                        "╚════════╩════════╩════════╝\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "Таблица usr очищена!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "╔════════╦════════╦════════╗\n" +
+                        "║id      ║login   ║password║\n" +
+                        "╠════════╬════════╬════════╣\n" +
+                        "║        ║        ║        ║\n" +
+                        "╚════════╩════════╩════════╝\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "До свидания!\n";
+
+        assertEquals(expectedText , getData());
+    }
+
+    @Test
+    public void deleteAndCreateTableTest() throws Exception {
+
+        in.add(getParametersForConnect());
+        in.add("list-table");
+        in.add("delete-table|delete_table");
+        in.add("list-table");
+        in.add("create-table|delete_table");
+        in.add("list-table");
+        in.add("exit");
+        runApplication();
+
+        String expectedText =
+                "Приветствую тебя пользователь!\n" +
+                        "Для начала работы с ситемой установи соединение с базой данных с помощью команды: \n" +
+                        "connect|host|port|dbName|userName|password\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "Соединение установлено!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "╔════════════╗\n" +
+                        "║delete_table║\n" +
+                        "╠════════════╣\n" +
+                        "║user_info   ║\n" +
+                        "╠════════════╣\n" +
+                        "║usr         ║\n" +
+                        "╚════════════╝\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "Таблица delete_table была удалена!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "╔═════════╗\n" +
+                        "║user_info║\n" +
+                        "╠═════════╣\n" +
+                        "║usr      ║\n" +
+                        "╚═════════╝\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "Была создана таблица delete_table!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "╔════════════╗\n" +
+                        "║delete_table║\n" +
+                        "╠════════════╣\n" +
+                        "║user_info   ║\n" +
+                        "╠════════════╣\n" +
+                        "║usr         ║\n" +
+                        "╚════════════╝\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "До свидания!\n";
+
+        assertEquals(expectedText , getData());
+    }
+
+    @Test
+    public void updateDataTableTest() throws Exception {
+
+        in.add(getParametersForConnect());
+        in.add("data-table|user_info");
+        in.add("insert-row|user_info|id|1|usr|1|name|Ivan|surname|Ivanov");
+        in.add("insert-row|user_info|id|2|usr|2|name|Sergey|surname|Ivanov");
+        in.add("data-table|user_info");
+        in.add("update-row|user_info|surname|Kirienko|!IF|name|=|Sergey");
+        in.add("data-table|user_info");
+        in.add("clear-table|user_info");
+        in.add("data-table|user_info");
+        in.add("exit");
+        runApplication();
+
+        String expectedText =
+                "Приветствую тебя пользователь!\n" +
+                        "Для начала работы с ситемой установи соединение с базой данных с помощью команды: \n" +
+                        "connect|host|port|dbName|userName|password\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "Соединение установлено!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "╔═══════╦═══════╦═══════╦═══════╗\n" +
+                        "║id     ║usr    ║name   ║surname║\n" +
+                        "╠═══════╬═══════╬═══════╬═══════╣\n" +
+                        "║       ║       ║       ║       ║\n" +
+                        "╚═══════╩═══════╩═══════╩═══════╝\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "В таблицу user_info была добавлена строка!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "В таблицу user_info была добавлена строка!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "╔═══════╦═══════╦═══════╦═══════╗\n" +
+                        "║id     ║usr    ║name   ║surname║\n" +
+                        "╠═══════╬═══════╬═══════╬═══════╣\n" +
+                        "║1      ║1      ║Ivan   ║Ivanov ║\n" +
+                        "║2      ║2      ║Sergey ║Ivanov ║\n" +
+                        "╚═══════╩═══════╩═══════╩═══════╝\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "В таблице user_info была обновлена строка!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "╔════════╦════════╦════════╦════════╗\n" +
+                        "║id      ║usr     ║name    ║surname ║\n" +
+                        "╠════════╬════════╬════════╬════════╣\n" +
+                        "║1       ║1       ║Ivan    ║Ivanov  ║\n" +
+                        "║2       ║2       ║Sergey  ║Kirienko║\n" +
+                        "╚════════╩════════╩════════╩════════╝\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "Таблица user_info очищена!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "╔═══════╦═══════╦═══════╦═══════╗\n" +
+                        "║id     ║usr    ║name   ║surname║\n" +
+                        "╠═══════╬═══════╬═══════╬═══════╣\n" +
+                        "║       ║       ║       ║       ║\n" +
+                        "╚═══════╩═══════╩═══════╩═══════╝\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "До свидания!\n";
+
+        assertEquals(expectedText , getData());
+    }
+
+    @Test
+    public void deleteDataTableTest() throws Exception {
+
+        in.add(getParametersForConnect());
+        in.add("data-table|user_info");
+        in.add("insert-row|user_info|id|1|usr|1|name|Ivan|surname|Ivanov");
+        in.add("insert-row|user_info|id|2|usr|2|name|Sergey|surname|Ivanov");
+        in.add("data-table|user_info");
+        in.add("delete-row|user_info|!IF|name|=|Sergey");
+        in.add("data-table|user_info");
+        in.add("delete-row|user_info|!IF|usr|>|0");
+        in.add("data-table|user_info");
+        in.add("exit");
+        runApplication();
+
+        String expectedText =
+                "Приветствую тебя пользователь!\n" +
+                        "Для начала работы с ситемой установи соединение с базой данных с помощью команды: \n" +
+                        "connect|host|port|dbName|userName|password\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "Соединение установлено!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "╔═══════╦═══════╦═══════╦═══════╗\n" +
+                        "║id     ║usr    ║name   ║surname║\n" +
+                        "╠═══════╬═══════╬═══════╬═══════╣\n" +
+                        "║       ║       ║       ║       ║\n" +
+                        "╚═══════╩═══════╩═══════╩═══════╝\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "В таблицу user_info была добавлена строка!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "В таблицу user_info была добавлена строка!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "╔═══════╦═══════╦═══════╦═══════╗\n" +
+                        "║id     ║usr    ║name   ║surname║\n" +
+                        "╠═══════╬═══════╬═══════╬═══════╣\n" +
+                        "║1      ║1      ║Ivan   ║Ivanov ║\n" +
+                        "║2      ║2      ║Sergey ║Ivanov ║\n" +
+                        "╚═══════╩═══════╩═══════╩═══════╝\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "В таблице user_info были удалены строки!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "╔═══════╦═══════╦═══════╦═══════╗\n" +
+                        "║id     ║usr    ║name   ║surname║\n" +
+                        "╠═══════╬═══════╬═══════╬═══════╣\n" +
+                        "║1      ║1      ║Ivan   ║Ivanov ║\n" +
+                        "╚═══════╩═══════╩═══════╩═══════╝\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "В таблице user_info были удалены строки!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "╔═══════╦═══════╦═══════╦═══════╗\n" +
+                        "║id     ║usr    ║name   ║surname║\n" +
+                        "╠═══════╬═══════╬═══════╬═══════╣\n" +
+                        "║       ║       ║       ║       ║\n" +
+                        "╚═══════╩═══════╩═══════╩═══════╝\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "До свидания!\n";
+
+        assertEquals(expectedText , getData());
+    }
+
+    @Test
+    public void userQueryTest() throws Exception {
+
+        in.add(getParametersForConnect());
+        in.add("data-table|usr");
+        in.add("user-query|<insert into usr (id, login, password) values(1, 'admin', '1q2w3e')");
+        in.add("data-table|usr");
+        in.add("user-query|<delete from usr");
+        in.add("data-table|usr");
+        in.add("exit");
+        runApplication();
+
+        String expectedText =
+                "Приветствую тебя пользователь!\n" +
+                        "Для начала работы с ситемой установи соединение с базой данных с помощью команды: \n" +
+                        "connect|host|port|dbName|userName|password\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "Соединение установлено!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "╔════════╦════════╦════════╗\n" +
+                        "║id      ║login   ║password║\n" +
+                        "╠════════╬════════╬════════╣\n" +
+                        "║        ║        ║        ║\n" +
+                        "╚════════╩════════╩════════╝\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "Была выполнен запрос: insert into usr (id, login, password) values(1, 'admin', '1q2w3e')!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "╔════════╦════════╦════════╗\n" +
+                        "║id      ║login   ║password║\n" +
+                        "╠════════╬════════╬════════╣\n" +
+                        "║1       ║admin   ║1q2w3e  ║\n" +
+                        "╚════════╩════════╩════════╝\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "Была выполнен запрос: delete from usr!\n" +
+                        "\n" +
+                        "Введите команду (help для справки): \n" +
+                        "╔════════╦════════╦════════╗\n" +
+                        "║id      ║login   ║password║\n" +
+                        "╠════════╬════════╬════════╣\n" +
+                        "║        ║        ║        ║\n" +
+                        "╚════════╩════════╩════════╝\n" +
                         "\n" +
                         "Введите команду (help для справки): \n" +
                         "До свидания!\n";

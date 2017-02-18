@@ -47,7 +47,7 @@ public class CreateTable implements Command {
             createRow = rowFactory.createCreateRow();
         }
 
-        dbManager.create(nameTable, createRow);
+        dbManager.createTable(nameTable, createRow);
         view.write("Была создана таблица " + nameTable + "!");
     }
 

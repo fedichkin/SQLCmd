@@ -16,6 +16,6 @@ public interface DBManager {
     void insert(String tableName, DataRow dataRow);
     void update(String tableName, DataRow dataRow, ConditionRow conditionRow);
     void delete(String tableName, ConditionRow conditionRow);
-    void create(String tableName, CreateRow createRow);
+    void createTable(String tableName, CreateRow createRow);
     void userQuery(String textQuery);
 }

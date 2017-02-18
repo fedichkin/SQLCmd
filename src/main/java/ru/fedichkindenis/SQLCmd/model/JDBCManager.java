@@ -230,7 +230,7 @@ public class JDBCManager implements DBManager {
     }
 
     @Override
-    public void create(String tableName, CreateRow createRow) {
+    public void createTable(String tableName, CreateRow createRow) {
         exceptionConnect();
 
         String queryStr = "create table " + tableName + " (";

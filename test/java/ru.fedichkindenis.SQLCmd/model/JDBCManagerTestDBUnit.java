@@ -184,7 +184,7 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
         createRow.add("id", "bigint", true);
         createRow.add("name", "varchar", false);
 
-        jdbcManager.create("create_table", createRow);
+        jdbcManager.createTable("create_table", createRow);
 
         List<String> actual = jdbcManager.listTable();
 
