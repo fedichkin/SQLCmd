@@ -37,7 +37,7 @@ public class CreateTableTest implements CommandTest {
 
     @Override
     @Test
-    public void testIncorrectCommandFormat() {
+    public void testIncorrectCommandFormat() throws Exception {
 
         try {
             command = new CreateTable(dbManager, viewDecorator,
@@ -51,7 +51,7 @@ public class CreateTableTest implements CommandTest {
 
     @Override
     @Test
-    public void testCorrectCommandFormat() {
+    public void testCorrectCommandFormat() throws Exception {
 
         command = new CreateTable(dbManager, viewDecorator,
                 "create-table|my_table|id|bigint|true|name|varchar|false");

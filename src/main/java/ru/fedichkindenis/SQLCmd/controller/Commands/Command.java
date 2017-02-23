@@ -2,5 +2,5 @@ package ru.fedichkindenis.SQLCmd.controller.Commands;
 
 public interface Command {
 
-    void execute();
+    void execute() throws Exception;
 }

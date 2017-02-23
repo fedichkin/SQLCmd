@@ -35,7 +35,7 @@ public class UpdateRowTest implements CommandTest {
 
     @Override
     @Test
-    public void testIncorrectCommandFormat() {
+    public void testIncorrectCommandFormat() throws Exception {
 
         try {
             command = new UpdateRow(dbManager, viewDecorator,
@@ -49,7 +49,7 @@ public class UpdateRowTest implements CommandTest {
 
     @Override
     @Test
-    public void testCorrectCommandFormat() {
+    public void testCorrectCommandFormat() throws Exception {
 
         command = new UpdateRow(dbManager, viewDecorator,
                 "update-row|usr|login|admin|!IF|id|=|4");

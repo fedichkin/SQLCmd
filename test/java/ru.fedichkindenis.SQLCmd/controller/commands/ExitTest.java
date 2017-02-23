@@ -35,7 +35,7 @@ public class ExitTest implements CommandTest {
 
     @Override
     @Test
-    public void testIncorrectCommandFormat() {
+    public void testIncorrectCommandFormat() throws Exception {
         try {
             command = new Exit(dbManager, viewDecorator, "exxit");
             command.execute();
@@ -47,7 +47,7 @@ public class ExitTest implements CommandTest {
 
     @Override
     @Test
-    public void testCorrectCommandFormat() {
+    public void testCorrectCommandFormat() throws Exception {
 
         try {
             command = new Exit(dbManager, viewDecorator, "exit");

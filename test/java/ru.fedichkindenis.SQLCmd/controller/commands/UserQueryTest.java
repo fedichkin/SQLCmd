@@ -36,7 +36,7 @@ public class UserQueryTest implements CommandTest {
 
     @Override
     @Test
-    public void testIncorrectCommandFormat() {
+    public void testIncorrectCommandFormat() throws Exception {
 
         try {
             command = new UserQuery(dbManager, viewDecorator,
@@ -50,7 +50,7 @@ public class UserQueryTest implements CommandTest {
 
     @Override
     @Test
-    public void testCorrectCommandFormat() {
+    public void testCorrectCommandFormat() throws Exception {
 
         command = new UserQuery(dbManager, viewDecorator,
                 "user-query|<insert into usr (id, login, password) values(6, 'us', '1234')");

@@ -35,7 +35,7 @@ public class DisconnectTest implements CommandTest {
 
     @Override
     @Test
-    public void testIncorrectCommandFormat() {
+    public void testIncorrectCommandFormat() throws Exception {
         try {
             command = new Disconnect(dbManager, viewDecorator, "dissconnect");
             command.execute();
@@ -47,7 +47,7 @@ public class DisconnectTest implements CommandTest {
 
     @Override
     @Test
-    public void testCorrectCommandFormat() {
+    public void testCorrectCommandFormat() throws Exception {
 
         command = new Disconnect(dbManager, viewDecorator, "disconnect");
         command.execute();

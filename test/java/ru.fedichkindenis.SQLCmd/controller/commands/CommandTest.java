@@ -10,7 +10,7 @@ interface CommandTest {
 
     void setup();
 
-    void testIncorrectCommandFormat();
+    void testIncorrectCommandFormat() throws Exception;
 
-    void testCorrectCommandFormat();
+    void testCorrectCommandFormat() throws Exception;
 }

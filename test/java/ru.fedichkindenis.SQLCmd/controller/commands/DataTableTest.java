@@ -43,7 +43,7 @@ public class DataTableTest implements CommandTest {
 
     @Override
     @Test
-    public void testIncorrectCommandFormat() {
+    public void testIncorrectCommandFormat() throws Exception {
         try {
             command = new DataTable(dbManager, viewDecorator,
                     "data-table|");
@@ -56,7 +56,7 @@ public class DataTableTest implements CommandTest {
 
     @Override
     @Test
-    public void testCorrectCommandFormat() {
+    public void testCorrectCommandFormat() throws Exception {
 
         List<DataRow> dataRowList = new LinkedList<>();
         DataRow firstRow = new DataRow();
@@ -79,7 +79,7 @@ public class DataTableTest implements CommandTest {
     }
 
     @Test
-    public void testNullTable() {
+    public void testNullTable() throws Exception {
 
         List<DataRow> dataRowList = new LinkedList<>();
         DataRow firstRow = new DataRow();

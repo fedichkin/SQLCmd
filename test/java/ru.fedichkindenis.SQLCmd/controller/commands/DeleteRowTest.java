@@ -35,7 +35,7 @@ public class DeleteRowTest implements CommandTest {
 
     @Override
     @Test
-    public void testIncorrectCommandFormat() {
+    public void testIncorrectCommandFormat() throws Exception {
 
         try {
             command = new DeleteRow(dbManager, viewDecorator,
@@ -49,7 +49,7 @@ public class DeleteRowTest implements CommandTest {
 
     @Override
     @Test
-    public void testCorrectCommandFormat() {
+    public void testCorrectCommandFormat() throws Exception {
 
         command = new DeleteRow(dbManager, viewDecorator,
                 "delete-row|usr|!IF|id|=|4");

@@ -31,7 +31,7 @@ public class ConnectTest {
     }
 
     @Test
-    public void testIncorrectCommandFormat() {
+    public void testIncorrectCommandFormat() throws Exception {
         try {
             command = new Connect(dbManager, viewDecorator, "connect|d|12|fg|ere");
             command.execute();
@@ -42,7 +42,7 @@ public class ConnectTest {
     }
 
     @Test
-    public void testCorrectCommandFormat() {
+    public void testCorrectCommandFormat() throws Exception {
 
         command = new Connect(dbManager, viewDecorator, "connect|localhost|5433|cmd|postgres|mac");
         command.execute();

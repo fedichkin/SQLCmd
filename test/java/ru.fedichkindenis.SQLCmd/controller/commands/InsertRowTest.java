@@ -34,7 +34,7 @@ public class InsertRowTest implements CommandTest {
 
     @Override
     @Test
-    public void testIncorrectCommandFormat() {
+    public void testIncorrectCommandFormat() throws Exception {
 
         try {
             command = new InsertRow(dbManager, viewDecorator, "insert-row|user|");
@@ -47,7 +47,7 @@ public class InsertRowTest implements CommandTest {
 
     @Override
     @Test
-    public void testCorrectCommandFormat() {
+    public void testCorrectCommandFormat() throws Exception {
 
         command = new InsertRow(dbManager, viewDecorator,
                 "insert-row|usr|login|admin");
