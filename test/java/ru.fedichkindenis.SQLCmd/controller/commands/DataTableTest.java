@@ -78,6 +78,22 @@ public class DataTableTest implements CommandTest {
                 "{{nameField: id, value: 2}{nameField: name, value: user}}]]");
     }
 
+    @Test
+    public void testNullTable() {
+
+        List<DataRow> dataRowList = new LinkedList<>();
+        DataRow firstRow = new DataRow();
+        dataRowList.add(firstRow);
+
+        when(dbManager.dataTable("usr")).thenReturn(dataRowList);
+
+        command = new DataTable(dbManager, viewDecorator,
+                "data-table|usr");
+        command.execute();
+
+        shouldPrintViewDecarator("[]");
+    }
+
     private void shouldPrintViewDecarator(String expected) {
         verify(viewDecorator, atMost(2)).write(listDataRow.capture());
         assertEquals(expected, listDataRow.getAllValues().toString());

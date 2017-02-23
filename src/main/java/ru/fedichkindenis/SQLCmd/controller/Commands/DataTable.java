@@ -34,7 +34,15 @@ public class DataTable implements Command {
         String nameTable = textCommand.split("\\|")[1];
 
         List<DataRow> dataRowList = dbManager.dataTable(nameTable);
-        view.write(dataRowList);
+
+        if(dataRowList.size() == 1
+                && dataRowList.get(0).getListValueField().size() == 0) {
+
+            view.write("Таблица " + nameTable + " не содержит данных и полей!");
+        }
+        else {
+            view.write(dataRowList);
+        }
     }
 
     private boolean validateCommand() {
