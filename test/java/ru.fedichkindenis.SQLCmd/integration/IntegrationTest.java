@@ -57,8 +57,8 @@ public class IntegrationTest {
     @Test
     public void EntryAndExitApplication() throws Exception {
 
+        //given
         in.add("exit");
-        runApplication();
 
         String expectedText =
                 "Приветствую тебя пользователь!\n" +
@@ -67,16 +67,18 @@ public class IntegrationTest {
                 "\n" +
                 "Введите команду (help для справки): \n" +
                 "До свидания!\n";
-
+        //when
+        runApplication();
+        //then
         assertEquals(expectedText , getData());
     }
 
     @Test
     public void commandWithoutConnectTest() throws Exception {
 
+        //given
         in.add("list-table");
         in.add("exit");
-        runApplication();
 
         String expectedText =
                 "Приветствую тебя пользователь!\n" +
@@ -88,16 +90,18 @@ public class IntegrationTest {
                 "\n" +
                 "Введите команду (help для справки): \n" +
                 "До свидания!\n";
-
+        //when
+        runApplication();
+        //then
         assertEquals(expectedText , getData());
     }
 
     @Test
     public void connectBDTest() throws Exception {
 
+        //given
         in.add(getParametersForConnect());
         in.add("exit");
-        runApplication();
 
         String expectedText =
                 "Приветствую тебя пользователь!\n" +
@@ -109,17 +113,19 @@ public class IntegrationTest {
                         "\n" +
                         "Введите команду (help для справки): \n" +
                         "До свидания!\n";
-
+        //when
+        runApplication();
+        //then
         assertEquals(expectedText , getData());
     }
 
     @Test
     public void badCommandTest() throws Exception {
 
+        //given
         in.add(getParametersForConnect());
         in.add("listCommand");
         in.add("exit");
-        runApplication();
 
         String expectedText =
                 "Приветствую тебя пользователь!\n" +
@@ -134,18 +140,20 @@ public class IntegrationTest {
                         "\n" +
                         "Введите команду (help для справки): \n" +
                         "До свидания!\n";
-
+        //when
+        runApplication();
+        //then
         assertEquals(expectedText , getData());
     }
 
     @Test
     public void getListTableTest() throws Exception {
 
+        //given
         in.add(getParametersForConnect());
         in.add("list-table");
         in.add("exit");
-        runApplication();
-
+        
         String expectedText =
                 "Приветствую тебя пользователь!\n" +
                         "Для начала работы с ситемой установи соединение с базой данных с помощью команды: \n" +
@@ -165,13 +173,16 @@ public class IntegrationTest {
                         "\n" +
                         "Введите команду (help для справки): \n" +
                         "До свидания!\n";
-
+        //when
+        runApplication();
+        //then
         assertEquals(expectedText , getData());
     }
 
     @Test
     public void insertDataAndClearTableTest() throws Exception {
 
+        //given
         in.add(getParametersForConnect());
         in.add("data-table|usr");
         in.add("insert-row|usr|id|1|login|admin|password|qwerty");
@@ -180,7 +191,6 @@ public class IntegrationTest {
         in.add("clear-table|usr");
         in.add("data-table|usr");
         in.add("exit");
-        runApplication();
 
         String expectedText =
                 "Приветствую тебя пользователь!\n" +
@@ -223,13 +233,16 @@ public class IntegrationTest {
                         "\n" +
                         "Введите команду (help для справки): \n" +
                         "До свидания!\n";
-
+        //when
+        runApplication();
+        //then
         assertEquals(expectedText , getData());
     }
 
     @Test
     public void deleteAndCreateTableTest() throws Exception {
 
+        //given
         in.add(getParametersForConnect());
         in.add("list-table");
         in.add("delete-table|delete_table");
@@ -237,7 +250,6 @@ public class IntegrationTest {
         in.add("create-table|delete_table");
         in.add("list-table");
         in.add("exit");
-        runApplication();
 
         String expectedText =
                 "Приветствую тебя пользователь!\n" +
@@ -280,13 +292,16 @@ public class IntegrationTest {
                         "\n" +
                         "Введите команду (help для справки): \n" +
                         "До свидания!\n";
-
+        //when
+        runApplication();
+        //then
         assertEquals(expectedText , getData());
     }
 
     @Test
     public void updateDataTableTest() throws Exception {
 
+        //given
         in.add(getParametersForConnect());
         in.add("data-table|user_info");
         in.add("insert-row|user_info|id|1|usr|1|name|Ivan|surname|Ivanov");
@@ -297,7 +312,6 @@ public class IntegrationTest {
         in.add("clear-table|user_info");
         in.add("data-table|user_info");
         in.add("exit");
-        runApplication();
 
         String expectedText =
                 "Приветствую тебя пользователь!\n" +
@@ -351,13 +365,16 @@ public class IntegrationTest {
                         "\n" +
                         "Введите команду (help для справки): \n" +
                         "До свидания!\n";
-
+        //when
+        runApplication();
+        //then
         assertEquals(expectedText , getData());
     }
 
     @Test
     public void deleteDataTableTest() throws Exception {
 
+        //given
         in.add(getParametersForConnect());
         in.add("data-table|user_info");
         in.add("insert-row|user_info|id|1|usr|1|name|Ivan|surname|Ivanov");
@@ -368,7 +385,6 @@ public class IntegrationTest {
         in.add("delete-row|user_info|!IF|usr|>|0");
         in.add("data-table|user_info");
         in.add("exit");
-        runApplication();
 
         String expectedText =
                 "Приветствую тебя пользователь!\n" +
@@ -421,13 +437,16 @@ public class IntegrationTest {
                         "\n" +
                         "Введите команду (help для справки): \n" +
                         "До свидания!\n";
-
+        //when
+        runApplication();
+        //then
         assertEquals(expectedText , getData());
     }
 
     @Test
     public void userQueryTest() throws Exception {
 
+        //given
         in.add(getParametersForConnect());
         in.add("data-table|usr");
         in.add("user-query|<insert into usr (id, login, password) values(1, 'admin', '1q2w3e')");
@@ -435,7 +454,6 @@ public class IntegrationTest {
         in.add("user-query|<delete from usr");
         in.add("data-table|usr");
         in.add("exit");
-        runApplication();
 
         String expectedText =
                 "Приветствую тебя пользователь!\n" +
@@ -474,7 +492,9 @@ public class IntegrationTest {
                         "\n" +
                         "Введите команду (help для справки): \n" +
                         "До свидания!\n";
-
+        //when
+        runApplication();
+        //then
         assertEquals(expectedText , getData());
     }
 
