@@ -38,11 +38,14 @@ public class DeleteRowTest implements CommandTest {
     public void testIncorrectCommandFormat() throws Exception {
 
         try {
+            //given
             command = new DeleteRow(dbManager, viewDecorator,
                     "delete-row|user|!IF|id|4");
+            //when
             command.execute();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
+            //then
             assertEquals("Указан не верный формат команды", e.getMessage());
         }
     }
@@ -51,10 +54,12 @@ public class DeleteRowTest implements CommandTest {
     @Test
     public void testCorrectCommandFormat() throws Exception {
 
+        //given
         command = new DeleteRow(dbManager, viewDecorator,
                 "delete-row|usr|!IF|id|=|4");
+        //when
         command.execute();
-
+        //then
         shouldPrintView("[В таблице usr были удалены строки!]");
     }
 

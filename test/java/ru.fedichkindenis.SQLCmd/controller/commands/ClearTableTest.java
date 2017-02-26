@@ -38,11 +38,14 @@ public class ClearTableTest implements CommandTest {
     public void testIncorrectCommandFormat() throws Exception {
 
         try {
+            //given
             command = new ClearTable(dbManager, viewDecorator,
                     "clear-table|");
+            //when
             command.execute();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
+            //then
             assertEquals("Указан не верный формат команды", e.getMessage());
         }
     }
@@ -51,10 +54,12 @@ public class ClearTableTest implements CommandTest {
     @Test
     public void testCorrectCommandFormat() throws Exception {
 
+        //given
         command = new ClearTable(dbManager, viewDecorator,
                 "clear-table|usr");
+        //when
         command.execute();
-
+        //then
         shouldPrintView("[Таблица usr очищена!]");
     }
 

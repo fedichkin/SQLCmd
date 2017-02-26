@@ -32,11 +32,7 @@ public class ControllerTest {
     @Test
     public void testCommandController() {
 
-        when(viewDecorator.read()).thenReturn("error").thenReturn("exit");
-
-        controller = new Controller(viewDecorator, dbManager);
-        controller.run();
-
+        //given
         List<String> expectedList = Arrays.asList(
                 "Приветствую тебя пользователь!",
                 "Для начала работы с ситемой установи соединение с базой данных с помощью команды: ",
@@ -48,6 +44,13 @@ public class ControllerTest {
                 "Введите команду (help для справки): ",
                 "До свидания!"
         );
+
+        when(viewDecorator.read()).thenReturn("error").thenReturn("exit");
+
+        controller = new Controller(viewDecorator, dbManager);
+        //when
+        controller.run();
+        //then
         shouldPrintView(expectedList);
     }
 

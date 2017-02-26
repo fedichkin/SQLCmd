@@ -37,10 +37,13 @@ public class DisconnectTest implements CommandTest {
     @Test
     public void testIncorrectCommandFormat() throws Exception {
         try {
+            //given
             command = new Disconnect(dbManager, viewDecorator, "dissconnect");
+            //when
             command.execute();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
+            //then
             assertEquals("Указан не верный формат команды", e.getMessage());
         }
     }
@@ -49,9 +52,11 @@ public class DisconnectTest implements CommandTest {
     @Test
     public void testCorrectCommandFormat() throws Exception {
 
+        //given
         command = new Disconnect(dbManager, viewDecorator, "disconnect");
+        //when
         command.execute();
-
+        //then
         shouldPrintView("[Соединение с базой разорванно]");
     }
 

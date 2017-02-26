@@ -52,7 +52,9 @@ public class JDBCManagerTest {
     @Test
     public void testConnect() {
 
+        //when
         correctConnect();
+        //then
         assertEquals(true, jdbcManager.isConnect());
         jdbcManager.disconnect();
     }
@@ -61,6 +63,7 @@ public class JDBCManagerTest {
     public void testConnectBadHost() {
 
         try {
+            //when
             jdbcManager.connect("badHost",
                     properties.getProperty("db.port"),
                     properties.getProperty("db.dbName"),
@@ -77,6 +80,7 @@ public class JDBCManagerTest {
     public void testConnectBadPort() {
 
         try {
+            //when
             jdbcManager.connect(properties.getProperty("db.host"),
                     "6666",
                     properties.getProperty("db.dbName"),
@@ -93,6 +97,7 @@ public class JDBCManagerTest {
     public void testConnectBadDBName() {
 
         try {
+            //when
             jdbcManager.connect(properties.getProperty("db.host"),
                     properties.getProperty("db.port"),
                     "bad",
@@ -109,6 +114,7 @@ public class JDBCManagerTest {
     public void testConnectBadUser() {
 
         try {
+            //when
             jdbcManager.connect(properties.getProperty("db.host"),
                     properties.getProperty("db.port"),
                     properties.getProperty("db.dbName"),
@@ -125,6 +131,7 @@ public class JDBCManagerTest {
     public void testConnectBadPassword() {
 
         try {
+            //when
             jdbcManager.connect(properties.getProperty("db.host"),
                     properties.getProperty("db.port"),
                     properties.getProperty("db.dbName"),
@@ -140,6 +147,7 @@ public class JDBCManagerTest {
     @Test
     public void testDisconnect() {
 
+        //when
         correctConnect();
         jdbcManager.disconnect();
     }

@@ -31,33 +31,33 @@ public class TableConsoleViewTest {
 
     @Test
     public void readTes() {
-
+        //given
         String expected = "Hello World!!!";
         when(view.read()).thenReturn(expected);
-
+        //when
         viewDecorator = new TableConsoleView(view);
         String actual = viewDecorator.read();
-
+        //then
         assertEquals(expected, actual);
     }
 
     @Test
     public void writeTest() {
-
+        //given
         String expected = "Hello World!!!";
-
+        //when
         viewDecorator = new TableConsoleView(view);
         viewDecorator.write(expected);
-
+        //then
         shouldPrintView(Collections.singletonList(expected));
     }
 
     @Test
     public void closeTest() {
-
+        //when
         viewDecorator = new TableConsoleView(view);
         viewDecorator.close();
-
+        //then
         verify(view).close();
     }
 
@@ -65,9 +65,10 @@ public class TableConsoleViewTest {
     public void writeListIfListNullTest() {
 
         try {
+            //when
             viewDecorator = new TableConsoleView(view);
             viewDecorator.write(null, AlignWrite.VERTICAL);
-
+            //then
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
 
@@ -79,9 +80,10 @@ public class TableConsoleViewTest {
     public void writeListIfListEmptyTest() {
 
         try {
+            //when
             viewDecorator = new TableConsoleView(view);
             viewDecorator.write(new LinkedList<>(), AlignWrite.VERTICAL);
-
+            //then
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
 
@@ -91,23 +93,22 @@ public class TableConsoleViewTest {
 
     @Test
     public void writeListHorizontalTest() {
-
-        viewDecorator = new TableConsoleView(view);
-        viewDecorator.write(Arrays.asList("table1", "table22", "table333"), AlignWrite.HORIZONTAL);
-
+        //given
         List<String> expected = Arrays.asList(
                 "╔════════╦════════╦════════╗",
                 "║table1  ║table22 ║table333║",
                 "╚════════╩════════╩════════╝");
+        //when
+        viewDecorator = new TableConsoleView(view);
+        viewDecorator.write(Arrays.asList("table1", "table22", "table333"), AlignWrite.HORIZONTAL);
+        //than
         shouldPrintView(expected);
     }
 
     @Test
     public void writeListVerticalTest() {
 
-        viewDecorator = new TableConsoleView(view);
-        viewDecorator.write(Arrays.asList("table1", "table22", "table333"), AlignWrite.VERTICAL);
-
+        //given
         List<String> expected = Arrays.asList(
                 "╔════════╗",
                 "║table1  ║",
@@ -116,42 +117,38 @@ public class TableConsoleViewTest {
                 "╠════════╣",
                 "║table333║",
                 "╚════════╝");
+        //when
+        viewDecorator = new TableConsoleView(view);
+        viewDecorator.write(Arrays.asList("table1", "table22", "table333"), AlignWrite.VERTICAL);
+        //than
         shouldPrintView(expected);
     }
 
     @Test
     public void writeDataRowTest() {
 
+        //given
+        List<String> expected = Arrays.asList(
+                "╔════╦════╗",
+                "║id  ║name║",
+                "╠════╬════╣",
+                "║1   ║user║",
+                "╚════╩════╝");
+
         viewDecorator = new TableConsoleView(view);
         DataRow dataRow = new DataRow();
         dataRow.add("id", 1);
         dataRow.add("name", "user");
-
+        //when
         viewDecorator.write(dataRow);
-
-        List<String> expected = Arrays.asList(
-                        "╔════╦════╗",
-                        "║id  ║name║",
-                        "╠════╬════╣",
-                        "║1   ║user║",
-                        "╚════╩════╝");
-
+        //then
         shouldPrintView(expected);
     }
 
     @Test
     public void writeListDataRow() {
 
-        viewDecorator = new TableConsoleView(view);
-        DataRow dataRow1 = new DataRow();
-        dataRow1.add("id", 1);
-        dataRow1.add("name", "user");
-        DataRow dataRow2 = new DataRow();
-        dataRow2.add("id", 2);
-        dataRow2.add("name", "admin");
-
-        viewDecorator.write(Arrays.asList(dataRow1, dataRow2));
-
+        //given
         List<String> expected = Arrays.asList(
                 "╔═════╦═════╗",
                 "║id   ║name ║",
@@ -160,6 +157,16 @@ public class TableConsoleViewTest {
                 "║2    ║admin║",
                 "╚═════╩═════╝");
 
+        viewDecorator = new TableConsoleView(view);
+        DataRow dataRow1 = new DataRow();
+        dataRow1.add("id", 1);
+        dataRow1.add("name", "user");
+        DataRow dataRow2 = new DataRow();
+        dataRow2.add("id", 2);
+        dataRow2.add("name", "admin");
+        //when
+        viewDecorator.write(Arrays.asList(dataRow1, dataRow2));
+        //then
         shouldPrintView(expected);
     }
 

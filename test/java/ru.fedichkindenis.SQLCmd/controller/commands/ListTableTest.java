@@ -42,10 +42,13 @@ public class ListTableTest implements CommandTest {
     @Test
     public void testIncorrectCommandFormat() throws Exception {
         try {
+            //given
             command = new ListTable(dbManager, viewDecorator, "list_table");
+            //when
             command.execute();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
+            //then
             assertEquals("Указан не верный формат команды", e.getMessage());
         }
     }
@@ -54,6 +57,7 @@ public class ListTableTest implements CommandTest {
     @Test
     public void testCorrectCommandFormat() throws Exception {
 
+        //given
         List<String> data = new LinkedList<>();
         data.add("user");
         data.add("user_info");
@@ -61,8 +65,9 @@ public class ListTableTest implements CommandTest {
         when(dbManager.listTable()).thenReturn(data);
 
         command = new ListTable(dbManager, viewDecorator, "list-table");
+        //when
         command.execute();
-
+        //then
         shouldPrintViewDecarator("[[user, user_info]]");
     }
 

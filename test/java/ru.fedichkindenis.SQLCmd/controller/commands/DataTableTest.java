@@ -45,11 +45,14 @@ public class DataTableTest implements CommandTest {
     @Test
     public void testIncorrectCommandFormat() throws Exception {
         try {
+            //given
             command = new DataTable(dbManager, viewDecorator,
                     "data-table|");
+            //when
             command.execute();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
+            //then
             assertEquals("Указан не верный формат команды", e.getMessage());
         }
     }
@@ -58,6 +61,7 @@ public class DataTableTest implements CommandTest {
     @Test
     public void testCorrectCommandFormat() throws Exception {
 
+        //given
         List<DataRow> dataRowList = new LinkedList<>();
         DataRow firstRow = new DataRow();
         firstRow.add("id", 1);
@@ -72,8 +76,9 @@ public class DataTableTest implements CommandTest {
 
         command = new DataTable(dbManager, viewDecorator,
                 "data-table|usr");
+        //when
         command.execute();
-
+        //then
         shouldPrintViewDecarator("[[{{nameField: id, value: 1}{nameField: name, value: admin}}, " +
                 "{{nameField: id, value: 2}{nameField: name, value: user}}]]");
     }
@@ -81,6 +86,7 @@ public class DataTableTest implements CommandTest {
     @Test
     public void testNullTable() throws Exception {
 
+        //given
         List<DataRow> dataRowList = new LinkedList<>();
         DataRow firstRow = new DataRow();
         dataRowList.add(firstRow);
@@ -89,8 +95,9 @@ public class DataTableTest implements CommandTest {
 
         command = new DataTable(dbManager, viewDecorator,
                 "data-table|usr");
+        //when
         command.execute();
-
+        //then
         shouldPrintViewDecarator("[]");
     }
 

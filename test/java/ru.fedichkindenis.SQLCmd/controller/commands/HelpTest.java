@@ -31,10 +31,13 @@ public class HelpTest implements CommandTest {
     @Test
     public void testIncorrectCommandFormat() throws Exception {
         try {
+            //given
             command = new Help(viewDecorator, "helpt");
+            //when
             command.execute();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
+            //then
             assertEquals("Указан не верный формат команды", e.getMessage());
         }
     }
@@ -43,9 +46,11 @@ public class HelpTest implements CommandTest {
     @Test
     public void testCorrectCommandFormat() throws Exception {
 
+        //given
         command = new Help(viewDecorator, "help");
+        //when
         command.execute();
-
+        //then
         shouldPrintView(
                 "[Команда: connect, " +
                         "\tОписание команды: Команда для установки соединения с базой данных, " +

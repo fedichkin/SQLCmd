@@ -33,10 +33,13 @@ public class ConnectTest {
     @Test
     public void testIncorrectCommandFormat() throws Exception {
         try {
+            //given
             command = new Connect(dbManager, viewDecorator, "connect|d|12|fg|ere");
+            //when
             command.execute();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
+            //then
             assertEquals("Указан не верный формат команды", e.getMessage());
         }
     }
@@ -44,9 +47,11 @@ public class ConnectTest {
     @Test
     public void testCorrectCommandFormat() throws Exception {
 
+        //given
         command = new Connect(dbManager, viewDecorator, "connect|localhost|5433|cmd|postgres|mac");
+        //when
         command.execute();
-
+        //then
         shouldPrintView("[Соединение установлено!]");
     }
 

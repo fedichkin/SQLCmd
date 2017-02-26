@@ -19,16 +19,19 @@ public class ConsoleTest {
     @Test
     public void testWrite() {
 
+        //given
         String expected = "Hello World!!!";
 
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
 
             System.setOut(new PrintStream(baos));
 
+            //when
             View console = new Console();
             console.write(expected);
 
             String actual = new String(baos.toByteArray());
+            //then
             assertEquals(expected + CRLF, actual);
         } catch (IOException e) {
 
@@ -39,15 +42,16 @@ public class ConsoleTest {
     @Test
     public void testRead() {
 
+        //given
         String expected = "Hello World!!!";
 
         try (ByteArrayInputStream bais = new ByteArrayInputStream(expected.getBytes())) {
 
             System.setIn(bais);
-
+            //when
             View console = new Console();
             String actual = console.read();
-
+            //then
             assertEquals(expected, actual);
         } catch (IOException e) {
 
@@ -59,7 +63,7 @@ public class ConsoleTest {
     public void testExceptionRead() {
 
         try {
-
+            //given
             InputStream inputStream = new InputStream() {
                 @Override
                 public int read() throws IOException {
@@ -75,10 +79,10 @@ public class ConsoleTest {
             };
 
             System.setIn(inputStream);
-
+            //when
             View console = new Console();
             console.read();
-
+            //then
             fail("Expected RuntimeException");
         } catch (RuntimeException e) {
             assertEquals("Ошибка чтения", e.getMessage());
@@ -88,6 +92,7 @@ public class ConsoleTest {
     @Test
     public void testClose() {
 
+        //given
         final Boolean[] actual = new Boolean[1];
 
         try (ByteArrayInputStream bais = new ByteArrayInputStream(new byte['q']){
@@ -100,10 +105,10 @@ public class ConsoleTest {
         }) {
 
             System.setIn(bais);
-
+            //when
             View console = new Console();
             console.close();
-
+            //then
             assertEquals(true, actual[0]);
         } catch (IOException e) {
 
@@ -115,7 +120,7 @@ public class ConsoleTest {
     public void testExceptionClose() {
 
         try {
-
+            //given
             InputStream inputStream = new InputStream() {
                 @Override
                 public int read() throws IOException {
@@ -131,10 +136,10 @@ public class ConsoleTest {
             };
 
             System.setIn(inputStream);
-
+            //when
             View console = new Console();
             console.close();
-
+            //then
             fail("Expected RuntimeException");
         } catch (RuntimeException e) {
             assertEquals("Ошибка закрытия", e.getMessage());

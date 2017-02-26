@@ -59,32 +59,35 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
     @Test
     public void listTableTest() throws Exception {
 
+        //given
         List<String> actual = jdbcManager.listTable();
-
+        //when
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("init-data.xml"));
-
+        //then
         Assert.assertEquals(Arrays.asList(expectedData.getTableNames()), actual);
     }
 
     @Test
     public void dataTableTest()  throws Exception {
 
+        //given
         List<DataRow> actual = jdbcManager.dataTable("usr");
 
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("init-data.xml"));
-
+        //when
         List<DataRow> expected = getDataMapList(expectedData, "usr");
-
+        //then
         Assert.assertEquals(expected.toString(), actual.toString());
     }
 
     @Test
     public void insertTest() throws Exception {
 
+        //given
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("insert-data.xml"));
@@ -96,15 +99,16 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
         newRow.add("login", "super_user");
         newRow.add("password", "1q2w3e4r");
         jdbcManager.insert("usr", newRow);
-
+        //when
         List<DataRow> actual = jdbcManager.dataTable("usr");
-
+        //then
         Assert.assertEquals(expected.toString(), actual.toString());
     }
 
     @Test
     public void updateTest() throws Exception {
 
+        //given
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("update-data.xml"));
@@ -116,17 +120,18 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
 
         ConditionRow conditionRow = new ConditionRow();
         conditionRow.add("id", 2, "=");
-
+        //when
         jdbcManager.update("usr", modifyRow, conditionRow);
 
         List<DataRow> actual = jdbcManager.dataTable("usr");
-
+        //then
         Assert.assertEquals(expected.toString(), actual.toString());
     }
 
     @Test
     public void deleteTest() throws Exception {
 
+        //given
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("delete-data.xml"));
@@ -135,47 +140,50 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
 
         ConditionRow conditionRow = new ConditionRow();
         conditionRow.add("id", 1, "=");
-
+        //when
         jdbcManager.delete("user_info", conditionRow);
 
         List<DataRow> actual = jdbcManager.dataTable("user_info");
-
+        //then
         Assert.assertEquals(expected.toString(), actual.toString());
     }
 
     @Test
     public void clearTableTest() throws Exception {
 
+        //given
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("clear_table-data.xml"));
 
         List<DataRow> expected = getDataMapList(expectedData, "user_info");
-
+        //when
         jdbcManager.clearTable("user_info");
 
         List<DataRow> actual = jdbcManager.dataTable("user_info");
-
+        //then
         Assert.assertEquals(expected.toString(), actual.toString());
     }
 
     @Test
     public void deleteTableTest() throws Exception {
 
+        //given
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("delete_table-data.xml"));
-
+        //when
         jdbcManager.deleteTable("delete_table");
 
         List<String> actual = jdbcManager.listTable();
-
+        //then
         Assert.assertEquals(Arrays.asList(expectedData.getTableNames()), actual);
     }
 
     @Test
     public void createTableTest() throws Exception {
 
+        //given
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("create_table-data.xml"));
@@ -183,28 +191,29 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
         CreateRow createRow = new CreateRow();
         createRow.add("id", "bigint", true);
         createRow.add("name", "varchar", false);
-
+        //when
         jdbcManager.createTable("create_table", createRow);
 
         List<String> actual = jdbcManager.listTable();
-
+        //then
         Assert.assertEquals(Arrays.asList(expectedData.getTableNames()), actual);
     }
 
     @Test
     public void userQueryTest() throws Exception {
 
+        //given
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("insert_user_query.xml"));
 
         List<DataRow> expected = getDataMapList(expectedData, "usr");
-
+        //when
         jdbcManager.userQuery("insert into usr(id, login, password) " +
                 "values(3, 'Iam', 'secure')");
 
         List<DataRow> actual = jdbcManager.dataTable("usr");
-
+        //then
         Assert.assertEquals(expected.toString(), actual.toString());
     }
 

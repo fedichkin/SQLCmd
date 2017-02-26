@@ -37,10 +37,13 @@ public class ExitTest implements CommandTest {
     @Test
     public void testIncorrectCommandFormat() throws Exception {
         try {
+            //given
             command = new Exit(dbManager, viewDecorator, "exxit");
+            //when
             command.execute();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
+            //then
             assertEquals("Указан не верный формат команды", e.getMessage());
         }
     }
@@ -50,7 +53,9 @@ public class ExitTest implements CommandTest {
     public void testCorrectCommandFormat() throws Exception {
 
         try {
+            //given
             command = new Exit(dbManager, viewDecorator, "exit");
+            //when
             command.execute();
 
             shouldPrintView("[До свидания!]");

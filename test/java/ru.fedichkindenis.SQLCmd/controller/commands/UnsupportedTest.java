@@ -29,10 +29,13 @@ public class UnsupportedTest implements CommandTest {
     public void testCorrectCommandFormat() throws Exception {
 
         try {
+            //given
             Command command = new Unsupported();
+            //when
             command.execute();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
+            //then
             assertEquals("Указан не верный формат команды", e.getMessage());
         }
     }

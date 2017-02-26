@@ -40,11 +40,14 @@ public class CreateTableTest implements CommandTest {
     public void testIncorrectCommandFormat() throws Exception {
 
         try {
+            //given
             command = new CreateTable(dbManager, viewDecorator,
                     "create-table|user|login|");
+            //when
             command.execute();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
+            //then
             assertEquals("Указан не верный формат команды", e.getMessage());
         }
     }
@@ -53,10 +56,12 @@ public class CreateTableTest implements CommandTest {
     @Test
     public void testCorrectCommandFormat() throws Exception {
 
+        //given
         command = new CreateTable(dbManager, viewDecorator,
                 "create-table|my_table|id|bigint|true|name|varchar|false");
+        //when
         command.execute();
-
+        //then
         shouldPrintView("[Была создана таблица my_table!]");
     }
 

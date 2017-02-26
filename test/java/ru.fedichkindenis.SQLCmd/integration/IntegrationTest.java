@@ -153,7 +153,7 @@ public class IntegrationTest {
         in.add(getParametersForConnect());
         in.add("list-table");
         in.add("exit");
-        
+
         String expectedText =
                 "Приветствую тебя пользователь!\n" +
                         "Для начала работы с ситемой установи соединение с базой данных с помощью команды: \n" +

@@ -38,11 +38,14 @@ public class UpdateRowTest implements CommandTest {
     public void testIncorrectCommandFormat() throws Exception {
 
         try {
+            //given
             command = new UpdateRow(dbManager, viewDecorator,
                     "update-row|user|login|!IF|id|=|4");
+            //when
             command.execute();
             fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
+            //then
             assertEquals("Указан не верный формат команды", e.getMessage());
         }
     }
@@ -51,10 +54,12 @@ public class UpdateRowTest implements CommandTest {
     @Test
     public void testCorrectCommandFormat() throws Exception {
 
+        //given
         command = new UpdateRow(dbManager, viewDecorator,
                 "update-row|usr|login|admin|!IF|id|=|4");
+        //when
         command.execute();
-
+        //then
         shouldPrintView("[В таблице usr была обновлена строка!]");
     }
 
