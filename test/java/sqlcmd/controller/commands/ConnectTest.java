@@ -1,8 +1,10 @@
-package ru.fedichkindenis.sqlcmd.controller.commands;
+package sqlcmd.controller.commands;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import ru.fedichkindenis.sqlcmd.controller.commands.Command;
+import ru.fedichkindenis.sqlcmd.controller.commands.Connect;
 import ru.fedichkindenis.sqlcmd.model.DBManager;
 import ru.fedichkindenis.sqlcmd.view.ViewDecorator;
 
@@ -11,8 +13,6 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
 /**
- * Created by Денис on 23.07.2016.
- *
  * Тесты для команды connect
  */
 

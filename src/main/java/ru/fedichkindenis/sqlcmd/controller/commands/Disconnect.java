@@ -29,7 +29,7 @@ public class Disconnect implements Command {
         }
 
         dbManager.disconnect();
-        view.write("Соединение с базой разорванно");
+        view.write("Соединение с базой разорвано");
     }
 
     private boolean validateCommand() {

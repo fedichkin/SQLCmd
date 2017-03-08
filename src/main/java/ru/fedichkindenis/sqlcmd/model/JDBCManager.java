@@ -6,8 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Денис on 15.07.2016.
- *
  * Менеджер базы данных JDBC
  */
 public class JDBCManager implements DBManager {
@@ -300,7 +298,7 @@ public class JDBCManager implements DBManager {
 
         if(!isConnect()) {
 
-            throw new RuntimeException("Соединение не установленно! Установите соединение!");
+            throw new RuntimeException("Соединение не установлено! Установите соединение!");
         }
     }
 }

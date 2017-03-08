@@ -1,13 +1,13 @@
-package ru.fedichkindenis.sqlcmd.controller.commands;
+package sqlcmd.controller.commands;
 
 import org.junit.Test;
+import ru.fedichkindenis.sqlcmd.controller.commands.Command;
+import ru.fedichkindenis.sqlcmd.controller.commands.Unsupported;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
- * Created by Денис on 26.07.2016.
- *
  * Класс для тестирования команды unsupported
  */
 public class UnsupportedTest implements CommandTest {

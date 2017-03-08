@@ -1,6 +1,8 @@
-package ru.fedichkindenis.sqlcmd.view;
+package sqlcmd.view;
 
 import org.junit.Test;
+import ru.fedichkindenis.sqlcmd.view.Console;
+import ru.fedichkindenis.sqlcmd.view.View;
 
 import java.io.*;
 
@@ -8,8 +10,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
- * Created by Денис on 27.07.2016.
- *
  * Класс для тестирования работы с консолью
  */
 public class ConsoleTest {

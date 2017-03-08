@@ -1,9 +1,13 @@
-package ru.fedichkindenis.sqlcmd.view;
+package sqlcmd.view;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import ru.fedichkindenis.sqlcmd.model.DataRow;
+import ru.fedichkindenis.sqlcmd.view.AlignWrite;
+import ru.fedichkindenis.sqlcmd.view.TableConsoleView;
+import ru.fedichkindenis.sqlcmd.view.View;
+import ru.fedichkindenis.sqlcmd.view.ViewDecorator;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,9 +19,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
 /**
- * Created by Денис on 29.07.2016.
- *
- * Клас для тестирования табличного вывода в консоль
+ * Класс для тестирования табличного вывода в консоль
  */
 public class TableConsoleViewTest {
 

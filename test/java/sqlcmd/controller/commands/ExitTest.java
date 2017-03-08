@@ -1,8 +1,11 @@
-package ru.fedichkindenis.sqlcmd.controller.commands;
+package sqlcmd.controller.commands;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import ru.fedichkindenis.sqlcmd.controller.commands.Command;
+import ru.fedichkindenis.sqlcmd.controller.commands.Exit;
+import ru.fedichkindenis.sqlcmd.controller.commands.ExitException;
 import ru.fedichkindenis.sqlcmd.model.DBManager;
 import ru.fedichkindenis.sqlcmd.view.ViewDecorator;
 
@@ -13,8 +16,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 /**
- * Created by Денис on 26.07.2016.
- *
  * Тест для команды exit
  */
 public class ExitTest implements CommandTest {

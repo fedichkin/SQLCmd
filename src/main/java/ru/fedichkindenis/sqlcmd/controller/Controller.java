@@ -22,7 +22,7 @@ public class Controller {
     public void run() {
 
         view.write("Приветствую тебя пользователь!");
-        view.write("Для начала работы с ситемой установи соединение с базой данных с помощью команды: ");
+        view.write("Для начала работы с системой установи соединение с базой данных с помощью команды: ");
         view.write("connect|host|port|dbName|userName|password");
 
         while (true) {

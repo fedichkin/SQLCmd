@@ -1,8 +1,9 @@
-package ru.fedichkindenis.sqlcmd.model;
+package sqlcmd.model;
 
 import config.JDBCProperties;
 import config.TestBD;
 import org.junit.*;
+import ru.fedichkindenis.sqlcmd.model.JDBCManager;
 
 import java.util.Properties;
 
@@ -10,8 +11,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
- * Created by Денис on 30.07.2016.
- *
  * Класс для тестирования менеджера базы данных JDBC
  */
 public class JDBCManagerTest {

@@ -1,8 +1,10 @@
-package ru.fedichkindenis.sqlcmd.controller.commands;
+package sqlcmd.controller.commands;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import ru.fedichkindenis.sqlcmd.controller.commands.Command;
+import ru.fedichkindenis.sqlcmd.controller.commands.Disconnect;
 import ru.fedichkindenis.sqlcmd.model.DBManager;
 import ru.fedichkindenis.sqlcmd.view.ViewDecorator;
 
@@ -13,9 +15,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 /**
- * Created by Денис on 26.07.2016.
- *
- * Клас для тестирования команды disconnect
+ * Класс для тестирования команды disconnect
  */
 public class DisconnectTest implements CommandTest {
 
@@ -55,7 +55,7 @@ public class DisconnectTest implements CommandTest {
         //when
         command.execute();
         //then
-        shouldPrintView("[Соединение с базой разорванно]");
+        shouldPrintView("[Соединение с базой разорвано]");
     }
 
     private void shouldPrintView(String expected) {

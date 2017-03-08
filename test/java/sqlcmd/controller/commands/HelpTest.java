@@ -1,9 +1,11 @@
-package ru.fedichkindenis.sqlcmd.controller.commands;
+package sqlcmd.controller.commands;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.MockitoAnnotations;
+import ru.fedichkindenis.sqlcmd.controller.commands.Command;
+import ru.fedichkindenis.sqlcmd.controller.commands.Help;
 import ru.fedichkindenis.sqlcmd.view.ViewDecorator;
 
 import static org.junit.Assert.assertEquals;
@@ -80,12 +82,12 @@ public class HelpTest implements CommandTest {
                         "\tФормат команды: insert-row|наименование таблицы|наименование поля1|значение1..., " +
                         "\tПример команды: insert-row|usr|id|1|login|user|password|qwerty, " +
                         "Команда: update-row, " +
-                        "\tОписание команды: Команда для обновления данных в строках отобраных по условию, " +
+                        "\tОписание команды: Команда для обновления данных в строках отобранных по условию, " +
                         "\tФормат команды: update-row|наименование таблицы|наименование поля1|значение поля 1|...|!IF|поле условия1|оператор условия1|значение условия1|..., " +
                         "\tПример команды: update-row|usr|password|1111|!IF|id|=|3, " +
-                        "\tДополнительная информация: В данной версии программы можно использовать только такие операторы для сравнения: =, <>, >, <, >=, <=. Блок с уловием может отсутствовать, " +
+                        "\tДополнительная информация: В данной версии программы можно использовать только такие операторы для сравнения: =, <>, >, <, >=, <=. Блок с условием может отсутствовать, " +
                         "Команда: delete-row, " +
-                        "\tОписание команды: Команда для удаления строк отобраных по условию, " +
+                        "\tОписание команды: Команда для удаления строк отобранных по условию, " +
                         "\tФормат команды: delete-row|наименование таблицы|!IF|поле условия1|оператор условия1|значение условия1|..., " +
                         "\tПример команды: delete-row|usr|!IF|id|<|5, " +
                         "\tДополнительная информация: В данной версии программы можно использовать только такие операторы для сравнения: =, <>, >, <, >=, <=. Условие обязательно или воспользуйтесь командой clear-table, " +

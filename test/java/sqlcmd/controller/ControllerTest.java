@@ -1,8 +1,9 @@
-package ru.fedichkindenis.sqlcmd.controller;
+package sqlcmd.controller;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import ru.fedichkindenis.sqlcmd.controller.Controller;
 import ru.fedichkindenis.sqlcmd.model.DBManager;
 import ru.fedichkindenis.sqlcmd.view.ViewDecorator;
 
@@ -13,8 +14,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 /**
- * Created by Денис on 27.07.2016.
- *
  * Класс для тестирования контролера
  */
 public class ControllerTest {
@@ -35,7 +34,7 @@ public class ControllerTest {
         //given
         List<String> expectedList = Arrays.asList(
                 "Приветствую тебя пользователь!",
-                "Для начала работы с ситемой установи соединение с базой данных с помощью команды: ",
+                "Для начала работы с системой установи соединение с базой данных с помощью команды: ",
                 "connect|host|port|dbName|userName|password",
                 "",
                 "Введите команду (help для справки): ",

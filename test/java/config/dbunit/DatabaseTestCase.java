@@ -39,7 +39,6 @@ public abstract  class DatabaseTestCase {
 
     void setUpDatabaseConfig(DatabaseConfig config)
     {
-        // Designed to be overridden.
     }
 
     IDatabaseTester getDatabaseTester() throws Exception {
@@ -102,8 +101,6 @@ public abstract  class DatabaseTestCase {
             this.operationListener = new DefaultOperationListener(){
                 public void connectionRetrieved(IDatabaseConnection connection) {
                     super.connectionRetrieved(connection);
-                    // When a new connection has been created then invoke the setUp method
-                    // so that user defined DatabaseConfig parameters can be set.
                     setUpDatabaseConfig(connection.getConfig());
                 }
             };

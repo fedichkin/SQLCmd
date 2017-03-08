@@ -1,7 +1,7 @@
 package ru.fedichkindenis.sqlcmd.model;
 
 /**
- * Класс для хранения набора параметв создания полей
+ * Класс для хранения набора параметров создания полей
  */
 public class CreateRow extends Row {
 

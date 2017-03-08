@@ -1,7 +1,8 @@
-package ru.fedichkindenis.sqlcmd.controller.commands;
+package sqlcmd.controller.commands;
 
 import org.junit.Before;
 import org.junit.Test;
+import ru.fedichkindenis.sqlcmd.controller.commands.*;
 import ru.fedichkindenis.sqlcmd.model.DBManager;
 import ru.fedichkindenis.sqlcmd.view.ViewDecorator;
 
@@ -10,8 +11,6 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 
 /**
- * Created by Денис on 26.07.2016.
- *
  * Класс для тестирования фабрики команд
  */
 public class CommandFactoryTest implements CommandTest {

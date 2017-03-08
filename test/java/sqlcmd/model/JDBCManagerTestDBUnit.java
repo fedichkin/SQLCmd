@@ -1,4 +1,4 @@
-package ru.fedichkindenis.sqlcmd.model;
+package sqlcmd.model;
 
 import config.DBUnitConfig;
 import config.JDBCProperties;
@@ -7,6 +7,10 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.junit.*;
+import ru.fedichkindenis.sqlcmd.model.ConditionRow;
+import ru.fedichkindenis.sqlcmd.model.CreateRow;
+import ru.fedichkindenis.sqlcmd.model.DataRow;
+import ru.fedichkindenis.sqlcmd.model.JDBCManager;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -14,8 +18,6 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * Created by Денис on 03.08.2016.
- *
  * Тестирование работы с базой данных с использованием DBUnit
  */
 public class JDBCManagerTestDBUnit extends DBUnitConfig {

@@ -1,8 +1,6 @@
 package ru.fedichkindenis.sqlcmd.util;
 
 /**
- * Created by Денис on 13.07.2016.
- *
  * Утилиты для работы со строками
  */
 public class StringUtil {

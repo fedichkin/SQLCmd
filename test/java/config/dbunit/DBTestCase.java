@@ -21,8 +21,6 @@ public abstract  class DBTestCase extends DatabaseTestCase {
         final IDatabaseTester databaseTester = getDatabaseTester();
         Assert.assertNotNull("DatabaseTester is not set", databaseTester);
         IDatabaseConnection connection = databaseTester.getConnection();
-        // Ensure that users have the possibility to configure the connection's
-        // configuration
         setUpDatabaseConfig(connection.getConfig());
         return connection;
     }
