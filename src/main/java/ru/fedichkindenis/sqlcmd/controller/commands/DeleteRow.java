@@ -13,7 +13,7 @@ import ru.fedichkindenis.sqlcmd.view.ViewDecorator;
  * Пример команды: delete-row|usr|!IF|id|<|5
  * В данной версии программы можно использовать только такие
  * операторы для сравнения: =, <>, >, <, >=, <=
- * Условие обязательно или воспользуйтесь командой clear-table
+ * Блок условия не обязателен
  */
 public class DeleteRow implements Command {
 
@@ -38,9 +38,14 @@ public class DeleteRow implements Command {
         String [] parameters = blocksCommand[0].split("\\|");
         String nameTable = parameters[1];
 
-        String [] conditions = blocksCommand[1].split("\\|");
-        RowFactory rowFactory = new RowFactory(conditions);
-        ConditionRow conditionRow = rowFactory.createConditionRow();
+        ConditionRow conditionRow = new ConditionRow();
+
+        if(blocksCommand.length == 2) {
+
+            String [] conditions = blocksCommand[1].split("\\|");
+            RowFactory rowFactory = new RowFactory(conditions);
+            conditionRow = rowFactory.createConditionRow();
+        }
 
         dbManager.delete(nameTable, conditionRow);
 
@@ -49,7 +54,7 @@ public class DeleteRow implements Command {
 
     private boolean validateCommand() {
 
-        int minCountArguments = 6;
+        int minCountArguments = 2;
         boolean isValidateCommand;
 
         isValidateCommand = !StringUtil.isEmpty(textCommand);
@@ -58,10 +63,11 @@ public class DeleteRow implements Command {
 
         String [] blocksCommand = textCommand.split("\\|!IF\\|");
 
-        isValidateCommand = isValidateCommand && blocksCommand.length == 2;
+        isValidateCommand = isValidateCommand && (blocksCommand.length == 1 || blocksCommand.length == 2);
 
         String [] argumentsFirstBlock = blocksCommand[0].split("\\|");
-        String [] argumentsSecondBlock = blocksCommand[1].split("\\|");
+        String [] argumentsSecondBlock = blocksCommand.length == 2
+                ? blocksCommand[1].split("\\|") : new String[0];
 
         isValidateCommand = isValidateCommand && argumentsFirstBlock.length % 2 == 0;
         isValidateCommand = isValidateCommand && argumentsSecondBlock.length % 3 == 0;

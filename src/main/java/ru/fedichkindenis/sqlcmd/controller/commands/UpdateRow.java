@@ -51,7 +51,6 @@ public class UpdateRow implements Command {
         if(blocksCommand.length == 2) {
 
             String [] conditions = blocksCommand[1].split("\\|");
-
             rowFactory = new RowFactory(conditions);
             conditionRow = rowFactory.createConditionRow();
         }
