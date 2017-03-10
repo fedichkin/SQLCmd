@@ -111,7 +111,7 @@ public class JDBCManager implements DBManager {
     public void clearTable(String tableName) {
         exceptionConnect();
 
-        String queryStr = "delete from " + tableName;
+        String queryStr = "truncate table " + tableName;
 
         try (PreparedStatement statement = connection.prepareStatement(queryStr)) {
 
