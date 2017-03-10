@@ -15,9 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * update to jUnit 4
+ * Данный класс позволяет использовать jUnit 4-й версии в библиотеке dbUnit
+ * (c)https://gist.github.com/kingargyle/9195975
  */
-public abstract  class DatabaseTestCase {
+public abstract class DatabaseTestCase {
 
     private static final Logger logger = LoggerFactory.getLogger(DatabaseTestCase.class);
 
