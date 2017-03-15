@@ -24,12 +24,14 @@ public class DeleteTable implements Command {
     @Override
     public void execute() {
 
+        final int indexNameTable = 1;
+
         if(!validateCommand()) {
             throw new IllegalArgumentException("Указан не верный формат команды");
         }
 
-        String [] parameters = textCommand.split("\\|");
-        String nameTable = parameters[1];
+        String [] parameters = textCommand.split(SEPARATE);
+        String nameTable = parameters[indexNameTable];
 
         dbManager.deleteTable(nameTable);
 
@@ -42,7 +44,7 @@ public class DeleteTable implements Command {
 
         return !StringUtil.isEmpty(textCommand)
                 && textCommand.startsWith("delete-table|")
-                && textCommand.split("\\|").length == countArguments;
+                && textCommand.split(SEPARATE).length == countArguments;
 
     }
 }

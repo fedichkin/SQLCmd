@@ -27,11 +27,13 @@ public class DataTable implements Command {
     @Override
     public void execute() {
 
+        final int indexNameTable = 1;
+
         if(!validateCommand()) {
             throw new IllegalArgumentException("Указан не верный формат команды");
         }
 
-        String nameTable = textCommand.split("\\|")[1];
+        String nameTable = textCommand.split(SEPARATE)[indexNameTable];
 
         List<DataRow> dataRowList = dbManager.dataTable(nameTable);
 
@@ -51,6 +53,6 @@ public class DataTable implements Command {
 
         return !StringUtil.isEmpty(textCommand)
                 && textCommand.startsWith("data-table|")
-                && textCommand.split("\\|").length == countArgument;
+                && textCommand.split(SEPARATE).length == countArgument;
     }
 }

@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 /**
  * Команда для вставки строк в таблицу
- * Формат команды: insert-row|наименование таблицы|наименование поля1|значение1.....
+ * Формат команды: insert-row|наименование таблицы|наименование поля1|значение1...
  * Пример команды: insert-row|usr|id|1|login|user|password|qwerty
  */
 public class InsertRow implements Command {
@@ -28,13 +28,16 @@ public class InsertRow implements Command {
     @Override
     public void execute() {
 
+        final int indexNameTable = 1;
+        final int startIndexField = 2;
+
         if(!validateCommand()) {
             throw new IllegalArgumentException("Указан не верный формат команды");
         }
 
-        String [] parameters = textCommand.split("\\|");
-        String nameTable = parameters[1];
-        String [] parametersDataRow = Arrays.copyOfRange(parameters, 2, parameters.length);
+        String [] parameters = textCommand.split(SEPARATE);
+        String nameTable = parameters[indexNameTable];
+        String [] parametersDataRow = Arrays.copyOfRange(parameters, startIndexField, parameters.length);
 
         RowFactory rowFactory = new RowFactory(parametersDataRow);
         DataRow dataRow = rowFactory.createDataRow();
@@ -46,10 +49,11 @@ public class InsertRow implements Command {
     private boolean validateCommand() {
 
         int minCountArguments = 4;
+        int countParametersInField = 2;
 
         return !StringUtil.isEmpty(textCommand)
                 && textCommand.startsWith("insert-row|")
-                && textCommand.split("\\|").length >= minCountArguments
-                && textCommand.split("\\|").length % 2 == 0;
+                && textCommand.split(SEPARATE).length >= minCountArguments
+                && textCommand.split(SEPARATE).length % countParametersInField == 0;
     }
 }

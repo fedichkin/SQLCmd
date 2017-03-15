@@ -24,16 +24,22 @@ public class Connect implements Command {
     @Override
     public void execute() {
 
+        final int indexHost = 1;
+        final int indexPort = 2;
+        final int indexDbName = 3;
+        final int indexUserName = 4;
+        final int indexPassword = 5;
+
         if(!validateCommand()) {
             throw new IllegalArgumentException("Указан не верный формат команды");
         }
 
-        String [] arguments = textCommand.split("\\|");
-        String host = arguments[1];
-        String port = arguments[2];
-        String dbName = arguments[3];
-        String userName = arguments[4];
-        String password = arguments[5];
+        String [] arguments = textCommand.split(SEPARATE);
+        String host = arguments[indexHost];
+        String port = arguments[indexPort];
+        String dbName = arguments[indexDbName];
+        String userName = arguments[indexUserName];
+        String password = arguments[indexPassword];
 
         dbManager.connect(host, port, dbName, userName, password);
         view.write("Соединение установлено!");
@@ -45,7 +51,7 @@ public class Connect implements Command {
 
         return !StringUtil.isEmpty(textCommand)
                 && textCommand.startsWith("connect|")
-                && textCommand.split("\\|").length == countArgument;
+                && textCommand.split(SEPARATE).length == countArgument;
 
     }
 }

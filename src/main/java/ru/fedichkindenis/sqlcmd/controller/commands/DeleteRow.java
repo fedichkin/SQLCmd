@@ -17,6 +17,8 @@ import ru.fedichkindenis.sqlcmd.view.ViewDecorator;
  */
 public class DeleteRow implements Command {
 
+    private final int COUNT_BLOCKS_IN_COMMAND = 2;
+
     private DBManager dbManager;
     private ViewDecorator view;
     private String textCommand;
@@ -30,19 +32,21 @@ public class DeleteRow implements Command {
     @Override
     public void execute() {
 
+        final int indexNameTable = 1;
+
         if(!validateCommand()) {
             throw new IllegalArgumentException("Указан не верный формат команды");
         }
 
-        String [] blocksCommand = textCommand.split("\\|!IF\\|");
-        String [] parameters = blocksCommand[0].split("\\|");
-        String nameTable = parameters[1];
+        String [] blocksCommand = textCommand.split(IF_SEPARATE);
+        String [] parameters = blocksCommand[0].split(SEPARATE);
+        String nameTable = parameters[indexNameTable];
 
         ConditionRow conditionRow = new ConditionRow();
 
-        if(blocksCommand.length == 2) {
+        if(blocksCommand.length == COUNT_BLOCKS_IN_COMMAND) {
 
-            String [] conditions = blocksCommand[1].split("\\|");
+            String [] conditions = blocksCommand[1].split(SEPARATE);
             RowFactory rowFactory = new RowFactory(conditions);
             conditionRow = rowFactory.createConditionRow();
         }
@@ -54,23 +58,27 @@ public class DeleteRow implements Command {
 
     private boolean validateCommand() {
 
-        int minCountArguments = 2;
+        final int minCountArguments = 2;
+        final int countParametersInFieldFirstBlock = 2;
+        final int countParametersInFieldSecondBlock = 3;
         boolean isValidateCommand;
 
         isValidateCommand = !StringUtil.isEmpty(textCommand);
         isValidateCommand = isValidateCommand && textCommand.startsWith("delete-row|");
-        isValidateCommand = isValidateCommand && textCommand.split("\\|").length >= minCountArguments;
+        isValidateCommand = isValidateCommand && textCommand.split(SEPARATE).length >= minCountArguments;
 
-        String [] blocksCommand = textCommand.split("\\|!IF\\|");
+        String [] blocksCommand = textCommand.split(IF_SEPARATE);
 
         isValidateCommand = isValidateCommand && (blocksCommand.length == 1 || blocksCommand.length == 2);
 
-        String [] argumentsFirstBlock = blocksCommand[0].split("\\|");
-        String [] argumentsSecondBlock = blocksCommand.length == 2
-                ? blocksCommand[1].split("\\|") : new String[0];
+        String [] argumentsFirstBlock = blocksCommand[0].split(SEPARATE);
+        String [] argumentsSecondBlock = blocksCommand.length == COUNT_BLOCKS_IN_COMMAND
+                ? blocksCommand[1].split(SEPARATE) : new String[0];
 
-        isValidateCommand = isValidateCommand && argumentsFirstBlock.length % 2 == 0;
-        isValidateCommand = isValidateCommand && argumentsSecondBlock.length % 3 == 0;
+        isValidateCommand = isValidateCommand &&
+                argumentsFirstBlock.length % countParametersInFieldFirstBlock == 0;
+        isValidateCommand = isValidateCommand &&
+                argumentsSecondBlock.length % countParametersInFieldSecondBlock == 0;
 
         return isValidateCommand;
     }

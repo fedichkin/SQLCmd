@@ -29,7 +29,7 @@ public class UserQuery implements Command {
             throw new IllegalArgumentException("Указан не верный формат команды");
         }
 
-        String [] parameters = textCommand.split("\\|<");
+        String [] parameters = textCommand.split(QUERY_SEPARATE);
         String textQuery = parameters[1];
 
         dbManager.userQuery(textQuery);
@@ -43,7 +43,7 @@ public class UserQuery implements Command {
 
         isValidateCommand = !StringUtil.isEmpty(textCommand);
         isValidateCommand = isValidateCommand && textCommand.startsWith("user-query|");
-        isValidateCommand = isValidateCommand && textCommand.split("\\|<").length == countArguments;
+        isValidateCommand = isValidateCommand && textCommand.split(QUERY_SEPARATE).length == countArguments;
 
         return isValidateCommand;
     }

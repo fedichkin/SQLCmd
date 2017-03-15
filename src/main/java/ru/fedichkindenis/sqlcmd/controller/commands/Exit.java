@@ -32,7 +32,7 @@ public class Exit implements Command {
         view.close();
         view.write("До свидания!");
 
-        throw new ExitException();
+        throw new ExitException("Работа программы завершена!");
     }
 
     private boolean validateCommand() {

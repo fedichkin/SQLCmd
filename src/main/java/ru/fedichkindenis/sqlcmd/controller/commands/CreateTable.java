@@ -20,6 +20,8 @@ import java.util.Arrays;
  */
 public class CreateTable implements Command {
 
+    private final int MIN_COUNT_ARGUMENTS = 2;
+
     private DBManager dbManager;
     private ViewDecorator view;
     private String textCommand;
@@ -33,16 +35,19 @@ public class CreateTable implements Command {
     @Override
     public void execute() {
 
+        final int indexNameTable = 1;
+
+
         if(!validateCommand()) {
             throw new IllegalArgumentException("Указан не верный формат команды");
         }
 
-        String [] parameters = textCommand.split("\\|");
-        String nameTable = parameters[1];
+        String [] parameters = textCommand.split(SEPARATE);
+        String nameTable = parameters[indexNameTable];
 
         CreateRow createRow = new CreateRow();
-        if(parameters.length > 2) {
-            String [] parametersCreateRow = Arrays.copyOfRange(parameters, 2, parameters.length);
+        if(parameters.length > MIN_COUNT_ARGUMENTS) {
+            String [] parametersCreateRow = Arrays.copyOfRange(parameters, MIN_COUNT_ARGUMENTS, parameters.length);
             RowFactory rowFactory = new RowFactory(parametersCreateRow);
             createRow = rowFactory.createCreateRow();
         }
@@ -53,13 +58,14 @@ public class CreateTable implements Command {
 
     private boolean validateCommand() {
 
-        int minCountArguments = 2;
+        final int countParametersForField = 3;
         boolean isValidateCommand;
 
         isValidateCommand = !StringUtil.isEmpty(textCommand);
         isValidateCommand = isValidateCommand && textCommand.startsWith("create-table|");
-        isValidateCommand = isValidateCommand && textCommand.split("\\|").length >= minCountArguments;
-        isValidateCommand = isValidateCommand && (textCommand.split("\\|").length - 2) % 3 == 0;
+        isValidateCommand = isValidateCommand && textCommand.split(SEPARATE).length >= MIN_COUNT_ARGUMENTS;
+        isValidateCommand = isValidateCommand && (textCommand.split(SEPARATE).length - MIN_COUNT_ARGUMENTS)
+                % countParametersForField == 0;
 
         return isValidateCommand;
     }
