@@ -26,15 +26,16 @@ public class RowFactory {
 
         validate(DATA_ROW);
 
-        int countField = (parameters.length / 2);
-        int firstFieldIndex = 0;
-        int firstValueIndex = 1;
+        final int countParametersInField = 2;
+        final int countField = (parameters.length / countParametersInField);
+        final int firstFieldIndex = 0;
+        final int firstValueIndex = 1;
 
         DataRow dataRow = new DataRow();
         for(int index = 0; index < countField; index ++) {
 
-            String field = parameters[firstFieldIndex + index * 2];
-            Object value = getValue(parameters[firstValueIndex + index * 2]);
+            String field = parameters[firstFieldIndex + index * countParametersInField];
+            Object value = getValue(parameters[firstValueIndex + index * countParametersInField]);
 
             dataRow.add(field, value);
         }
@@ -46,17 +47,18 @@ public class RowFactory {
 
         validate(CONDITION_ROW);
 
-        int countCondition = parameters.length / 3;
-        int firstIndexNameField = 0;
-        int firstIndexCondition = 1;
-        int firstIndexValueField = 2;
+        final int countParametersInField = 3;
+        final int countCondition = parameters.length / countParametersInField;
+        final int firstIndexNameField = 0;
+        final int firstIndexCondition = 1;
+        final int firstIndexValueField = 2;
 
         ConditionRow conditionRow = new ConditionRow();
         for(int index = 0; index < countCondition; index++) {
 
-            String nameFiled = parameters[firstIndexNameField + index * 3];
-            String condition = parameters[firstIndexCondition + index * 3];
-            Object valueField = getValue(parameters[firstIndexValueField + index * 3]);
+            String nameFiled = parameters[firstIndexNameField + index * countParametersInField];
+            String condition = parameters[firstIndexCondition + index * countParametersInField];
+            Object valueField = getValue(parameters[firstIndexValueField + index * countParametersInField]);
 
             conditionRow.add(nameFiled, valueField, condition);
         }
@@ -68,17 +70,18 @@ public class RowFactory {
 
         validate(CONDITION_ROW);
 
-        int countCreateField = parameters.length / 3;
-        int firstIndexNameField = 0;
-        int firstIndexTypeField = 1;
-        int firstIndexIsNotNullField = 2;
+        final int countParametersInField = 3;
+        final int countCreateField = parameters.length / countParametersInField;
+        final int firstIndexNameField = 0;
+        final int firstIndexTypeField = 1;
+        final int firstIndexIsNotNullField = 2;
 
         CreateRow createRow = new CreateRow();
         for(int index = 0; index < countCreateField; index++) {
 
-            String nameField = parameters[firstIndexNameField + index * 3];
-            String typeField = parameters[firstIndexTypeField + index * 3];
-            String isNotNullField = parameters[firstIndexIsNotNullField + index * 3];
+            String nameField = parameters[firstIndexNameField + index * countParametersInField];
+            String typeField = parameters[firstIndexTypeField + index * countParametersInField];
+            String isNotNullField = parameters[firstIndexIsNotNullField + index * countParametersInField];
 
             createRow.add(nameField, typeField, isNotNullField.equals("true"));
         }
@@ -114,9 +117,12 @@ public class RowFactory {
 
     private Object getValue(String parameter) {
 
-        if(parameter.matches("\\d\\d\\.\\d\\d\\.\\d\\d\\d\\d")) {
+        final String regexDateFormat = "\\d\\d\\.\\d\\d\\.\\d\\d\\d\\d";
+        final String textDateFormat = "dd.MM.yyyy";
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        if(parameter.matches(regexDateFormat)) {
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat(textDateFormat);
 
             try {
                 return dateFormat.parse(parameter);
