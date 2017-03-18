@@ -1,7 +1,6 @@
 package ru.fedichkindenis.sqlcmd.model;
 
 import java.sql.*;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,16 +10,21 @@ import java.util.List;
 public class JDBCManager implements DBManager {
 
     private Connection connection;
+    private BuilderQuery builderQuery;
+
+    public JDBCManager(BuilderQuery builderQuery) {
+        this.builderQuery = builderQuery;
+    }
 
     @Override
     public void connect(String hostname, String port, String dbName, String username, String password) {
 
         try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://" + hostname + ":" + port + "/" + dbName,
-                    username, password);
+            Class.forName(builderQuery.getClassDriver());
+            connection = DriverManager.getConnection(
+                    builderQuery.getUrlConnection(hostname, port, dbName), username, password);
         } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 
@@ -32,7 +36,7 @@ public class JDBCManager implements DBManager {
             try {
                 connection.close();
             } catch (SQLException e) {
-                throw new RuntimeException(e.getMessage());
+                throw new RuntimeException(e.getMessage(), e);
             }
         }
     }
@@ -43,10 +47,7 @@ public class JDBCManager implements DBManager {
 
         List<String> listTable = new LinkedList<>();
 
-        String queryStr = "select table_name as nameTable " +
-                "from information_schema.tables " +
-                "where table_schema = 'public' " +
-                "order by table_name";
+        String queryStr = builderQuery.getQueryListTable();
 
         try (PreparedStatement statement = connection.prepareStatement(queryStr);
              ResultSet resultSet = statement.executeQuery()) {
@@ -57,7 +58,7 @@ public class JDBCManager implements DBManager {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException(e.getMessage(), e);
         }
 
         return listTable;
@@ -69,7 +70,7 @@ public class JDBCManager implements DBManager {
 
         List<DataRow> dataRows = new LinkedList<>();
 
-        String queryStr = "select * from " + tableName;
+        String queryStr = builderQuery.getQueryDataTable(tableName);
 
         try (PreparedStatement statement = connection.prepareStatement(queryStr);
              ResultSet resultSet = statement.executeQuery()) {
@@ -101,7 +102,7 @@ public class JDBCManager implements DBManager {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException(e.getMessage(), e);
         }
 
         return dataRows;
@@ -111,14 +112,14 @@ public class JDBCManager implements DBManager {
     public void clearTable(String tableName) {
         exceptionConnect();
 
-        String queryStr = "truncate table " + tableName;
+        String queryStr = builderQuery.getQueryClearTable(tableName);
 
         try (PreparedStatement statement = connection.prepareStatement(queryStr)) {
 
             statement.execute();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 
@@ -126,14 +127,14 @@ public class JDBCManager implements DBManager {
     public void deleteTable(String tableName) {
         exceptionConnect();
 
-        String queryStr = "drop table " + tableName;
+        String queryStr = builderQuery.getQueryDeleteTable(tableName);
 
         try (PreparedStatement statement = connection.prepareStatement(queryStr)) {
 
             statement.execute();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 
@@ -141,22 +142,7 @@ public class JDBCManager implements DBManager {
     public void insert(String tableName, DataRow dataRow) {
         exceptionConnect();
 
-        String queryStr = "insert into " + tableName + "(";
-
-        for(String nameFiled : dataRow.getListNameField()) {
-
-            queryStr = queryStr + nameFiled + ",";
-        }
-
-        queryStr = queryStr.substring(0, queryStr.length() - 1) + ")";
-        queryStr = queryStr + " values (";
-
-        for(int i = 0; i < dataRow.getCountField(); i++) {
-
-            queryStr = queryStr + "?,";
-        }
-
-        queryStr = queryStr.substring(0, queryStr.length() - 1) + ")";
+        String queryStr = builderQuery.getQueryInsertRow(tableName, dataRow);
 
         try (PreparedStatement statement = connection.prepareStatement(queryStr)) {
 
@@ -169,7 +155,7 @@ public class JDBCManager implements DBManager {
             statement.execute();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 
@@ -177,21 +163,7 @@ public class JDBCManager implements DBManager {
     public void update(String tableName, DataRow dataRow, ConditionRow conditionRow) {
         exceptionConnect();
 
-        String queryStr = "update " + tableName + " set ";
-
-        for(String nameField : dataRow.getListNameField()) {
-
-            queryStr = queryStr + nameField + " = ?,";
-        }
-
-        queryStr = queryStr.substring(0, queryStr.length() - 1);
-        queryStr = queryStr + " where 1 = 1 ";
-
-        Iterator<String> conditionIterator = conditionRow.getListConditionField().iterator();
-        for(String nameField : conditionRow.getListNameField()) {
-
-            queryStr = queryStr + " and " + nameField + conditionIterator.next() + "?";
-        }
+        String queryStr = builderQuery.getQueryUpdateRow(tableName, dataRow, conditionRow);
 
         try (PreparedStatement statement = connection.prepareStatement(queryStr)) {
 
@@ -201,7 +173,7 @@ public class JDBCManager implements DBManager {
             statement.execute();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 
@@ -209,13 +181,7 @@ public class JDBCManager implements DBManager {
     public void delete(String tableName, ConditionRow conditionRow) {
         exceptionConnect();
 
-        String queryStr = "delete from " + tableName + " where 1 = 1";
-
-        Iterator<String> conditionIterator = conditionRow.getListConditionField().iterator();
-        for(String nameField : conditionRow.getListNameField()) {
-
-            queryStr = queryStr + " and " + nameField + conditionIterator.next() + "?";
-        }
+        String queryStr = builderQuery.getQueryDeleteRow(tableName, conditionRow);
 
         try (PreparedStatement statement = connection.prepareStatement(queryStr)) {
 
@@ -223,7 +189,7 @@ public class JDBCManager implements DBManager {
             statement.execute();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 
@@ -231,33 +197,14 @@ public class JDBCManager implements DBManager {
     public void createTable(String tableName, CreateRow createRow) {
         exceptionConnect();
 
-        String queryStr = "create table " + tableName + " (";
-
-        Iterator<Field> fieldIterator = createRow.getIteratorField();
-
-        while (fieldIterator.hasNext()) {
-
-            CreateField field = (CreateField)fieldIterator.next();
-
-            queryStr = queryStr + field.getNameField() + " ";
-            queryStr = queryStr + field.getTypeField() + " ";
-            queryStr = queryStr + (field.isNotNull() ? " NOT NULL" : "");
-            queryStr = queryStr + ",";
-        }
-
-        if(queryStr.charAt(queryStr.length() - 1) == ',') {
-
-            queryStr = queryStr.substring(0, queryStr.length() - 1);
-        }
-
-        queryStr = queryStr + ")";
+        String queryStr = builderQuery.getQueryCreateTable(tableName, createRow);
 
         try (PreparedStatement statement = connection.prepareStatement(queryStr)) {
 
             statement.execute();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 
@@ -270,11 +217,11 @@ public class JDBCManager implements DBManager {
             statement.execute();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 
-    private void setParameters(ConditionRow conditionRow, DataRow dataRow,
+    private static void setParameters(ConditionRow conditionRow, DataRow dataRow,
                                PreparedStatement statement) throws SQLException {
 
         int index = 1;
@@ -298,7 +245,8 @@ public class JDBCManager implements DBManager {
 
         if(!isConnect()) {
 
-            throw new RuntimeException("Соединение не установлено! Установите соединение!");
+            throw new RuntimeException("Соединение не установлено! " +
+                    "Установите соединение!");
         }
     }
 }

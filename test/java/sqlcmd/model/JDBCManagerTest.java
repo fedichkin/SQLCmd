@@ -3,7 +3,9 @@ package sqlcmd.model;
 import config.JDBCProperties;
 import config.TestBD;
 import org.junit.*;
+import ru.fedichkindenis.sqlcmd.model.BuilderQuery;
 import ru.fedichkindenis.sqlcmd.model.JDBCManager;
+import ru.fedichkindenis.sqlcmd.model.PostgreSqlBuilderQuery;
 
 import java.util.Properties;
 
@@ -23,7 +25,8 @@ public class JDBCManagerTest {
     public void setUp() throws Exception {
         JDBCProperties jdbcProperties = new JDBCProperties("postgesql.config.properties");
         properties = jdbcProperties.getProperties();
-        jdbcManager = new JDBCManager();
+        BuilderQuery builderQuery = new PostgreSqlBuilderQuery();
+        jdbcManager = new JDBCManager(builderQuery);
     }
 
     @BeforeClass

@@ -5,8 +5,10 @@ import config.JDBCProperties;
 import config.TestBD;
 import org.junit.*;
 import ru.fedichkindenis.sqlcmd.controller.Controller;
+import ru.fedichkindenis.sqlcmd.model.BuilderQuery;
 import ru.fedichkindenis.sqlcmd.model.DBManager;
 import ru.fedichkindenis.sqlcmd.model.JDBCManager;
+import ru.fedichkindenis.sqlcmd.model.PostgreSqlBuilderQuery;
 import ru.fedichkindenis.sqlcmd.view.Console;
 import ru.fedichkindenis.sqlcmd.view.TableConsoleView;
 import ru.fedichkindenis.sqlcmd.view.View;
@@ -517,7 +519,8 @@ public class IntegrationTest {
     private void runApplication() throws Exception {
 
         View view = new Console();
-        DBManager dbManager = new JDBCManager();
+        BuilderQuery builderQuery = new PostgreSqlBuilderQuery();
+        DBManager dbManager = new JDBCManager(builderQuery);
 
         Controller controller = new Controller(new TableConsoleView(view), dbManager);
         controller.run();

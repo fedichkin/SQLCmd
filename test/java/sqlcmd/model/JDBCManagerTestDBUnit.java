@@ -7,10 +7,7 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.junit.*;
-import ru.fedichkindenis.sqlcmd.model.ConditionRow;
-import ru.fedichkindenis.sqlcmd.model.CreateRow;
-import ru.fedichkindenis.sqlcmd.model.DataRow;
-import ru.fedichkindenis.sqlcmd.model.JDBCManager;
+import ru.fedichkindenis.sqlcmd.model.*;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -33,7 +30,8 @@ public class JDBCManagerTestDBUnit extends DBUnitConfig {
 
         JDBCProperties jdbcProperties = new JDBCProperties("postgesql.config.properties");
         Properties properties = jdbcProperties.getProperties();
-        jdbcManager = new JDBCManager();
+        BuilderQuery builderQuery = new PostgreSqlBuilderQuery();
+        jdbcManager = new JDBCManager(builderQuery);
         jdbcManager.connect(properties.getProperty("db.host"),
                 properties.getProperty("db.port"),
                 properties.getProperty("db.dbName"),
