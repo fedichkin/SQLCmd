@@ -26,12 +26,12 @@ public abstract class Row {
         return nameList;
     }
 
-    int getCountField() {
+    public int getCountField() {
 
         return row.size();
     }
 
-    Iterator<Field> getIteratorField() {
+    public Iterator<Field> getIteratorField() {
 
         return row.iterator();
     }

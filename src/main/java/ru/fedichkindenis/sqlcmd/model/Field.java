@@ -3,7 +3,7 @@ package ru.fedichkindenis.sqlcmd.model;
 /**
  * База для поля таблицы
  */
-abstract class Field {
+public abstract class Field {
 
     private String nameFiled;
 
@@ -11,7 +11,7 @@ abstract class Field {
         this.nameFiled = nameFiled;
     }
 
-    String getNameField() {
+    public String getNameField() {
         return nameFiled;
     }
 

@@ -13,7 +13,7 @@ public class ConditionRow extends Row {
         add(conditionField);
     }
 
-    Collection<String> getListConditionField() {
+    public Collection<String> getListConditionField() {
 
         List<String> conditionList = new LinkedList<>();
 
